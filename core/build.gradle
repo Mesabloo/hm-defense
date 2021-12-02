@@ -1,0 +1,12 @@
+sourceCompatibility = JavaVersion.VERSION_11
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets {
+    main.java.srcDirs = [ "src/java" ]
+    main.kotlin.srcDirs = [ "src/kotlin" ]
+}
+
+eclipse.project.name = appName + "-core"
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-script-runtime:1.6.0"
+}

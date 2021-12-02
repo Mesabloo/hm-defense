@@ -1,0 +1,82 @@
+buildscript {
+    
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        google()
+    }
+    dependencies {
+        
+
+    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.6.0"
+}
+
+allprojects {
+    apply plugin: "eclipse"
+    apply plugin: "kotlin"
+
+    version = '1.0'
+    ext {
+        appName = "hm-defense"
+        gdxVersion = '1.10.0'
+        roboVMVersion = '2.3.12'
+        box2DLightsVersion = '1.5'
+        ashleyVersion = '1.7.3'
+        aiVersion = '1.8.2'
+        gdxControllersVersion = '2.1.0'
+
+        ktxVersion = "$gdxVersion-b4"
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+}
+
+project(":desktop") {
+    apply plugin: "java-library"
+
+
+    dependencies {
+        implementation project(":core")
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        
+    }
+}
+
+project(":core") {
+    apply plugin: "java-library"
+
+
+    dependencies {
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+        // LibKTX: port of LibGDX for Kotlin
+        api group: 'io.github.libktx', name: 'ktx-app', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-actors', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-ashley', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-ashley', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-async', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-async', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-async', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-freetype-async', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-graphics', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-graphics', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-math', version: ktxVersion
+        api group: 'io.github.libktx', name: 'ktx-math', version: ktxVersion
+
+    }
+}
