@@ -1,6 +1,6 @@
-buildscript {
-    
+import org.codehaus.groovy.runtime.GStringImpl
 
+buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
@@ -9,7 +9,6 @@ buildscript {
         google()
     }
     dependencies {
-        
 
     }
 }
@@ -33,7 +32,7 @@ allprojects {
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
 
-        ktxVersion = "$gdxVersion-b4"
+        ktxVersion = "$gdxVersion-b4" as GStringImpl
     }
 
     repositories {
@@ -48,36 +47,32 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "java-library"
-
-
+    
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        
     }
 }
 
 project(":core") {
     apply plugin: "java-library"
 
-
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
 
         // LibKTX: port of LibGDX for Kotlin
-        api group: 'io.github.libktx', name: 'ktx-app', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-actors', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-ashley', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-assets-async', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-async', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-box2d', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-collections', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-freetype-async', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-graphics', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-log', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-math', version: ktxVersion
-        api group: 'io.github.libktx', name: 'ktx-scene2d', version: ktxVersion
-
+        api "io.github.libktx:ktx-app:$ktxVersion"
+        api "io.github.libktx:ktx-actors:$ktxVersion"
+        api "io.github.libktx:ktx-ashley:$ktxVersion"
+        api "io.github.libktx:ktx-assets-async:$ktxVersion"
+        api "io.github.libktx:ktx-async:$ktxVersion"
+        api "io.github.libktx:ktx-box2d:$ktxVersion"
+        api "io.github.libktx:ktx-collections:$ktxVersion"
+        api "io.github.libktx:ktx-freetype-async:$ktxVersion"
+        api "io.github.libktx:ktx-graphics:$ktxVersion"
+        api "io.github.libktx:ktx-log:$ktxVersion"
+        api "io.github.libktx:ktx-math:$ktxVersion"
+        api "io.github.libktx:ktx-scene2d:$ktxVersion"
     }
 }
