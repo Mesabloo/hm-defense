@@ -5,10 +5,10 @@ still have not received an answer to this day.
 While I managed to gather all those assets from an official `.ipa` file installed on one of my apple devices, I will not be
 redistributing them until I get an official grant for this (this README will be updated if it happens).
 
-### How do I still play the game?
-
 Because reverse-engineering an Android/Desktop app is pretty easy, leading to assets stealing, I will not put publicly available
 releases on github, unless I encrypt those assets (the source code is public, so reversing this could also be very easy).
+
+### How do I still play the game?
 
 This folder will need to be populated with all the assets needed as described below.
 
