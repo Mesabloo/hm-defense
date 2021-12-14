@@ -1,4 +1,4 @@
-*Heavy MACH: Defense* is a game where you need to create an army of machines in order to defend your castle from the enemy castle, in a side-scroller style.
+*Heavy MACH: Defense* is a game where you need to create an army of machines in order to defend your castle from the enemy castle, in a top-down side-scroller style.
 
 ## Why? 
 
@@ -19,7 +19,7 @@ TODO
 
 ## Gameplay
 
-TODO
+Described [here](docs/Gameplay.md).
 
 ## Screenshots of the original game
 
