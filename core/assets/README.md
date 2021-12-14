@@ -25,11 +25,11 @@ APK file or a Desktop executable.
 ## Note for those people getting the real assets from the original game
 
 If you extracted an `.ipa` file from a working iOS device, you will be facing a little issue coming from the fact that
-the PNG are modified in a non-standard by the iOS toolchain (to add some extra metadata), which leads to most image
+the PNG files are modified in a non-standard way by the iOS toolchain (to add some extra metadata), which leads to most image
 viewers on Linux not being able to preview the images 
 ([libpng does not handle the extra non-standard chunks they put in it](https://github.com/cocos2d/cocos2d-x/issues/15199)).
 
 The solution to retrieve the original viewable PNG is to use [pngdefry](http://www.jongware.com/pngdefry.html) which 
 processes the images to remove those non-standard chunks (without breaking the image completely).<br>
-I am not sure if it is available for Windows, however a Linux version can be found 
+I am not sure if it is available for Windows, but a Linux version can be found 
 [here](https://github.com/bumaociyuan/ios-ipa-server/raw/master/pngdefry-linux).
