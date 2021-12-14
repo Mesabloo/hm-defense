@@ -35,6 +35,10 @@ allprojects {
         ktxVersion = "$gdxVersion-b4" as GStringImpl
     }
 
+    tasks.withType(Jar).all {
+        duplicatesStrategy 'exclude'
+    }
+
     repositories {
         mavenLocal()
         mavenCentral()
