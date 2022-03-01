@@ -1,15 +1,11 @@
 # create_and_dump_qtable fileName
 define create_and_dump_qtable
   # --- Get all class information
-  call (void *) objc_getClass("NSString")
-  set $NSString_class = $
   call (void *) objc_getClass("QTable")
   set $QTable_class = $
   call (void *) objc_getClass("NSBundle")
   set $NSBundle_class = $
   # --- Get all selectors
-  call (void *) sel_registerName("stringWithFormat:")
-  set $NSString_stringWithFormat_sel = $
   call (void *) sel_registerName("alloc")
   set $QTable_alloc_sel = $
   call (void *) sel_registerName("initWithFile:")
@@ -19,12 +15,6 @@ define create_and_dump_qtable
   call (void *) sel_registerName("pathForResource:ofType:")
   set $NSBundle_pathForResource_sel = $
   # --- Extract table
-  call (void *) objc_msgSend( \
-    $NSString_class, \
-    $NSString_stringWithFormat_sel, \
-    @"$arg0" \
-  )
-  set $fileName = $
   call (void *) objc_msgSend( \
     $QTable_class, \
     $QTable_alloc_sel \
@@ -38,7 +28,7 @@ define create_and_dump_qtable
   call (void *) objc_msgSend( \
     $bundle, \
     $NSBundle_pathForResource_sel, \
-    $fileName, \
+    @"$arg0", \
     @"tble" \
   )
   set $path = $
