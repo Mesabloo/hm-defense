@@ -35,7 +35,7 @@ After extracting the IPA file, you should get a folder structure similar to this
         ┆
         └── Wpn_EnMissile.wav
 ```
-All assets that are willing to extract are located in the `Payload/MachDefense.app` folder.
+All assets we are willing to extract are located in the `Payload/MachDefense.app` folder.
 
 ### Extracting images and sounds
 
@@ -44,8 +44,8 @@ Some of them like sounds are easy to get: simply copy and paste them following t
 
 For images, it is a little bit more complicated.
 JPEG files can be copied and pasted as such, just like sounds.
-However, PNG files are compressed using Apple's toolchain, which makes them incompatible with some image viewer (in fact, many of them).
-This is because the compressing tool insert some non-standard weird chunks in the PNG files
+However, PNG files are compressed using Apple's toolchain, which makes them incompatible with some image viewers (in fact, many of them).
+This is because the compressing tool inserts some non-standard weird chunks in the PNG files
 (see [this Cocos2D issue](https://github.com/cocos2d/cocos2d-x/issues/15199)), which cannot be parsed by `libpng`.
 
 The solution here is to use the tool named [pngdefry](http://www.jongware.com/pngdefry.html), whose goal is to reverse those modifications
@@ -54,11 +54,11 @@ This tool may surely be found for Windows (I haven't been able to), and a Linux 
 [here](https://github.com/bumaociyuan/ios-ipa-server/raw/master/pngdefry-linux).
 
 After calling `./pngdefry -o Somewhere file.png` on every PNG file (replacing `file` and `Somewhere` respectively with the name of the file
-and where you want the defried images copied), all usable PNG files will be located inside `Somewhere`.
+and where you want the defried images copied), all usable PNG files will be located inside `Somewhere` and ready to be reorganised.
  
 ### Extracting stat files
 
-Extracting imaegs and sounds is very easy compared to this, because those files are encrypted using an unknown home-made algorithmi (the `.tble` files).
+Extracting images and sounds is very easy compared to this, because these files are encrypted using an unknown home-made algorithm (the `.tble` files).
 I haven't managed to get the hold on this algorithm, however I managed to extract the unencrypted tables anyway, by abusing the
 Objective-C runtime with GDB.
 
@@ -70,13 +70,13 @@ In order to retrieve each of them, you will need to follow this steps:
   All commands need to be performed in the terminal (may it be an app like MTerminal or the SSH tunnel) as of now.
 - Install GDB on your device (for example the one from the radare repo).
 
-  Warning: if executing `gdb` yields the error `Invalid instruction 4`, you will need to patch it yourself using the following commands
+  __Warning:__ if executing `gdb` yields the error `Invalid instruction 4`, you will need to patch it yourself using the following commands
   (you will need `ldid` and `sed` installed from Cydia):
   ```bash
   sed -i'' 's/\x00\x30\x93\xe4/\x00\x30\x93\xe5/g;s/\x00\x30\xd3\xe4/\x00\x30\xd3\xe5/g;' /usr/bin/gdb
   ldid -s /usr/bin/gdb
   ```
-- Copy the file [`./reverse/create_and_dump_qtable.gdb`] to your device, somewhere you can easily find it (we'll name this folder `ROOT` underneath).
+- Copy the file [`./reverse/create_and_dump_qtable.gdb`](./reverse/create_and_dump_qtable.gdb) to your device, somewhere you can easily find it (we'll name this folder `ROOT` underneath).
 - Launch the game on the device.
 - Find out what PID it as. One can execute the command `ps ax | grep 'MachDefense'`, which should return something along those lines:
   ```bash
@@ -94,7 +94,7 @@ In order to retrieve each of them, you will need to follow this steps:
   ```
   This may take some time to load, but don't worry, you should see the GDB prompt at some point (it says `(gdb)`).
 
-  The app will be frozen for as long as we stay in GDB. This is the expected behavior.
+  __Note:__ The app will be frozen for as long as we stay in GDB. This is the expected behavior.
 - For each stat file in the list below, execute this command in GDB (you might be able to use loops?):
   ```bash
   create_and_dump_qtable FILE
@@ -147,7 +147,8 @@ In order to retrieve each of them, you will need to follow this steps:
   ESpawn_21          ESpawn_45     ESpawn_69     
   ```
 - Convert the output format to JSON, following these rules:
-  - Remove all `XXX@` in keys (where `XXX` is any number)
+  - Remove all `XXX@` in keys (where `XXX` is any number).
+    For example `"2@Param"` becomes simply `"Param"`.
   - TODO
 
 ## How do I still play the game?
