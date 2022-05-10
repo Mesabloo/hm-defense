@@ -161,7 +161,13 @@ Each entry is formatted as `filename.ext     # what this is`.<br>
 The part `# what this is` is only a comment on what the file represents and should not be present in the filename. (TODO)
 ```bash
 .
-└
+├── data   # Contains all the .json files extracted earlier
+│   ├── BaseUpgrade.json
+│   ├── Description_us.json
+│   ┆
+│   └── WeaponInfo.json
+├── gfx
+└── sfx
 ```
 
 Once done, a simple compilation using the `gradle` tool (as described in the root README) should work and generate either an
