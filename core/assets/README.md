@@ -154,7 +154,7 @@ In order to retrieve each of them, you will need to follow this steps:
   It accepts `.log` files to convert to JSON files on the command-line.
   A quick and easy way to convert all `.log` files to JSON is `./table-to-json.py DIR/*.log` where `DIR` is the directory containing your `.log` files.
   Note that the `.json` files will be saved in the same directory, with the same file names as the `.log` files.
-- TODO
+- Put the `.json` files in the correct folder (see structure at the done).
 
 ## How do I still play the game?
 
