@@ -146,10 +146,12 @@ In order to retrieve each of them, you will need to follow this steps:
   ESpawn_20          ESpawn_44     ESpawn_68     
   ESpawn_21          ESpawn_45     ESpawn_69     
   ```
-- Convert the output format to JSON, following these rules:
-  - Remove all `XXX@` in keys (where `XXX` is any number).
-    For example `"2@Param"` becomes simply `"Param"`.
-  - TODO
+- At this point, it is better to transfer everything onto your computer.
+- Now you can convert every `.log` file to JSON using the simple Python3 script `table-to-json.py`.
+  It accepts `.log` files to convert to JSON files on the command-line.
+  A quick and easy way to convert all `.log` files to JSON is `./table-to-json.py DIR/*.log` where `DIR` is the directory containing your `.log` files.
+  Note that the `.json` files will be saved in the same directory, with the same file names as the `.log` files.
+- TODO
 
 ## How do I still play the game?
 
