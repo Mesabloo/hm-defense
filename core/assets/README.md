@@ -117,6 +117,9 @@ In order to retrieve each of them, you will need to follow this steps:
 
   The most important part is that the whole stat dictionary has been written down to the file `FILE.log`.
 
+  For convenience, a macro named `extract_all_qtables` can be used to extract all the tables from the list to files
+  (this merely calls `create_and_dump_qtable` for all the file names in the list below).
+
   -----------
 
   Table file names list:
