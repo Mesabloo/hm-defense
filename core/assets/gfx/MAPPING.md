@@ -1,5 +1,7 @@
 # Mapping from the original assets names
 
+This document describes how to rename image assets in order to make them usable by the application.
+
 ## Flags
 
 - `ad.png` → `lang/ad.png`
