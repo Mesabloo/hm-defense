@@ -420,3 +420,97 @@ This document describes how to rename image assets in order to make them usable 
 - `tBG_26_02.png` → `terrains/26/02-small.png`
 - `tBG_27_01.png` → `terrains/27/01-small.png`
 - `tBG_27_02.png` → `terrains/27/02-small.png`
+
+## Effects
+
+- `Efx_BulletTrail.png` → `models/effects/bullet-trail.png`
+- `Efx_DamageHMG.png` → `models/effects/damage-hmg.png`
+- `Efx_Damage.png` → `models/effects/damage.png`
+- `Efx_Explode01.png` → `models/effects/explode-01.png`
+- `Efx_Explode02.png` → `models/effects/explode-02.png`
+- `Efx_Explode03.png` → `models/effects/explode-03.png`
+- `Efx_Explode04.png` → `models/effects/explode-04.png`
+- `Efx_ExplodeBoss.png` → `models/effects/explode-boss.png`
+- `Efx_ExplodeGround.png` → `models/effects/explode-ground.png`
+- `Efx_ExplodeIon.png` → `models/effects/explode-ion.png`
+- `Efx_ExplodeNPC.png` → `models/effects/explode-npc.png`
+- `Efx_ExplodePlasma.png` → `models/effects/explode-plasma.png`
+- `Efx_Fire.png` → `models/effects/fire.png`
+- `Efx_Flame.png` → `models/effects/flame.png`
+- `Efx_Ion01.png` → `models/effects/`
+- `Efx_Ion02.png` → `models/effects/`
+- `Efx_Ion03.png` → `models/effects/`
+- `Efx_Ion04.png` → `models/effects/`
+- `Efx_Ion05.png` → `models/effects/`
+- `Efx_Ion06.png` → `models/effects/`
+- `Efx_Ion07.png` → `models/effects/`
+- `Efx_Item2.png` → `models/effects/item2.png`
+- `Efx_Item.png` → `models/effects/item.png`
+- `Efx_LevelUp.jpg` → `models/effects/level-up.jpg`
+- `Efx_Lightning.png` → `models/effects/lightning.png`
+- `Efx_Nuclear.png` → `models/effects/nuclear.png`
+- `Efx_Plasma.png` → `models/effects/plasma.png`
+- `Efx_Rail01.png` → `models/effects/rail.png`
+- `Efx_RailgunEx.png` → `models/effects/railgun-ex.png`
+- `Efx_Railgun.png` → `models/effects/railgun.png`
+- `Efx_Shotgun.png` → `models/effects/shotgun.png`
+- `Efx_Smoke.png` → `models/effects/smoke.png`
+- `Efx_Trail01.png` → `models/effects/trail-01.png`
+- `Efx_Trail02.png` → `models/effects/trail-02.png`
+- `Efx_Trail03.png` → `models/effects/trail-03.png`
+- `Efx_Trail04.png` → `models/effects/trail-04.png`
+- `SmokeEffect2.png` → `models/effects/smoke-effect2.png`
+- `SmokeEffect.png` → `models/effects/smoke-effect.png`
+- `SmokeTrail.png` → `models/effects/smoke-trail.png`
+
+## Turrets
+
+### Enemy turrets
+
+- `E_Turret_Body_01.png` → `models/turrets/enemy/01/body.png`
+- `E_Turret_Body_02.png` → `models/turrets/enemy/02/body.png`
+- `E_Turret_Body_03.png` → `models/turrets/enemy/03/body.png`
+- `E_Turret_Body_04.png` → `models/turrets/enemy/04/body.png`
+- `E_Turret_Body_05.png` → `models/turrets/enemy/05/body.png`
+- `E_Turret_Body_06.png` → `models/turrets/enemy/06/body.png`
+- `E_Turret_Body_07.png` → `models/turrets/enemy/07/body.png`
+- `E_Turret_Body_08.png` → `models/turrets/enemy/08/body.png`
+- `E_Turret_Body_09.png` → `models/turrets/enemy/09/body.png`
+- `E_Turret_Body_10.png` → `models/turrets/enemy/10/body.png`
+- `E_Turret_Body_11.png` → `models/turrets/enemy/11/body.png`
+- `E_Turret_Body_12.png` → `models/turrets/enemy/12/body.png`
+- `E_Turret13_Body.png` → `models/turrets/enemy/13/body.png`
+- `E_Turret14_Body.png` → `models/turrets/enemy/14/body.png`
+- `E_Turret15_Body.png` → `models/turrets/enemy/15/body.png`
+- `E_Turret16_Body.png` → `models/turrets/enemy/16/body.png`
+- `E_Turret17_Body.png` → `models/turrets/enemy/17/body.png`
+- `E_Turret18_Body.png` → `models/turrets/enemy/18/body.png`
+- `E_Turret19_Body.png` → `models/turrets/enemy/19/body.png`
+- `E_Turret20_Body.png` → `models/turrets/enemy/20/body.png`
+- `E_Turret_Wpn_01.png` → `models/turrets/enemy/01/weapon.png`
+- `E_Turret_Wpn_02.png` → `models/turrets/enemy/02/weapon.png`
+- `E_Turret_Wpn_03.png` → `models/turrets/enemy/03/weapon.png`
+- `E_Turret_Wpn_04.png` → `models/turrets/enemy/04/weapon.png`
+- `E_Turret_Wpn_05.png` → `models/turrets/enemy/05/weapon.png`
+- `E_Turret_Wpn_06.png` → `models/turrets/enemy/06/weapon.png`
+- `E_Turret_Wpn_07.png` → `models/turrets/enemy/07/weapon.png`
+- `E_Turret_Wpn_08.png` → `models/turrets/enemy/08/weapon.png`
+- `E_Turret_Wpn_09.png` → `models/turrets/enemy/09/weapon.png`
+- `E_Turret_Wpn_10.png` → `models/turrets/enemy/10/weapon.png`
+- `E_Turret_Wpn_11.png` → `models/turrets/enemy/11/weapon.png`
+- `E_Turret_Wpn_12.png` → `models/turrets/enemy/12/weapon.png`
+- `E_Turret13_Wpn_01.png` → `models/turrets/enemy/13/weapon-01.png`
+- `E_Turret13_Wpn_02.png` → `models/turrets/enemy/13/weapon-02.png`
+- `E_Turret14_Wpn.png` → `models/turrets/enemy/14/weapon.png`
+- `E_Turret15_Wpn.png` → `models/turrets/enemy/15/weapon.png`
+- `E_Turret16_Wpn.png` → `models/turrets/enemy/16/weapon.png`
+- `E_Turret17_Wpn_01.png` → `models/turrets/enemy/17/weapon-01.png`
+- `E_Turret17_Wpn_02.png` → `models/turrets/enemy/17/weapon-02.png`
+- `E_Turret18_Wpn_01.png` → `models/turrets/enemy/18/weapon-01.png`
+- `E_Turret18_Wpn_02.png` → `models/turrets/enemy/18/weapon-02.png`
+- `E_Turret19_Wpn.png` → `models/turrets/enemy/19/weapon.png`
+- `E_Turret20_Wpn.png` → `models/turrets/enemy/20/weapon.png`
+
+### Ally turrets
+
+
