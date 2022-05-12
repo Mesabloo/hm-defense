@@ -37,6 +37,6 @@ match($0, /^- (.*?) → (.*?)$/, gr) {
     print "cp \"" $1 "\" \"" $2 "\"" > PS_SCRIPT;
   } 
   # Generate bash script
-  print "rm '" $1 "' || true" > SH_SCRIPT;
-  print "rm \"" $1 "\" -erroraction silentlycontinue" > PS_SCRIPT; 
+  # print "rm '" $1 "' || true" > SH_SCRIPT;
+  # print "rm \"" $1 "\" -erroraction silentlycontinue" > PS_SCRIPT; 
 }
