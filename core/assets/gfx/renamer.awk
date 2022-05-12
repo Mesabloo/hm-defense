@@ -30,14 +30,13 @@ match($0, /^- (.*?) → (.*?)$/, gr) {
     dir = extract_basepath($2);
 
     # Generate bash script
-    print "mkdir -p '" dir "'" > SH_SCRIPT;
-    print "mv '" $1 "' '" $2 "'" > SH_SCRIPT;
+    print "mkdir -p '" dir "' >/dev/null || true" > SH_SCRIPT;
+    print "cp '" $1 "' '" $2 "'" > SH_SCRIPT;
     # Generate batch script
     print "mkdir \"" dir "\" -erroraction silentlycontinue >$null" > PS_SCRIPT;
-    print "mv \"" $1 "\" \"" $2 "\"" > PS_SCRIPT;
-  } else {
-    # Generate bash script
-    print "rm '" $1 "'" > SH_SCRIPT;
-    print "rm \"" $1 "\" -erroraction silentlycontinue" > PS_SCRIPT;
-  }
+    print "cp \"" $1 "\" \"" $2 "\"" > PS_SCRIPT;
+  } 
+  # Generate bash script
+  print "rm '" $1 "' || true" > SH_SCRIPT;
+  print "rm \"" $1 "\" -erroraction silentlycontinue" > PS_SCRIPT; 
 }
