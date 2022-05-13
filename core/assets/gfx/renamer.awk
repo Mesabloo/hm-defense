@@ -12,9 +12,11 @@ BEGIN {
 }
 
 BEGINFILE {
-    while ( (getline line < FILENAME) > 0 ) {
-        nb_total++;
+  while ( (getline line < FILENAME) > 0 ) {
+    if (line ~ /^-/) {
+      nb_total++;
     }
+  }
 }
 
 function extract_basepath(full_path) {
@@ -42,7 +44,7 @@ match($0, /^- (.*?) → (.*?)$/, gr) {
     print "mkdir -p '" dir "' >/dev/null || true" > SH_SCRIPT;
     print "cp '" $1 "' '" $2 "'" > SH_SCRIPT;
     # Generate powershell script
-    print "Write-Progress -Id 1 -Status \"Progress\" -Activity \"Moving assets to the correct location\" -CurrentOperation \"Processing file " $1 "\" -PercentComplete " int(nb_rec / nb_total) > PS_SCRIPT; 
+    print "Write-Progress -Id 1 -Status \"Progress\" -Activity \"Moving assets to the correct location\" -CurrentOperation \"Processing file " $1 "\" -PercentComplete " int(nb_rec / nb_total * 100) > PS_SCRIPT; 
     print "mkdir \"" dir "\" -erroraction silentlycontinue >$null" > PS_SCRIPT;
     print "cp \"" $1 "\" \"" $2 "\"" > PS_SCRIPT;
   } 
