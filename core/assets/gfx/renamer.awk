@@ -5,7 +5,8 @@ BEGIN {
   SH_SCRIPT = SCRIPT_NAME ".sh";
   PS_SCRIPT = SCRIPT_NAME ".ps1";
 
-  print "#!/usr/bin/env bash" > SH_SCRIPT;
+  print "#!/usr/bin/env bash\n" > SH_SCRIPT;
+  print "(\n" > SH_SCRIPT;
 
   nb_rec = 0;
   nb_total = 0;
@@ -40,11 +41,14 @@ match($0, /^- (.*?) → (.*?)$/, gr) {
     
     dir = extract_basepath($2);
 
+    percent = int(nb_rec / nb_total * 100);
+
     # Generate bash script
-    print "mkdir -p '" dir "' >/dev/null || true" > SH_SCRIPT;
-    print "cp '" $1 "' '" $2 "'" > SH_SCRIPT;
+    print "  mkdir -p '" dir "' &>/dev/null || true" > SH_SCRIPT;
+    print "  cp '" $1 "' '" $2 "' &>/dev/null" > SH_SCRIPT;
+    print "  printf \"XXX\\n%d\\n\\nProcessing file %s\\nXXX\\n\" '" percent "' '" $1 "'" > SH_SCRIPT;
     # Generate powershell script
-    print "Write-Progress -Id 1 -Status \"Progress\" -Activity \"Moving assets to the correct location\" -CurrentOperation \"Processing file " $1 "\" -PercentComplete " int(nb_rec / nb_total * 100) > PS_SCRIPT; 
+    print "Write-Progress -Id 1 -Activity \"Moving assets to the correct location\" -Status \"Processing file\" -CurrentOperation \"" $1 "\" -PercentComplete " percent > PS_SCRIPT; 
     print "mkdir \"" dir "\" -erroraction silentlycontinue >$null" > PS_SCRIPT;
     print "cp \"" $1 "\" \"" $2 "\"" > PS_SCRIPT;
   } 
@@ -53,4 +57,8 @@ match($0, /^- (.*?) → (.*?)$/, gr) {
   # print "rm \"" $1 "\" -erroraction silentlycontinue" > PS_SCRIPT;
 
   nb_rec++;
+}
+
+END {
+  print "\n) | dialog --title 'Moving assets to the correct location' --gauge '\\n' 7 80 0" > SH_SCRIPT;
 }
