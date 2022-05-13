@@ -6,6 +6,15 @@ BEGIN {
   PS_SCRIPT = SCRIPT_NAME ".ps1";
 
   print "#!/usr/bin/env bash" > SH_SCRIPT;
+
+  nb_rec = 0;
+  nb_total = 0;
+}
+
+BEGINFILE {
+    while ( (getline line < FILENAME) > 0 ) {
+        nb_total++;
+    }
 }
 
 function extract_basepath(full_path) {
@@ -32,11 +41,14 @@ match($0, /^- (.*?) → (.*?)$/, gr) {
     # Generate bash script
     print "mkdir -p '" dir "' >/dev/null || true" > SH_SCRIPT;
     print "cp '" $1 "' '" $2 "'" > SH_SCRIPT;
-    # Generate batch script
+    # Generate powershell script
+    print "Write-Progress -Id 1 -Status \"Progress\" -Activity \"Moving assets to the correct location\" -CurrentOperation \"Processing file " $1 "\" -PercentComplete " int(nb_rec / nb_total) > PS_SCRIPT; 
     print "mkdir \"" dir "\" -erroraction silentlycontinue >$null" > PS_SCRIPT;
     print "cp \"" $1 "\" \"" $2 "\"" > PS_SCRIPT;
   } 
   # Generate bash script
   # print "rm '" $1 "' || true" > SH_SCRIPT;
-  # print "rm \"" $1 "\" -erroraction silentlycontinue" > PS_SCRIPT; 
+  # print "rm \"" $1 "\" -erroraction silentlycontinue" > PS_SCRIPT;
+
+  nb_rec++;
 }

@@ -897,6 +897,8 @@ mkdir -p './models/effects' >/dev/null || true
 cp 'SmokeEffect.png' 'models/effects/smoke-effect.png'
 mkdir -p './models/effects' >/dev/null || true
 cp 'SmokeTrail.png' 'models/effects/smoke-trail.png'
+mkdir -p './models/turrets' >/dev/null || true
+cp 'B_P_Body_02.png' 'models/turrets/transporter.png'
 mkdir -p './models/turrets/enemy/01' >/dev/null || true
 cp 'E_Turret_Body_01.png' 'models/turrets/enemy/01/body.png'
 mkdir -p './models/turrets/enemy/02' >/dev/null || true

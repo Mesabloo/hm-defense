@@ -467,6 +467,21 @@ This document describes how to rename image assets in order to make them usable 
 
 ## Turret models
 
+- `B_A_Body_01.png` → ❌
+- `B_A_Body_02.png` → ❌
+- `B_A_Body_03.png` → ❌
+- `B_A_Wpn_01.png` → ❌
+- `B_A_Wpn_02.png` → ❌
+- `B_A_Wpn_03.png` → ❌
+- `B_D_Body_01.png` → ❌
+- `B_D_Body_02.png` → ❌
+- `B_P_Body_01.png` → ❌
+- `B_P_Body_02.png` → `models/turrets/transporter.png`
+- `B_P_Body_03.png` → ❌
+- `B_P_Body_04.png` → ❌
+- `B_P_Body_05.png` → ❌
+- `B_P_Body_06.png` → ❌
+
 ### Enemy turrets
 
 - `E_Turret_Body_01.png` → `models/turrets/enemy/01/body.png`
@@ -889,3 +904,7 @@ This document describes how to rename image assets in order to make them usable 
 - `E_Plane05_Body.png` → `models/planes/05/body.png`
 - `E_Plane05_Prop.png` → `models/planes/05/propeller.png`
 - `E_Plane05_Wpn.png` → `models/planes/05/weapon.png`
+
+## Base models
+
+
