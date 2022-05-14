@@ -13,10 +13,13 @@ compileKotlin {
 }
 
 sourceSets {
-    main.java.srcDirs = [ "src/java" ]
-    main.kotlin.srcDirs = [ "src/kotlin" ]
+    main.java.srcDirs = ["src/java"]
+    main.kotlin.srcDirs = ["src/kotlin"]
 }
-sourceSets.main.resources.srcDirs = ["../core/assets"]
+sourceSets.main.resources {
+    srcDirs = ["../core/assets"]
+    excludes = ["reverse", "**/*.md", "**/*.awk", "**/*.sh", "**/*.ps1", "**/.gitignore", "**/.gitattributes", "**/.gitkeep"]
+}
 
 project.ext.mainClassName = "fr.mesabloo.heavymachdefense.desktop.DesktopLauncherKt"
 project.ext.assetsDir = new File("../core/assets")
