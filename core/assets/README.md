@@ -154,114 +154,21 @@ In order to retrieve each of them, you will need to follow this steps:
   It accepts `.log` files to convert to JSON files on the command-line.
   A quick and easy way to convert all `.log` files to JSON is `./table-to-json.py DIR/*.log` where `DIR` is the directory containing your `.log` files.
   Note that the `.json` files will be saved in the same directory, with the same file names as the `.log` files.
-- Put the `.json` files in the correct folder (see structure at the done).
+- Put the `.json` files in the `data` folder.
 
 ## How do I still play the game?
 
-This folder will need to be populated with all the assets needed as described below.
+This folder will need to be populated with all the assets needed as described below:
 
-Each entry is formatted as `filename.ext     # what this is`.<br>
-The part `# what this is` is only a comment on what the file represents and should not be present in the filename. (TODO)
-```bash
-.
-├── data   # Contains all the .json files extracted earlier
-│   ├── BaseUpgrade.json
-│   ├── Description_kr.json
-│   ├── Description_us.json
-│   ├── ESpawn_01.json
-│   ├── ESpawn_02.json
-│   ├── ESpawn_03.json
-│   ├── ESpawn_04.json
-│   ├── ESpawn_05.json
-│   ├── ESpawn_06.json
-│   ├── ESpawn_07.json
-│   ├── ESpawn_08.json
-│   ├── ESpawn_09.json
-│   ├── ESpawn_10.json
-│   ├── ESpawn_11.json
-│   ├── ESpawn_12.json
-│   ├── ESpawn_13.json
-│   ├── ESpawn_14.json
-│   ├── ESpawn_15.json
-│   ├── ESpawn_16.json
-│   ├── ESpawn_17.json
-│   ├── ESpawn_18.json
-│   ├── ESpawn_19.json
-│   ├── ESpawn_20.json
-│   ├── ESpawn_21.json
-│   ├── ESpawn_22.json
-│   ├── ESpawn_23.json
-│   ├── ESpawn_24.json
-│   ├── ESpawn_25.json
-│   ├── ESpawn_26.json
-│   ├── ESpawn_27.json
-│   ├── ESpawn_28.json
-│   ├── ESpawn_29.json
-│   ├── ESpawn_30.json
-│   ├── ESpawn_31.json
-│   ├── ESpawn_32.json
-│   ├── ESpawn_33.json
-│   ├── ESpawn_34.json
-│   ├── ESpawn_35.json
-│   ├── ESpawn_36.json
-│   ├── ESpawn_37.json
-│   ├── ESpawn_38.json
-│   ├── ESpawn_39.json
-│   ├── ESpawn_40.json
-│   ├── ESpawn_41.json
-│   ├── ESpawn_42.json
-│   ├── ESpawn_43.json
-│   ├── ESpawn_44.json
-│   ├── ESpawn_45.json
-│   ├── ESpawn_46.json
-│   ├── ESpawn_47.json
-│   ├── ESpawn_48.json
-│   ├── ESpawn_49.json
-│   ├── ESpawn_50.json
-│   ├── ESpawn_51.json
-│   ├── ESpawn_52.json
-│   ├── ESpawn_53.json
-│   ├── ESpawn_54.json
-│   ├── ESpawn_55.json
-│   ├── ESpawn_56.json
-│   ├── ESpawn_57.json
-│   ├── ESpawn_58.json
-│   ├── ESpawn_59.json
-│   ├── ESpawn_60.json
-│   ├── ESpawn_61.json
-│   ├── ESpawn_62.json
-│   ├── ESpawn_63.json
-│   ├── ESpawn_64.json
-│   ├── ESpawn_65.json
-│   ├── ESpawn_66.json
-│   ├── ESpawn_67.json
-│   ├── ESpawn_68.json
-│   ├── ESpawn_69.json
-│   ├── ESpawn_70.json
-│   ├── ESpawn_71.json
-│   ├── ESpawn_72.json
-│   ├── ESpawn_73.json
-│   ├── ESpawn_74.json
-│   ├── ESpawn_75.json
-│   ├── ESpawn_76.json
-│   ├── ESpawn_77.json
-│   ├── ESpawn_78.json
-│   ├── ESpawn_79.json
-│   ├── ESpawn_80.json
-│   ├── ItemInfo.json
-│   ├── ItemRegen.json
-│   ├── MachBuild_Name.json
-│   ├── MachBuild_Parts.json
-│   ├── MachList.json
-│   ├── MachRegen.json
-│   ├── MapList.json
-│   ├── PartsList.json
-│   ├── SpAttackList.json
-│   ├── TileList.json
-│   └── WeaponInfo.json
-├── gfx
-└── sfx
-```
+- The `data` folder contains all the JSON files generated earlier.
+  If however you did not get them from the original application, there are description on what to put in them in the folder
+  (each file has an associated markdown file containing a table with information to put).
+
+  These data files need to be patched using the scripts provided in the [data](./data) directory.
+- The `gfx` folder contains all the images.
+  A mapping from the original assets, as well as an auto renamer, are available in the `gfx` directory.
+- The `sfx` folder contains all the sounds in the game.
+  Automatic renaming can be used as described in the [`sfx/MAPPING.md`](./sfx/MAPPING.md) file.
 
 Once done, a simple compilation using the `gradle` tool (as described in the root README) should work and generate either an
 APK file (for Android) or a Desktop executable.
