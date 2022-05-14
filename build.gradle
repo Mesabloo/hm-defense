@@ -31,6 +31,7 @@ allprojects {
         ashleyVersion = '1.7.3'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
+        ashleyVersion = '1.7.4'
 
         ktxVersion = "$gdxVersion-b4" as GStringImpl
     }
@@ -56,6 +57,7 @@ project(":desktop") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
     }
 }
 
@@ -64,12 +66,15 @@ project(":core") {
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+
+        api "com.badlogicgames.ashley:ashley:$ashleyVersion"
 
         // LibKTX: port of LibGDX for Kotlin
         api "io.github.libktx:ktx-app:$ktxVersion"
         api "io.github.libktx:ktx-actors:$ktxVersion"
         api "io.github.libktx:ktx-ashley:$ktxVersion"
-        api "io.github.libktx:ktx-assets-async:$ktxVersion"
+        api "io.github.libktx:ktx-assets:$ktxVersion"
         api "io.github.libktx:ktx-async:$ktxVersion"
         api "io.github.libktx:ktx-box2d:$ktxVersion"
         api "io.github.libktx:ktx-collections:$ktxVersion"
