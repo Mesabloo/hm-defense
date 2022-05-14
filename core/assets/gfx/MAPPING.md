@@ -4,6 +4,9 @@ This document describes how to rename image assets in order to make them usable 
 
 > `→ ❌` means that the specific item has not been kept.
 
+Generating processing scripts is done by calling `./renamer.awk -v CONTENT_KIND="images" MAPPING.md`.
+This generates a bash and a powershell script (which should already be available in the same directory).
+
 ## Flags
 
 - `ad.png` → `lang/ad.png`
@@ -905,6 +908,57 @@ This document describes how to rename image assets in order to make them usable 
 - `E_Plane05_Prop.png` → `models/planes/05/propeller.png`
 - `E_Plane05_Wpn.png` → `models/planes/05/weapon.png`
 
+## Boss models
+
+- `Boss01_Body.png` → `models/boss/01/body.png`
+- `Boss01_Wpn_01.png` → `models/boss/01/weapon-01.png`
+- `Boss01_Wpn_02.png` → `models/boss/01/weapon-02.png`
+- `Boss02_Body.png` → `models/boss/02/body.png`
+- `Boss02_Wpn_01.png` → `models/boss/02/weapon.png`
+- `Boss03_Body.png` → `models/boss/03/body.png`
+- `Boss03_Wpn_01.png` → `models/boss/03/weapon-01.png`
+- `Boss03_Wpn_02.png` → `models/boss/03/weapon-02.png`
+- `Boss03_Wpn_03.png` → `models/boss/03/weapon-03.png`
+- `Boss04_Body.png` → `models/boss/04/body.png`
+- `Boss04_Wpn_01.png` → `models/boss/04/weapon-01.png`
+- `Boss04_Wpn_02.png` → `models/boss/04/weapon-02.png`
+- `Boss04_Wpn_03.png` → `models/boss/04/weapon-03.png`
+- `Boss04_Wpn_04.png` → `models/boss/04/weapon-04.png`
+- `Boss05_Body.png` → `models/boss/05/body.png`
+- `Boss05_Wpn_01.png` → `models/boss/05/weapon-01.png`
+- `Boss05_Wpn_02.png` → `models/boss/05/weapon-02.png`
+- `Boss06_Body.png` → `models/boss/06/body.png`
+- `Boss06_Wpn_01.png` → `models/boss/06/weapon.png`
+- `Boss07_Body.png` → `models/boss/07/body.png`
+- `Boss07_Wpn_01.png` → `models/boss/07/weapon-01.png`
+- `Boss07_Wpn_02.png` → `models/boss/07/weapon-02.png`
+- `Boss08_Body.png` → `models/boss/08/body.png`
+- `Boss08_Wpn_01.png` → `models/boss/08/weapon-01.png`
+- `Boss08_Wpn_02.png` → `models/boss/08/weapon-02.png`
+- `Boss08_Wpn_03.png` → `models/boss/08/weapon-03.png`
+
 ## Base models
 
-
+- `Base01.png` → `models/base/ally/01/base.png`
+- `Base01_Rader.png` → `models/base/ally/01/radar.png`
+- `Base02.png` → `models/base/ally/02/base.png`
+- `Base02_Rader.png` → `models/base/ally/02/radar.png`
+- `Base03.png` → `models/base/ally/03/base.png`
+- `Base03_Rader.png` → `models/base/ally/03/radar.png`
+- `Base04.png` → `models/base/ally/04/base.png`
+- `Base04_Rader.png` → `models/base/ally/04/radar.png`
+- `Base05.png` → `models/base/ally/05/base.png`
+- `Base05_Rader.png` → `models/base/ally/05/radar.png`
+- `Base06.png` → `models/base/ally/06/base.png`
+- `Base06_Rader.png` → `models/base/ally/06/radar.png`
+- `Base07.png` → `models/base/ally/07/base.png`
+- `Base07_Rader.png` → `models/base/ally/07/radar.png`
+- `BaseWpn01.png` → `models/base/ally/01/weapon.png`
+- `BaseWpn02.png` → `models/base/ally/02/weapon.png`
+- `BaseWpn03.png` → `models/base/ally/03/weapon.png`
+- `BaseWpn04.png` → `models/base/ally/04/weapon.png`
+- `BaseWpn05.png` → `models/base/ally/05/weapon.png`
+- `BaseWpn06.png` → `models/base/ally/06/weapon.png`
+- `BaseWpn07.png` → `models/base/ally/07/weapon.png`
+- `E_Base.png` → `models/base/enemy/base.png`
+- `E_Base_Rader.png` → `models/base/enemy/radar.png`
