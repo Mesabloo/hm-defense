@@ -36,6 +36,46 @@ inputFiles=[{path:heavy-missile/body-01.png,type:Input,regionName:heavy-missile-
 keepInputFileExtensions=false
 
 
+---
+
+name=machine-weapons
+filename=weapons.atlas
+output=.
+
+alias=true
+alphaThreshold=0
+debug=false
+duplicatePadding=false
+edgePadding=true
+fast=false
+filterMag=Nearest
+filterMin=Nearest
+ignoreBlankImages=true
+maxHeight=2048
+maxWidth=1024
+minHeight=16
+minWidth=16
+paddingX=2
+paddingY=2
+pot=true
+mof=false
+rotation=false
+stripWhitespaceX=false
+stripWhitespaceY=false
+wrapX=ClampToEdge
+wrapY=ClampToEdge
+premultiplyAlpha=false
+grid=false
+square=false
+bleed=true
+limitMemory=true
+useIndexes=true
+
+scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
+inputFiles=[{path:heavy-missile/weapon-01.png,type:Input,regionName:heavy-missile-01},{path:heavy-missile/weapon-10.png,type:Input,regionName:heavy-missile-10},{path:heavy-missile/weapon-02.png,type:Input,regionName:heavy-missile-02},{path:heavy-missile/weapon-03.png,type:Input,regionName:heavy-missile-03},{path:heavy-missile/weapon-04.png,type:Input,regionName:heavy-missile-04},{path:heavy-missile/weapon-05.png,type:Input,regionName:heavy-missile-05},{path:heavy-missile/weapon-06.png,type:Input,regionName:heavy-missile-06},{path:heavy-missile/weapon-07.png,type:Input,regionName:heavy-missile-07},{path:heavy-missile/weapon-08.png,type:Input,regionName:heavy-missile-08},{path:heavy-missile/weapon-09.png,type:Input,regionName:heavy-missile-09},{path:hmg/weapon-01.png,type:Input,regionName:hmg-01},{path:hmg/weapon-10.png,type:Input,regionName:hmg-10},{path:hmg/weapon-02.png,type:Input,regionName:hmg-02},{path:hmg/weapon-03.png,type:Input,regionName:hmg-03},{path:hmg/weapon-04.png,type:Input,regionName:hmg-04},{path:hmg/weapon-05.png,type:Input,regionName:hmg-05},{path:hmg/weapon-06.png,type:Input,regionName:hmg-06},{path:hmg/weapon-07.png,type:Input,regionName:hmg-07},{path:hmg/weapon-08.png,type:Input,regionName:hmg-08},{path:hmg/weapon-09.png,type:Input,regionName:hmg-09},{path:ion/weapon-01.png,type:Input,regionName:ion-01},{path:ion/weapon-10.png,type:Input,regionName:ion-10},{path:ion/weapon-02.png,type:Input,regionName:ion-02},{path:ion/weapon-03.png,type:Input,regionName:ion-03},{path:ion/weapon-04.png,type:Input,regionName:ion-04},{path:ion/weapon-05.png,type:Input,regionName:ion-05},{path:ion/weapon-06.png,type:Input,regionName:ion-06},{path:ion/weapon-07.png,type:Input,regionName:ion-07},{path:ion/weapon-08.png,type:Input,regionName:ion-08},{path:ion/weapon-09.png,type:Input,regionName:ion-09},{path:missile/weapon-01.png,type:Input,regionName:missile-01},{path:missile/weapon-10.png,type:Input,regionName:missile-10},{path:missile/weapon-02.png,type:Input,regionName:missile-02},{path:missile/weapon-03.png,type:Input,regionName:missile-03},{path:missile/weapon-04.png,type:Input,regionName:missile-04},{path:missile/weapon-05.png,type:Input,regionName:missile-05},{path:missile/weapon-06.png,type:Input,regionName:missile-06},{path:missile/weapon-07.png,type:Input,regionName:missile-07},{path:missile/weapon-08.png,type:Input,regionName:missile-08},{path:missile/weapon-09.png,type:Input,regionName:missile-09},{path:plasma/weapon-01.png,type:Input,regionName:plasma-01},{path:plasma/weapon-10.png,type:Input,regionName:plasma-10},{path:plasma/weapon-02.png,type:Input,regionName:plasma-02},{path:plasma/weapon-03.png,type:Input,regionName:plasma-03},{path:plasma/weapon-04.png,type:Input,regionName:plasma-04},{path:plasma/weapon-05.png,type:Input,regionName:plasma-05},{path:plasma/weapon-06.png,type:Input,regionName:plasma-06},{path:plasma/weapon-07.png,type:Input,regionName:plasma-07},{path:plasma/weapon-08.png,type:Input,regionName:plasma-08},{path:plasma/weapon-09.png,type:Input,regionName:plasma-09},{path:rifle/weapon-01.png,type:Input,regionName:rifle-01},{path:rifle/weapon-10.png,type:Input,regionName:rifle-10},{path:rifle/weapon-02.png,type:Input,regionName:rifle-02},{path:rifle/weapon-03.png,type:Input,regionName:rifle-03},{path:rifle/weapon-04.png,type:Input,regionName:rifle-04},{path:rifle/weapon-05.png,type:Input,regionName:rifle-05},{path:rifle/weapon-06.png,type:Input,regionName:rifle-06},{path:rifle/weapon-07.png,type:Input,regionName:rifle-07},{path:rifle/weapon-08.png,type:Input,regionName:rifle-08},{path:rifle/weapon-09.png,type:Input,regionName:rifle-09},{path:shotgun/weapon-01.png,type:Input,regionName:shotgun-01},{path:shotgun/weapon-02.png,type:Input,regionName:shotgun-02},{path:shotgun/weapon-03.png,type:Input,regionName:shotgun-03},{path:shotgun/weapon-04.png,type:Input,regionName:shotgun-04},{path:shotgun/weapon-05.png,type:Input,regionName:shotgun-05},{path:shotgun/weapon-06.png,type:Input,regionName:shotgun-06},{path:shotgun/weapon-07.png,type:Input,regionName:shotgun-07},{path:shotgun/weapon-08.png,type:Input,regionName:shotgun-08},{path:shotgun/weapon-09.png,type:Input,regionName:shotgun-09},{path:shotgun/weapon-10.png,type:Input,regionName:shotgun-10}]
+keepInputFileExtensions=false
+
+
 -PROJ-
 
 version=4.10.2
