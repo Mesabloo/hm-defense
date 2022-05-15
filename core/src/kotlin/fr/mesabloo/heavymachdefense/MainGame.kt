@@ -27,7 +27,7 @@ class MainGame : KtxGame<Screen>() {
 
         // Set the current screen to the first stage.
         // TODO: this will be tweaked when creating a menu screen.
-        this.currentScreen = StageScreen(this.batch, 1)
+        this.currentScreen = StageScreen(this.batch,1)
     }
 
     override fun render() {
