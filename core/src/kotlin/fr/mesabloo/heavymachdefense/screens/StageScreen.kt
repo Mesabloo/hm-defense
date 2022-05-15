@@ -36,11 +36,11 @@ class StageScreen(private val batch: SpriteBatch, private val number: Int) : Scr
 
         this.entities.add(engine.entity {
             with<TextureComponent> {
-                texture = AssetsManager.rifleBody01
+                texture = AssetsManager.textureFromAtlasRegion(AssetsManager.machineBodies, "rifle-01")
             }
             with<PositionComponent> {
-                x = 10f
-                y = 20f
+                x = 50f
+                y = 50f
                 z = 10000f
             }
         })

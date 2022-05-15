@@ -18,7 +18,7 @@ sourceSets {
 }
 sourceSets.main.resources {
     srcDirs = ["../core/assets"]
-    excludes = ["reverse", "**/*.md", "**/*.awk", "**/*.sh", "**/*.ps1", "**/.gitignore", "**/.gitattributes", "**/.gitkeep"]
+    excludes = ["reverse", "**/*.md", "**/*.awk", "**/*.sh", "**/*.ps1", "**/.gitignore", "**/.gitattributes", "**/.gitkeep", "**/*.tpproj"]
 }
 
 project.ext.mainClassName = "fr.mesabloo.heavymachdefense.desktop.DesktopLauncherKt"

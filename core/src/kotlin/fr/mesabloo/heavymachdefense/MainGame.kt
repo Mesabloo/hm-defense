@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.Box2D
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.AssetsManager
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.screens.StageScreen
 import fr.mesabloo.heavymachdefense.log.ColoredLogger
 import ktx.app.KtxGame
@@ -20,6 +21,7 @@ class MainGame : KtxGame<Screen>() {
 
         // Initialize Box2D right now
         Box2D.init()
+        AssetsManager.init()
 
         this.batch = SpriteBatch()
 
@@ -43,6 +45,8 @@ class MainGame : KtxGame<Screen>() {
     override fun dispose() {
         if (DEBUG)
             Gdx.app.debug("MainGame", "Quitting application")
+
+        super.dispose()
     }
 
 }

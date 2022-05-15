@@ -70,6 +70,8 @@ project(":core") {
 
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
 
+        implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+
         // LibKTX: port of LibGDX for Kotlin
         api "io.github.libktx:ktx-app:$ktxVersion"
         api "io.github.libktx:ktx-actors:$ktxVersion"

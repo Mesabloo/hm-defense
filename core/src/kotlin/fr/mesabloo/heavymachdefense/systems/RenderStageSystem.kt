@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import fr.mesabloo.heavymachdefense.DEBUG
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.PositionComponent
@@ -13,8 +14,8 @@ import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.Text
 import ktx.ashley.allOf
 import ktx.ashley.get
 
-const val VP_WIDTH = 100f
-const val VP_HEIGHT = 150f
+const val VP_WIDTH = 1000f
+const val VP_HEIGHT = 1500f
 
 class RenderStageSystem(private val batch: SpriteBatch) :
     IteratingSystem(allOf(TextureComponent::class, PositionComponent::class).get()) {
@@ -23,8 +24,8 @@ class RenderStageSystem(private val batch: SpriteBatch) :
     private val camera : Camera
 
     init {
-        // TODO: create a camera
         this.camera = OrthographicCamera(VP_WIDTH, VP_HEIGHT)
+        this.camera.position.set(VP_WIDTH / 2, VP_HEIGHT / 2, 100f)
     }
 
     override fun update(deltaTime: Float) {
@@ -34,8 +35,9 @@ class RenderStageSystem(private val batch: SpriteBatch) :
 
         this.camera.update()
 
-        this.batch.begin()
         this.batch.projectionMatrix = this.camera.combined
+        this.batch.disableBlending()
+        this.batch.begin()
 
         for (e: Entity in renderingQueue) {
             val texture = e[TextureComponent.mapper]!!.texture
