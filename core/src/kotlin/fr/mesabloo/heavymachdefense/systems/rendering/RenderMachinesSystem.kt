@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.BodyComponent
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.PositionComponent
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.RotationComponent
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineSpriteComponent
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.MachAssetsManager
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.machAssetsManager
@@ -15,7 +16,8 @@ import ktx.ashley.get
 class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
     allOf(
         MachineSpriteComponent::class,
-        BodyComponent::class
+        BodyComponent::class,
+        RotationComponent::class
     ).get()
 ) {
     private var renderingQueue: MutableSet<Entity> = mutableSetOf()
@@ -31,16 +33,23 @@ class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
         for (entity in renderingQueue) {
             val bodyComponent = entity[BodyComponent.mapper]!!
             val machineSpriteComponent = entity[MachineSpriteComponent.mapper]!!
+            val rotationComponent = entity[RotationComponent.mapper]!!
 
             val regionName =
                 machAssetsManager.machineTileName(machineSpriteComponent.kind.machineName, machineSpriteComponent.level)
             val bodySprite = Sprite(MachAssetsManager.textureFromAtlasRegion(machAssetsManager.machineBodies, regionName))
 
-            this.batch.draw(
-                bodySprite,
-                bodyComponent.body.position.x,
-                bodyComponent.body.position.y
-            )
+            bodySprite.setOriginCenter()
+            bodySprite.rotate(rotationComponent.angle)
+            bodySprite.setPosition(bodyComponent.body.position.x + bodyComponent.width, bodyComponent.body.position.y + bodyComponent.height / 2)
+
+            bodySprite.draw(this.batch)
+
+//            this.batch.draw(
+//                bodySprite,
+//                bodyComponent.body.position.x + bodyComponent.width,
+//                bodyComponent.body.position.y + bodyComponent.height / 2
+//            )
         }
 
         this.batch.end()

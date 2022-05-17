@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.World
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.BodyComponent
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.RotationComponent
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineComponent
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineKind
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineSpriteComponent
@@ -42,4 +43,7 @@ fun createMachine(engine: Engine, world: World, kind: MachineKind, level: Long):
 //    with<MachineIAComponent> {
 //        this.kind = kind
 //    }
+    with<RotationComponent> {
+        angle = 90f
+    }
 }
