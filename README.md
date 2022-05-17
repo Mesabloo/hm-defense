@@ -35,8 +35,6 @@ Described [here](docs/Gameplay.md).
 - No money will be accepted from this work.
   This is all done on my free time and I do *not* want to earn money from this.
   This repository is (and will always be) free for everybody to use.
-- Official assets will most likely not be redistributed in this repository. 
-  For more information, see [here](./core/assets/README.md).
 
 ## Credits & license
 
