@@ -33,9 +33,7 @@ class UIWorld : Disposable {
         this.camera.update()
         this.batch.projectionMatrix = this.camera.combined
 
-        this.batch.begin()
         this.engine.update(deltaTime)
-        this.batch.end()
     }
 
     override fun dispose() {

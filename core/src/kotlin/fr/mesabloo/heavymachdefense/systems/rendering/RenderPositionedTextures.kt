@@ -23,6 +23,8 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
         val renderingQueue = this.renderingQueue.toMutableList()
         renderingQueue.sortWith { o1, o2 -> o1[PositionComponent.mapper]!!.z.compareTo(o2[PositionComponent.mapper]!!.z) }
 
+        this.batch.begin()
+
         for (entity in renderingQueue) {
             val positionComponent = entity[PositionComponent.mapper]!!
             val textureComponent = entity[TextureComponent.mapper]!!
@@ -36,6 +38,8 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
                 positionComponent.y
             )
         }
+
+        this.batch.end()
     }
 
     override fun processEntity(entity: Entity?, deltaTime: Float) {

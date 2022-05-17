@@ -25,6 +25,8 @@ class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
         val renderingQueue = this.renderingQueue.toMutableList()
         renderingQueue.sortWith { o1, o2 -> o1[PositionComponent.mapper]!!.z.compareTo(o2[PositionComponent.mapper]!!.z) }
 
+        this.batch.begin()
+
         for (entity in renderingQueue) {
             val bodyComponent = entity[BodyComponent.mapper]!!
             val machineSpriteComponent = entity[MachineSpriteComponent.mapper]!!
@@ -39,6 +41,8 @@ class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
                 bodyComponent.body.position.y
             )
         }
+
+        this.batch.end()
     }
 
     override fun processEntity(entity: Entity?, deltaTime: Float) {
