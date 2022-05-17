@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.BodyComponent
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.PositionComponent
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineSpriteComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.AssetsManager
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.MachAssetsManager
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.machAssetsManager
 import ktx.ashley.allOf
 import ktx.ashley.get
 
@@ -32,8 +33,8 @@ class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
             val machineSpriteComponent = entity[MachineSpriteComponent.mapper]!!
 
             val regionName =
-                AssetsManager.machineTileName(machineSpriteComponent.kind.machineName, machineSpriteComponent.level)
-            val bodySprite = Sprite(AssetsManager.textureFromAtlasRegion(AssetsManager.machineBodies, regionName))
+                machAssetsManager.machineTileName(machineSpriteComponent.kind.machineName, machineSpriteComponent.level)
+            val bodySprite = Sprite(MachAssetsManager.textureFromAtlasRegion(machAssetsManager.machineBodies, regionName))
 
             this.batch.draw(
                 bodySprite,

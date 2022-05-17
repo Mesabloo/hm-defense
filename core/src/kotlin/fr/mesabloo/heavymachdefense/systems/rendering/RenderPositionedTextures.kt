@@ -35,7 +35,9 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
             this.batch.draw(
                 sprite,
                 positionComponent.x,
-                positionComponent.y
+                positionComponent.y,
+                textureComponent.width,
+                textureComponent.height
             )
         }
 
