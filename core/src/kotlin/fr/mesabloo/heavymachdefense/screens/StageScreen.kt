@@ -1,92 +1,81 @@
 package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.screens
 
-import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.PooledEngine
-import com.badlogic.gdx.Screen
-import com.badlogic.gdx.graphics.Camera
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.ashley.signals.Signal
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.InputMultiplexer
 import fr.mesabloo.heavymachdefense.DEBUG
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineKind
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.createBackground
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.createCamera
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.createMachine
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.AssetsManager
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.UpdatePositionFromBodySystem
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.ui.createGameUI
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.MouseInputEvent
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.camera.MoveCameraSystem
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.rendering.RenderMachinesSystem
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.rendering.debug.DebugWorldSystem
-import ktx.box2d.createWorld
-
-const val VP_WIDTH = 512f
-const val VP_HEIGHT = 1024f // the game screen is actually twice as high, but we only show half of it
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.world.GameWorld
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.world.UIWorld
 
 /**
  * This is the base class for the main game.
  * This is where the game is played (spawning machines, etc.).
  */
-class StageScreen(private val batch: SpriteBatch, private val number: Int) : Screen {
+class StageScreen(private val number: Int) : AbstractScreen() {
     /**
      * The Box2D world in which physics take place.
      * We do not have any gravity (in fact, the gravity should be pushing perpendicular to both X and Y axes).
      */
-    private val world = createWorld()
-
-    // TODO: make camera a component with a system `CameraSystem`
-    private val camera: Camera = OrthographicCamera(VP_WIDTH, VP_HEIGHT)
+    private val world = GameWorld()
+    private val ui = UIWorld()
 
     /////////////////// INTERNAL ///////////////////////
 
-    private val engine = PooledEngine()
-
-    private val entities = mutableListOf<Entity>()
+    private val mouseInputSignal = Signal<MouseInputEvent>()
 
     init {
-        this.camera.position.set(VP_WIDTH / 2, VP_HEIGHT / 2, 0f)
-        this.camera.update()
-
-        //engine.addSystem(MoveMachineSystem())
-        this.engine.addSystem(RenderMachinesSystem(this.batch))
-        this.engine.addSystem(UpdatePositionFromBodySystem())
+        world.engine.addSystem(MouseInputSystem(mouseInputSignal))
+        world.engine.addSystem(MoveCameraSystem())
+        ///// RENDERING
+        world.engine.addSystem(RenderMachinesSystem(world.batch))
+        world.engine.addSystem(RenderPositionedTextures(world.batch))
         if (DEBUG)
-            this.engine.addSystem(DebugWorldSystem(this.world, this.camera))
+            world.engine.addSystem(DebugWorldSystem(world.world, world.camera))
 
-        this.entities.add(createMachine(this.engine, this.world, MachineKind.RIFLE, 1))
+        createCamera(world.engine, world.camera)
+        createMachine(world.engine, world.world, MachineKind.RIFLE, 1)
+        createBackground(world.engine, this.number)
+
+        //////////////////////////
+
+        ui.engine.addSystem(RenderPositionedTextures(ui.batch))
+        createGameUI(ui.engine)
     }
 
     override fun show() {
+        super.show()
 
+        val inputMux = InputMultiplexer()
+        inputMux.addProcessor(MouseInputProcessor(this.mouseInputSignal))
+
+        Gdx.input.inputProcessor = inputMux
     }
 
-    @Suppress("NAME_SHADOWING")
-    override fun render(deltaTime: Float) {
-        val deltaTime = if (deltaTime > 0.1f) 0.1f else deltaTime
-
-        this.camera.update()
-        this.batch.projectionMatrix = this.camera.combined
-
-        this.batch.begin()
-        this.batch.draw(AssetsManager.background(this.number, 1), 0f, 0f)
-        this.batch.draw(AssetsManager.background(this.number, 2), 0f, 1024f)
-
-        this.engine.update(deltaTime)
-        this.batch.end()
+    override fun render(delta: Float) {
+        this.world.render(delta)
+        this.ui.render(delta)
     }
 
     override fun resize(width: Int, height: Int) {
-        this.camera.update()
-    }
-
-    override fun pause() {
-
-    }
-
-    override fun resume() {
-
-    }
-
-    override fun hide() {
-
+        this.world.resize(width, height)
+        this.ui.resize(width, height)
     }
 
     override fun dispose() {
-        this.engine.clearPools()
+        super.dispose()
+
+        this.world.dispose()
     }
 }

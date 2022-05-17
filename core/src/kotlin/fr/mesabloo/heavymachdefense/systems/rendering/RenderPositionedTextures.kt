@@ -4,17 +4,15 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.BodyComponent
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.PositionComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineSpriteComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.AssetsManager
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.TextureComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
 
-class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
+class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem(
     allOf(
-        MachineSpriteComponent::class,
-        BodyComponent::class
+        TextureComponent::class,
+        PositionComponent::class
     ).get()
 ) {
     private var renderingQueue: MutableSet<Entity> = mutableSetOf()
@@ -26,17 +24,16 @@ class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
         renderingQueue.sortWith { o1, o2 -> o1[PositionComponent.mapper]!!.z.compareTo(o2[PositionComponent.mapper]!!.z) }
 
         for (entity in renderingQueue) {
-            val bodyComponent = entity[BodyComponent.mapper]!!
-            val machineSpriteComponent = entity[MachineSpriteComponent.mapper]!!
+            val positionComponent = entity[PositionComponent.mapper]!!
+            val textureComponent = entity[TextureComponent.mapper]!!
 
-            val regionName =
-                AssetsManager.machineTileName(machineSpriteComponent.kind.machineName, machineSpriteComponent.level)
-            val bodySprite = Sprite(AssetsManager.textureFromAtlasRegion(AssetsManager.machineBodies, regionName))
+            val texture = textureComponent.texture!!
+            val sprite = Sprite(texture)
 
             this.batch.draw(
-                bodySprite,
-                bodyComponent.body.position.x,
-                bodyComponent.body.position.y
+                sprite,
+                positionComponent.x,
+                positionComponent.y
             )
         }
     }
