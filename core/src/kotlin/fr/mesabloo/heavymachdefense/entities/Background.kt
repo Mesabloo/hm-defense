@@ -15,7 +15,7 @@ fun createBackground(engine: Engine, lvl: Int): Collection<Entity> = listOf(
             texture = TextureRegion(AssetsManager.background(lvl, 1))
         }
         with<PositionComponent> {
-            x = 128f
+            x = 0f
             y = 0f
             z = 0f
         }
@@ -25,7 +25,7 @@ fun createBackground(engine: Engine, lvl: Int): Collection<Entity> = listOf(
             texture = TextureRegion(AssetsManager.background(lvl, 2))
         }
         with<PositionComponent> {
-            x = 128f
+            x = 0f
             y = 1024f
             z = 0f
         }

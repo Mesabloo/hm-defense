@@ -39,8 +39,8 @@ class StageScreen(private val number: Int) : AbstractScreen() {
         world.engine.addSystem(MouseInputSystem(mouseInputSignal))
         world.engine.addSystem(MoveCameraSystem())
         ///// RENDERING
-        world.engine.addSystem(RenderMachinesSystem(world.batch))
         world.engine.addSystem(RenderPositionedTextures(world.batch))
+        world.engine.addSystem(RenderMachinesSystem(world.batch))
         if (DEBUG)
             world.engine.addSystem(DebugWorldSystem(world.world, world.camera))
 
