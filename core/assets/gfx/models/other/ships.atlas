@@ -1,0 +1,20 @@
+
+ships.png
+size: 139, 46
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+body-01
+  rotate: false
+  xy: 2, 2
+  size: 101, 42
+  orig: 101, 42
+  offset: 0, 0
+  index: -1
+weapon-01
+  rotate: false
+  xy: 105, 27
+  size: 32, 17
+  orig: 32, 17
+  offset: 0, 0
+  index: -1

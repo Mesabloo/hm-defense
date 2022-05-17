@@ -1,0 +1,83 @@
+
+enemy-bullet.png
+size: 128, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+00
+  rotate: false
+  xy: 2, 38
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+01
+  rotate: false
+  xy: 36, 20
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+02
+  rotate: false
+  xy: 2, 20
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+03
+  rotate: false
+  xy: 2, 56
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+04
+  rotate: false
+  xy: 70, 56
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+05
+  rotate: false
+  xy: 36, 56
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+06
+  rotate: false
+  xy: 2, 74
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+07
+  rotate: false
+  xy: 36, 38
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+08
+  rotate: false
+  xy: 36, 74
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+09
+  rotate: false
+  xy: 2, 2
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+10
+  rotate: false
+  xy: 70, 74
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1

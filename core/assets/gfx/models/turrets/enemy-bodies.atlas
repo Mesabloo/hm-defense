@@ -1,0 +1,146 @@
+
+enemy-bodies.png
+size: 512, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+01
+  rotate: false
+  xy: 467, 215
+  size: 39, 39
+  orig: 39, 39
+  offset: 0, 0
+  index: -1
+02
+  rotate: false
+  xy: 437, 73
+  size: 46, 33
+  orig: 46, 33
+  offset: 0, 0
+  index: -1
+03
+  rotate: false
+  xy: 163, 4
+  size: 46, 33
+  orig: 46, 33
+  offset: 0, 0
+  index: -1
+04
+  rotate: false
+  xy: 115, 2
+  size: 46, 35
+  orig: 46, 35
+  offset: 0, 0
+  index: -1
+05
+  rotate: false
+  xy: 437, 40
+  size: 31, 31
+  orig: 31, 31
+  offset: 0, 0
+  index: -1
+06
+  rotate: false
+  xy: 467, 174
+  size: 32, 39
+  orig: 32, 39
+  offset: 0, 0
+  index: -1
+07
+  rotate: false
+  xy: 467, 174
+  size: 32, 39
+  orig: 32, 39
+  offset: 0, 0
+  index: -1
+08
+  rotate: false
+  xy: 436, 108
+  size: 51, 37
+  orig: 51, 37
+  offset: 0, 0
+  index: -1
+09
+  rotate: false
+  xy: 387, 52
+  size: 48, 41
+  orig: 48, 41
+  offset: 0, 0
+  index: -1
+10
+  rotate: false
+  xy: 328, 32
+  size: 57, 49
+  orig: 57, 49
+  offset: 0, 0
+  index: -1
+11
+  rotate: false
+  xy: 377, 95
+  size: 57, 50
+  orig: 57, 50
+  offset: 0, 0
+  index: -1
+12
+  rotate: false
+  xy: 328, 83
+  size: 47, 62
+  orig: 47, 62
+  offset: 0, 0
+  index: -1
+13
+  rotate: false
+  xy: 229, 33
+  size: 97, 113
+  orig: 97, 113
+  offset: 0, 0
+  index: -1
+14
+  rotate: false
+  xy: 116, 39
+  size: 111, 107
+  orig: 111, 107
+  offset: 0, 0
+  index: -1
+15
+  rotate: false
+  xy: 234, 151
+  size: 118, 103
+  orig: 118, 103
+  offset: 0, 0
+  index: -1
+16
+  rotate: false
+  xy: 354, 147
+  size: 111, 107
+  orig: 111, 107
+  offset: 0, 0
+  index: -1
+17
+  rotate: false
+  xy: 116, 148
+  size: 116, 106
+  orig: 116, 106
+  offset: 0, 0
+  index: -1
+18
+  rotate: false
+  xy: 2, 140
+  size: 112, 114
+  orig: 112, 114
+  offset: 0, 0
+  index: -1
+19
+  rotate: false
+  xy: 2, 31
+  size: 111, 107
+  orig: 111, 107
+  offset: 0, 0
+  index: -1
+20
+  rotate: false
+  xy: 2, 31
+  size: 111, 107
+  orig: 111, 107
+  offset: 0, 0
+  index: -1

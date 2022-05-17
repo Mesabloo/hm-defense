@@ -1,0 +1,167 @@
+
+enemy-weapons.png
+size: 512, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+01
+  rotate: false
+  xy: 174, 2
+  size: 38, 15
+  orig: 38, 15
+  offset: 0, 0
+  index: -1
+02
+  rotate: false
+  xy: 313, 30
+  size: 36, 17
+  orig: 36, 17
+  offset: 0, 0
+  index: -1
+03
+  rotate: false
+  xy: 354, 54
+  size: 37, 17
+  orig: 37, 17
+  offset: 0, 0
+  index: -1
+04
+  rotate: false
+  xy: 134, 3
+  size: 38, 15
+  orig: 38, 15
+  offset: 0, 0
+  index: -1
+05
+  rotate: false
+  xy: 178, 19
+  size: 45, 30
+  orig: 45, 30
+  offset: 0, 0
+  index: -1
+06
+  rotate: false
+  xy: 454, 63
+  size: 45, 28
+  orig: 45, 28
+  offset: 0, 0
+  index: -1
+07
+  rotate: false
+  xy: 454, 93
+  size: 52, 33
+  orig: 52, 33
+  offset: 0, 0
+  index: -1
+08
+  rotate: false
+  xy: 393, 52
+  size: 49, 33
+  orig: 49, 33
+  offset: 0, 0
+  index: -1
+09
+  rotate: false
+  xy: 312, 49
+  size: 40, 22
+  orig: 40, 22
+  offset: 0, 0
+  index: -1
+10
+  rotate: false
+  xy: 393, 87
+  size: 59, 39
+  orig: 59, 39
+  offset: 0, 0
+  index: -1
+11
+  rotate: false
+  xy: 225, 17
+  size: 41, 32
+  orig: 41, 32
+  offset: 0, 0
+  index: -1
+12
+  rotate: false
+  xy: 99, 2
+  size: 33, 16
+  orig: 33, 16
+  offset: 0, 0
+  index: -1
+13-01
+  rotate: false
+  xy: 268, 8
+  size: 43, 27
+  orig: 43, 27
+  offset: 0, 0
+  index: -1
+13-02
+  rotate: false
+  xy: 195, 51
+  size: 58, 32
+  orig: 58, 32
+  offset: 0, 0
+  index: -1
+14
+  rotate: false
+  xy: 195, 85
+  size: 77, 41
+  orig: 77, 41
+  offset: 0, 0
+  index: -1
+15
+  rotate: false
+  xy: 99, 63
+  size: 94, 63
+  orig: 94, 63
+  offset: 0, 0
+  index: -1
+16
+  rotate: false
+  xy: 99, 20
+  size: 77, 41
+  orig: 77, 41
+  offset: 0, 0
+  index: -1
+17-01
+  rotate: false
+  xy: 334, 73
+  size: 57, 53
+  orig: 57, 53
+  offset: 0, 0
+  index: -1
+17-02
+  rotate: false
+  xy: 313, 9
+  size: 26, 19
+  orig: 26, 19
+  offset: 0, 0
+  index: -1
+18-01
+  rotate: false
+  xy: 268, 37
+  size: 42, 37
+  orig: 42, 37
+  offset: 0, 0
+  index: -1
+18-02
+  rotate: false
+  xy: 274, 76
+  size: 58, 50
+  orig: 58, 50
+  offset: 0, 0
+  index: -1
+19
+  rotate: false
+  xy: 2, 10
+  size: 95, 41
+  orig: 95, 41
+  offset: 0, 0
+  index: -1
+20
+  rotate: false
+  xy: 2, 53
+  size: 95, 73
+  orig: 95, 73
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,62 @@
+
+enemy-planes.png
+size: 180, 263
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+body-01
+  rotate: false
+  xy: 104, 119
+  size: 48, 70
+  orig: 48, 70
+  offset: 0, 0
+  index: -1
+body-02
+  rotate: false
+  xy: 104, 191
+  size: 60, 70
+  orig: 60, 70
+  offset: 0, 0
+  index: -1
+body-03
+  rotate: false
+  xy: 2, 146
+  size: 100, 115
+  orig: 100, 115
+  offset: 0, 0
+  index: -1
+body-04
+  rotate: false
+  xy: 2, 36
+  size: 92, 108
+  orig: 92, 108
+  offset: 0, 0
+  index: -1
+body-05
+  rotate: false
+  xy: 96, 2
+  size: 81, 115
+  orig: 81, 115
+  offset: 0, 0
+  index: -1
+prop-04
+  rotate: false
+  xy: 2, 5
+  size: 30, 29
+  orig: 30, 29
+  offset: 0, 0
+  index: -1
+prop-05
+  rotate: false
+  xy: 154, 165
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+weapon-05
+  rotate: false
+  xy: 154, 150
+  size: 13, 13
+  orig: 13, 13
+  offset: 0, 0
+  index: -1

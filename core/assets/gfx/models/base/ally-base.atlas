@@ -1,0 +1,153 @@
+
+ally-base.png
+size: 512, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+base-01
+  rotate: false
+  xy: 132, 111
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+base-02
+  rotate: false
+  xy: 2, 111
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+base-03
+  rotate: false
+  xy: 2, 369
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+base-04
+  rotate: false
+  xy: 262, 627
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+base-05
+  rotate: false
+  xy: 132, 627
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+base-06
+  rotate: false
+  xy: 2, 627
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+base-07
+  rotate: false
+  xy: 132, 369
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+radar-01
+  rotate: false
+  xy: 460, 843
+  size: 37, 14
+  orig: 37, 14
+  offset: 0, 0
+  index: -1
+radar-02
+  rotate: false
+  xy: 75, 72
+  size: 37, 12
+  orig: 37, 12
+  offset: 0, 0
+  index: -1
+radar-03
+  rotate: false
+  xy: 128, 86
+  size: 45, 23
+  orig: 45, 23
+  offset: 0, 0
+  index: -1
+radar-04
+  rotate: false
+  xy: 2, 2
+  size: 45, 23
+  orig: 45, 23
+  offset: 0, 0
+  index: -1
+radar-05
+  rotate: false
+  xy: 262, 555
+  size: 46, 23
+  orig: 46, 23
+  offset: 0, 0
+  index: -1
+radar-06
+  rotate: false
+  xy: 392, 813
+  size: 46, 23
+  orig: 46, 23
+  offset: 0, 0
+  index: -1
+radar-07
+  rotate: false
+  xy: 332, 602
+  size: 46, 23
+  orig: 46, 23
+  offset: 0, 0
+  index: -1
+weapon-01
+  rotate: false
+  xy: 262, 531
+  size: 45, 22
+  orig: 45, 22
+  offset: 0, 0
+  index: -1
+weapon-02
+  rotate: false
+  xy: 460, 859
+  size: 50, 24
+  orig: 50, 24
+  offset: 0, 0
+  index: -1
+weapon-03
+  rotate: false
+  xy: 75, 86
+  size: 51, 23
+  orig: 51, 23
+  offset: 0, 0
+  index: -1
+weapon-04
+  rotate: false
+  xy: 2, 27
+  size: 65, 35
+  orig: 65, 35
+  offset: 0, 0
+  index: -1
+weapon-05
+  rotate: false
+  xy: 2, 64
+  size: 71, 45
+  orig: 71, 45
+  offset: 0, 0
+  index: -1
+weapon-06
+  rotate: false
+  xy: 392, 838
+  size: 66, 45
+  orig: 66, 45
+  offset: 0, 0
+  index: -1
+weapon-07
+  rotate: false
+  xy: 262, 580
+  size: 68, 45
+  orig: 68, 45
+  offset: 0, 0
+  index: -1

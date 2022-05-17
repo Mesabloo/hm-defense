@@ -1,0 +1,20 @@
+
+enemy-base.png
+size: 512, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+base-01
+  rotate: false
+  xy: 2, 20
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+radar-01
+  rotate: false
+  xy: 2, 2
+  size: 43, 16
+  orig: 43, 16
+  offset: 0, 0
+  index: -1
