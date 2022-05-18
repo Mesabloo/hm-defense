@@ -1,15 +1,13 @@
 package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.world
 
 import com.badlogic.ashley.core.PooledEngine
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.Box2DWorldComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.Box2DWorldUpdater
-import ktx.ashley.entity
-import ktx.ashley.with
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.BG_BORDER
 import ktx.box2d.createWorld
 
 const val WORLD_WIDTH = 512f
@@ -26,15 +24,31 @@ class GameWorld : Disposable {
     val engine = PooledEngine()
 
     init {
-        this.world.setContinuousPhysics(true)
-
         this.camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0f)
         this.camera.update()
 
-        this.engine.entity { with<Box2DWorldComponent> {} }
-        this.engine.addSystem(Box2DWorldUpdater(this.world))
+        this.world.setContactListener(object: ContactListener {
+            override fun beginContact(p0: Contact) {
+                val bodyA = p0.fixtureA
+                val bodyB = p0.fixtureB
 
-        //this.world.setContactListener()
+                if (bodyA.userData == BG_BORDER || bodyB.userData == BG_BORDER) {
+                    Gdx.app.debug(this.javaClass.simpleName, "Contact with border detected")
+                }
+            }
+
+            override fun endContact(p0: Contact?) {
+
+            }
+
+            override fun preSolve(p0: Contact?, p1: Manifold?) {
+
+            }
+
+            override fun postSolve(p0: Contact?, p1: ContactImpulse?) {
+
+            }
+        })
     }
 
     fun resize(width: Int, height: Int) {
@@ -48,6 +62,7 @@ class GameWorld : Disposable {
         this.camera.update()
         this.batch.projectionMatrix = this.camera.combined
 
+        this.world.step(deltaTime, 2, 5)
         this.engine.update(deltaTime)
     }
 

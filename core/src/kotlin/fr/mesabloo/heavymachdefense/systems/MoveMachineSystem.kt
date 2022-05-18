@@ -18,7 +18,7 @@ class MoveMachineSystem : IteratingSystem(
             // For now, constant low velocity towards the right
 
             //machineComponent.body.setTransform(0f, 0f, 90f * MathUtils.degreesToRadians)
-            machineComponent.body.setLinearVelocity(2f, 0f)
+            machineComponent.body.setLinearVelocity(4f, 0f)
         }
     }
 }

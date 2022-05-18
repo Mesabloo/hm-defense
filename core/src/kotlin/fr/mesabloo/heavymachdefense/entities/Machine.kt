@@ -44,7 +44,7 @@ fun createMachine(engine: Engine, world: World, kind: MachineKind, level: Long):
             friction = 0f
             userData = MachinePart.RIGHT_WEAPON
         }
-        position.set((0f + 32f / 2f) / PPM, (16f + 32f / 2f) / PPM)
+        position.set((16f + 32f / 2f) / PPM, (16f + 32f / 2f) / PPM)
     }
 
     with<MachineComponent> {
