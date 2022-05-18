@@ -2,12 +2,10 @@ package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.physics.box2d.Body
-import com.badlogic.gdx.physics.box2d.World
 import ktx.ashley.Mapper
 import kotlin.properties.Delegates
 
 class BodyComponent : Component {
-    lateinit var world: World
     lateinit var body: Body
     var width by Delegates.notNull<Float>()
     var height by Delegates.notNull<Float>()

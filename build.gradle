@@ -82,6 +82,7 @@ project(":core") {
         api "io.github.libktx:ktx-collections:$ktxVersion"
         api "io.github.libktx:ktx-freetype-async:$ktxVersion"
         api "io.github.libktx:ktx-graphics:$ktxVersion"
+        api "io.github.libktx:ktx-json:$ktxVersion"
         api "io.github.libktx:ktx-log:$ktxVersion"
         api "io.github.libktx:ktx-math:$ktxVersion"
         api "io.github.libktx:ktx-scene2d:$ktxVersion"

@@ -31,6 +31,7 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
 
             val texture = textureComponent.texture!!
             val sprite = Sprite(texture)
+            sprite.setOriginCenter()
 
             this.batch.draw(
                 sprite,

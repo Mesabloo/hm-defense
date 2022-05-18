@@ -10,6 +10,7 @@ import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.create
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.createMachine
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.ui.createGameUI
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.MouseInputEvent
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.MoveMachineSystem
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.camera.MoveCameraSystem
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
@@ -36,6 +37,7 @@ class StageScreen(private val number: Int) : AbstractScreen() {
     private val mouseInputSignal = Signal<MouseInputEvent>()
 
     init {
+        world.engine.addSystem(MoveMachineSystem())
         world.engine.addSystem(MouseInputSystem(mouseInputSignal))
         world.engine.addSystem(MoveCameraSystem())
         ///// RENDERING
@@ -46,7 +48,7 @@ class StageScreen(private val number: Int) : AbstractScreen() {
 
         createCamera(world.engine, world.camera)
         createMachine(world.engine, world.world, MachineKind.RIFLE, 1)
-        createBackground(world.engine, this.number)
+        createBackground(world.engine, this.number, world.world)
 
         //////////////////////////
 
@@ -74,8 +76,9 @@ class StageScreen(private val number: Int) : AbstractScreen() {
     }
 
     override fun dispose() {
-        super.dispose()
-
         this.world.dispose()
+        this.ui.dispose()
+
+        super.dispose()
     }
 }

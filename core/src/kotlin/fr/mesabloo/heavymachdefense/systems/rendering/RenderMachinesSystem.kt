@@ -4,10 +4,11 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.BodyComponent
+import com.badlogic.gdx.physics.box2d.Transform
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.MachinePart
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.PPM
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.PositionComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.RotationComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineSpriteComponent
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineComponent
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.MachAssetsManager
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.machAssetsManager
 import ktx.ashley.allOf
@@ -15,9 +16,7 @@ import ktx.ashley.get
 
 class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
     allOf(
-        MachineSpriteComponent::class,
-        BodyComponent::class,
-        RotationComponent::class
+        MachineComponent::class
     ).get()
 ) {
     private var renderingQueue: MutableSet<Entity> = mutableSetOf()
@@ -31,25 +30,50 @@ class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
         this.batch.begin()
 
         for (entity in renderingQueue) {
-            val bodyComponent = entity[BodyComponent.mapper]!!
-            val machineSpriteComponent = entity[MachineSpriteComponent.mapper]!!
-            val rotationComponent = entity[RotationComponent.mapper]!!
+            val bodyComponent = entity[MachineComponent.mapper]!!
 
             val regionName =
-                machAssetsManager.machineTileName(machineSpriteComponent.kind.machineName, machineSpriteComponent.level)
-            val bodySprite = Sprite(MachAssetsManager.textureFromAtlasRegion(machAssetsManager.machineBodies, regionName))
+                machAssetsManager.machineTileName(bodyComponent.kind.machineName, bodyComponent.level)
 
-            bodySprite.setOriginCenter()
-            bodySprite.rotate(rotationComponent.angle)
-            bodySprite.setPosition(bodyComponent.body.position.x + bodyComponent.width, bodyComponent.body.position.y + bodyComponent.height / 2)
+            val bodyCenter = bodyComponent.body.position
 
-            bodySprite.draw(this.batch)
+            for (f in bodyComponent.body.fixtureList) {
+                val transform: Transform = f.body.transform
 
-//            this.batch.draw(
-//                bodySprite,
-//                bodyComponent.body.position.x + bodyComponent.width,
-//                bodyComponent.body.position.y + bodyComponent.height / 2
-//            )
+                when (f.userData) {
+                    MachinePart.BODY -> {
+                        val bodySprite =
+                            Sprite(MachAssetsManager.textureFromAtlasRegion(machAssetsManager.machineBodies, regionName))
+                        bodySprite.setOriginCenter()
+                        bodySprite.setPosition(bodyCenter.x * PPM, bodyCenter.y * PPM)
+                        bodySprite.draw(this.batch)
+                    }
+                    MachinePart.LEFT_WEAPON -> {
+//                        val weaponSprite =
+//                            Sprite(MachAssetsManager.textureFromAtlasRegion(machAssetsManager.machineWeapons, regionName))
+//                        weaponSprite.setOriginCenter()
+//
+//                        var pos: Vector2 = vec2(1f, 1f)
+//                        (f.shape as PolygonShape).getVertex(0, pos)
+//                        pos = transform.mul(pos)
+//
+//                        weaponSprite.setPosition(pos.x * PPM, pos.y * PPM)
+//                        weaponSprite.draw(this.batch)
+                    }
+                    MachinePart.RIGHT_WEAPON -> {
+//                        val weaponSprite =
+//                            Sprite(MachAssetsManager.textureFromAtlasRegion(machAssetsManager.machineWeapons, regionName))
+//                        weaponSprite.setOriginCenter()
+//
+//                        var pos: Vector2 = vec2(1f, 1f)
+//                        (f.shape as PolygonShape).getVertex(0, pos)
+//                        pos = transform.mul(pos)
+//
+//                        weaponSprite.setPosition(pos.x * PPM, pos.y * PPM)
+//                        weaponSprite.draw(this.batch)
+                    }
+                }
+            }
         }
 
         this.batch.end()
