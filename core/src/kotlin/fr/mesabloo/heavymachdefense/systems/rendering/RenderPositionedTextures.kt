@@ -20,8 +20,7 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
     override fun update(deltaTime: Float) {
         super.update(deltaTime)
 
-        val renderingQueue = this.renderingQueue.toMutableList()
-        renderingQueue.sortWith { o1, o2 -> o1[PositionComponent.mapper]!!.z.compareTo(o2[PositionComponent.mapper]!!.z) }
+        val renderingQueue = this.renderingQueue.toMutableList().sortedBy { e -> e[PositionComponent.mapper]!!.z }
 
         this.batch.begin()
 
