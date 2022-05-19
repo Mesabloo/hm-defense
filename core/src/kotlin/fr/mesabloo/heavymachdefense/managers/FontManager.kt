@@ -2,7 +2,6 @@ package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.utils.Disposable
 
 class FontManager : Disposable {
@@ -12,22 +11,14 @@ class FontManager : Disposable {
         const val MINERAL: String = "mineral"
         const val STAGE: String = "stage"
 
-        const val TREBUCHET_MS: String = "trebuc"
-        const val TREBUCHET_MS_BOLD: String = "trebucbd"
+        const val TREBUCHET_MS: String = "trebuchet_ms"
+        const val TREBUCHET_MS_BOLD: String = "trebuchet_ms_bd"
     }
 
     fun init() {
-        listOf(CREDITS, LEVEL, MINERAL, STAGE)
+        listOf(CREDITS, LEVEL, MINERAL, STAGE, TREBUCHET_MS, TREBUCHET_MS_BOLD)
             .forEach { fontName ->
                 this.bitmapFonts[fontName] = BitmapFont(Gdx.files.internal("fonts/${fontName}.fnt"))
-            }
-        listOf(TREBUCHET_MS, TREBUCHET_MS_BOLD)
-            .forEach { fontName ->
-                val generator = FreeTypeFontGenerator(Gdx.files.internal("fonts/${fontName}.ttf"))
-                val parameters = FreeTypeFontGenerator.FreeTypeFontParameter()
-                parameters.size = 12
-
-                this.bitmapFonts[fontName] = generator.generateFont(parameters)
             }
     }
 

@@ -1,5 +1,3 @@
-import org.codehaus.groovy.runtime.GStringImpl
-
 buildscript {
     repositories {
         mavenLocal()
@@ -25,15 +23,14 @@ allprojects {
     version = '1.0'
     ext {
         appName = "hm-defense"
-        gdxVersion = '1.10.0'
+        gdxVersion = '1.11.0'
         roboVMVersion = '2.3.12'
         box2DLightsVersion = '1.5'
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
         ashleyVersion = '1.7.4'
-
-        ktxVersion = "$gdxVersion-rc2" as GStringImpl
+        ktxVersion = '1.10.0-rc2'
     }
 
     tasks.withType(Jar).all {
@@ -58,7 +55,6 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
 }
 
@@ -68,20 +64,15 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-
-        implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
 
         // LibKTX: port of LibGDX for Kotlin
         api "io.github.libktx:ktx-app:$ktxVersion"
         api "io.github.libktx:ktx-actors:$ktxVersion"
         api "io.github.libktx:ktx-ashley:$ktxVersion"
         api "io.github.libktx:ktx-assets:$ktxVersion"
-        api "io.github.libktx:ktx-async:$ktxVersion"
         api "io.github.libktx:ktx-box2d:$ktxVersion"
         api "io.github.libktx:ktx-collections:$ktxVersion"
-        api "io.github.libktx:ktx-freetype:$ktxVersion"
         api "io.github.libktx:ktx-graphics:$ktxVersion"
         api "io.github.libktx:ktx-json:$ktxVersion"
         api "io.github.libktx:ktx-log:$ktxVersion"
