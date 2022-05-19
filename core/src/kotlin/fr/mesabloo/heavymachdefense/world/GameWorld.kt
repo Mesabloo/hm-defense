@@ -62,8 +62,8 @@ class GameWorld : Disposable {
         this.camera.update()
         this.batch.projectionMatrix = this.camera.combined
 
-        this.world.step(deltaTime, 6, 2)
         this.engine.update(deltaTime)
+        this.world.step(1 / 60f, 6, 2)
     }
 
     override fun dispose() {

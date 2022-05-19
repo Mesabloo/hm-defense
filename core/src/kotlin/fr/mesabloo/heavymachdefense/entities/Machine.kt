@@ -45,13 +45,17 @@ fun createMachine(engine: Engine, world: World, kind: MachineKind, level: Long):
 //        }
 //        position.set((x + 32f / 2f) / PPM, (y + 32f / 2f) / PPM)
 //    }
-    val mainBody = MachineModel("rifle", 1).toPositionedBody(world, vec2(x, y))
+    val (bodies, joints) = MachineModel("rifle", 1).toPositionedBody(world, vec2(x, y))
 
     with<MachineComponent> {
         this.kind = kind
         this.level = level
 
-        this.body = mainBody
+        this.mainBody = bodies[0]
+        this.lWeaponBody = bodies[1]
+        this.rWeaponBody = bodies[2]
+
+        this.joints = joints
     }
 //    with<MachineMovementComponent> {
 //

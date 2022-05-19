@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
+import com.badlogic.gdx.physics.box2d.Joint
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.JsonReader
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.MachinePart
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.PPM
 import ktx.box2d.body
 import ktx.box2d.box
+import ktx.box2d.weldJointWith
 import ktx.math.vec2
 
 class MachineModel(name: String, level: Int) {
@@ -56,53 +58,73 @@ class MachineModel(name: String, level: Int) {
         // TODO: feet
     }
 
-    fun toPositionedBody(world: World, pos: Vector2): Body =
-        world.body {
-            type = BodyDef.BodyType.KinematicBody
-            // main body
-            box(
-                width = this@MachineModel.bodySize.first / PPM,
-                height = this@MachineModel.bodySize.second / PPM
-            ) {
-                density = 10f
-                restitution = 0f
-                friction = 1f
+    fun toPositionedBody(world: World, pos: Vector2): Pair<List<Body>, List<Joint>> {
+        val center = vec2(
+            (pos.x + this@MachineModel.bodySize.first / 2f) / PPM,
+            (pos.y + this@MachineModel.bodySize.second / 2f) / PPM
+        )
+
+        val bodies = listOf(
+            world.body {
+                type = BodyDef.BodyType.KinematicBody
+                box(
+                    width = this@MachineModel.bodySize.first / PPM,
+                    height = this@MachineModel.bodySize.second / PPM
+                ) {
+                    density = 10f
+                    restitution = 0f
+                    friction = 1f
+                    isSensor = false
+                }
                 userData = MachinePart.BODY
-                isSensor = false
-            }
-            // left weapon
-            box(
-                width = this@MachineModel.leftWeaponSize.first / PPM,
-                height = this@MachineModel.leftWeaponSize.second / PPM,
-                position = vec2(
-                    this@MachineModel.leftWeaponOffset.first / PPM,
-                    this@MachineModel.leftWeaponOffset.second / PPM
-                )
-            ) {
-                density = 0f
-                restitution = 0f
-                isSensor = true
-                friction = 0f
+                position.set(center)
+            },
+            world.body {
+                type = BodyDef.BodyType.KinematicBody
+                box(
+                    width = this@MachineModel.leftWeaponSize.first / PPM,
+                    height = this@MachineModel.leftWeaponSize.second / PPM
+                ) {
+                    density = 0f
+                    restitution = 0f
+                    isSensor = true
+                    friction = 0f
+                }
                 userData = MachinePart.LEFT_WEAPON
-            }
-            // right weapon
-            box(
-                width = this@MachineModel.rightWeaponSize.first / PPM,
-                height = this@MachineModel.rightWeaponSize.second / PPM,
-                position = vec2(
-                    this@MachineModel.rightWeaponOffset.first / PPM,
-                    this@MachineModel.rightWeaponOffset.second / PPM
+                position.set(
+                    center.x + this@MachineModel.leftWeaponOffset.first / PPM,
+                    center.y + this@MachineModel.leftWeaponOffset.second / PPM
                 )
-            ) {
-                density = 0f
-                restitution = 0f
-                isSensor = true
-                friction = 0f
+            },
+            world.body {
+                type = BodyDef.BodyType.KinematicBody
+                box(
+                    width = this@MachineModel.rightWeaponSize.first / PPM,
+                    height = this@MachineModel.rightWeaponSize.second / PPM,
+                ) {
+                    density = 0f
+                    restitution = 0f
+                    isSensor = true
+                    friction = 0f
+                }
                 userData = MachinePart.RIGHT_WEAPON
+                position.set(
+                    center.x + this@MachineModel.rightWeaponOffset.first / PPM,
+                    center.y + this@MachineModel.rightWeaponOffset.second / PPM
+                )
             }
-            position.set(
-                (pos.x + this@MachineModel.bodySize.first / 2f) / PPM,
-                (pos.y + this@MachineModel.bodySize.second / 2f) / PPM
-            )
-        }
+        )
+        val joints = listOf(
+            bodies[0].weldJointWith(bodies[1]) {
+                frequencyHz = 0f
+                dampingRatio = 0f
+            },
+            bodies[0].weldJointWith(bodies[2]) {
+                frequencyHz = 0f
+                dampingRatio = 0f
+            }
+        )
+
+        return Pair(bodies, joints)
+    }
 }
