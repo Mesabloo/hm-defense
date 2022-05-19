@@ -28,12 +28,12 @@ allprojects {
         gdxVersion = '1.10.0'
         roboVMVersion = '2.3.12'
         box2DLightsVersion = '1.5'
-        ashleyVersion = '1.7.3'
+        ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
         ashleyVersion = '1.7.4'
 
-        ktxVersion = "$gdxVersion-b4" as GStringImpl
+        ktxVersion = "$gdxVersion-rc2" as GStringImpl
     }
 
     tasks.withType(Jar).all {
@@ -58,6 +58,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
 }
 
@@ -80,7 +81,7 @@ project(":core") {
         api "io.github.libktx:ktx-async:$ktxVersion"
         api "io.github.libktx:ktx-box2d:$ktxVersion"
         api "io.github.libktx:ktx-collections:$ktxVersion"
-        api "io.github.libktx:ktx-freetype-async:$ktxVersion"
+        api "io.github.libktx:ktx-freetype:$ktxVersion"
         api "io.github.libktx:ktx-graphics:$ktxVersion"
         api "io.github.libktx:ktx-json:$ktxVersion"
         api "io.github.libktx:ktx-log:$ktxVersion"

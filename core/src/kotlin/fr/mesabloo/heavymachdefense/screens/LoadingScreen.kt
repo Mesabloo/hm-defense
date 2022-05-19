@@ -18,7 +18,7 @@ class LoadingScreen: AbstractScreen() {
         this.ui.engine.entity {
             with<TextComponent> {
                 message = "69420"
-                font = fontManager.fonts[FontManager.STAGE]!!
+                font = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_BOLD]!!
             }
             with<PositionComponent> {
                 x = this@LoadingScreen.ui.camera.viewportWidth / 2

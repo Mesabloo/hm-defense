@@ -1,7 +1,7 @@
 package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense
 
 // 16 pixels = 1 meter
-const val PPM: Float = 1f //16f
+const val PPM: Float = 16f
 
 enum class MachinePart {
     LEFT_FOOT,
