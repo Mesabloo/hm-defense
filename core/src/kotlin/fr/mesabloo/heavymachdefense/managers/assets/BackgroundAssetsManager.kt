@@ -45,4 +45,4 @@ class BackgroundAssetsManager : Disposable {
     }
 }
 
-val backgroundAssetsManager = BackgroundAssetsManager()
+val backgroundAssetsManager by lazy { BackgroundAssetsManager() }

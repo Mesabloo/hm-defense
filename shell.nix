@@ -8,6 +8,11 @@ let
     sha256 = "1w79rll5302inmysr2bav2y80117b86npgry23maiv6cnj5xa19l";
   };
 
+  hiero-jar = pkgs.fetchurl {
+    url = "https://libgdx-nightlies.s3.eu-central-1.amazonaws.com/libgdx-runnables/runnable-hiero.jar";
+    sha256 = "1lvr4qa0qjs103nkbl2gyc0d0syza12ghf0qpwqcqqn1v3hiq765";
+  };
+
   gdx-texture-packer = pkgs.stdenv.mkDerivation {
     name = "gdx-texture-packer";
 
@@ -53,9 +58,17 @@ pkgs.mkShell {
     jetbrains.idea-community
 
     gdx-texture-packer
+
+    (python3.withPackages (ps: with ps; [
+      pillow
+    ]))
+
+    glib
+    glib.dev
   ];
 
   LD_LIBRARY_PATH = "${pkgs.xorg.libXxf86vm}/lib:${pkgs.openal}/lib";
   GDX_SETUP = "java -jar ${gdx-setup-tool-jar}";
   JAVA_HOME = "${pkgs.jdk11}/lib/openjdk";
+  GDX_GENFONT = "java -jar ${hiero-jar}";
 }

@@ -33,4 +33,4 @@ class MachAssetsManager : Disposable {
     val machineWeapons by assetManager.load<TextureAtlas>(MACHINE_WEAPONS_PATH)
 }
 
-val machAssetsManager = MachAssetsManager()
+val machAssetsManager by lazy { MachAssetsManager() }

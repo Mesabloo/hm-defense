@@ -26,10 +26,7 @@ class UIWorld : Disposable {
         this.viewport.update(width, height, false)
     }
 
-    @Suppress("NAME_SHADOWING")
     fun render(deltaTime: Float) {
-        val deltaTime = if (deltaTime > 0.1f) 0.1f else deltaTime
-
         this.camera.update()
         this.batch.projectionMatrix = this.camera.combined
 

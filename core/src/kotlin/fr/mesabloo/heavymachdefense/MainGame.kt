@@ -7,7 +7,9 @@ import com.badlogic.gdx.physics.box2d.Box2D
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.assetManager
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.backgroundAssetsManager
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.machAssetsManager
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.fontManager
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.screens.AbstractScreen
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.screens.LoadingScreen
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.screens.StageScreen
 import fr.mesabloo.heavymachdefense.log.ColoredLogger
 import ktx.app.KtxGame
@@ -21,7 +23,11 @@ class MainGame : KtxGame<AbstractScreen>() {
         // Initialize Box2D right now
         Box2D.init()
 
+        fontManager.init()
         backgroundAssetsManager.init()
+
+        this.addScreen(LoadingScreen())
+        this.setScreen<LoadingScreen>()
 
         super.create()
     }
@@ -30,8 +36,7 @@ class MainGame : KtxGame<AbstractScreen>() {
         Gdx.gl.glClearColor(1f, 1f, 1f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        if (!assetManager.update())
-            return
+        assetManager.update()
 
         // Set the current screen to the first stage.
         // TODO: this will be tweaked when creating a menu screen.

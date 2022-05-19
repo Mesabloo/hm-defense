@@ -2,4 +2,4 @@ package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.asset
 
 import com.badlogic.gdx.assets.AssetManager
 
-val assetManager = AssetManager()
+val assetManager by lazy { AssetManager() }
