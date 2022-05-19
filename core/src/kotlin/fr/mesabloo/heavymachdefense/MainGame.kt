@@ -36,7 +36,8 @@ class MainGame : KtxGame<AbstractScreen>() {
         Gdx.gl.glClearColor(1f, 1f, 1f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        assetManager.update()
+        if (!assetManager.isFinished)
+            assetManager.update()
 
         // Set the current screen to the first stage.
         // TODO: this will be tweaked when creating a menu screen.
@@ -61,7 +62,12 @@ class MainGame : KtxGame<AbstractScreen>() {
         if (DEBUG)
             Gdx.app.debug(this.javaClass.simpleName, "Quitting application")
 
+        machAssetsManager.dispose()
+        backgroundAssetsManager.dispose()
+        assetManager.dispose()
+
+        fontManager.dispose()
+
         super.dispose()
     }
-
 }

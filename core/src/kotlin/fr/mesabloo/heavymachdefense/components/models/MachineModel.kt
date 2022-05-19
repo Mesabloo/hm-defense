@@ -11,7 +11,7 @@ import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.MachinePart
 import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.PPM
 import ktx.box2d.body
 import ktx.box2d.box
-import ktx.box2d.weldJointWith
+import ktx.box2d.distanceJointWith
 import ktx.math.vec2
 
 class MachineModel(name: String, level: Int) {
@@ -115,13 +115,13 @@ class MachineModel(name: String, level: Int) {
             }
         )
         val joints = listOf(
-            bodies[0].weldJointWith(bodies[1]) {
+            bodies[0].distanceJointWith(bodies[1]) {
                 frequencyHz = 0f
-                dampingRatio = 0f
+                dampingRatio = 1f
             },
-            bodies[0].weldJointWith(bodies[2]) {
+            bodies[0].distanceJointWith(bodies[2]) {
                 frequencyHz = 0f
-                dampingRatio = 0f
+                dampingRatio = 1f
             }
         )
 
