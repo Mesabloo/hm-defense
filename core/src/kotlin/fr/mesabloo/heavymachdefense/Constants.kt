@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense
+package fr.mesabloo.heavymachdefense
 
 // 16 pixels = 1 meter
 const val PPM: Float = 16f

@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.input
+package fr.mesabloo.heavymachdefense.components.input
 
 import com.badlogic.ashley.core.Component
 import ktx.ashley.Mapper

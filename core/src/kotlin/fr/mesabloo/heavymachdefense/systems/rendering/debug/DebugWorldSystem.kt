@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.rendering.debug
+package fr.mesabloo.heavymachdefense.systems.rendering.debug
 
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.graphics.Camera

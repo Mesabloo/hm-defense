@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.models
+package fr.mesabloo.heavymachdefense.components.models
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
@@ -7,8 +7,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.Joint
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.JsonReader
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.MachinePart
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.PPM
+import fr.mesabloo.heavymachdefense.MachinePart
+import fr.mesabloo.heavymachdefense.PPM
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.box2d.distanceJointWith

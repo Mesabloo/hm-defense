@@ -1,10 +1,10 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.camera
+package fr.mesabloo.heavymachdefense.systems.camera
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.CameraComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.input.MouseInputComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.world.WORLD_HEIGHT
+import fr.mesabloo.heavymachdefense.components.CameraComponent
+import fr.mesabloo.heavymachdefense.components.input.MouseInputComponent
+import fr.mesabloo.heavymachdefense.world.WORLD_HEIGHT
 import ktx.ashley.allOf
 import ktx.ashley.get
 import kotlin.math.abs

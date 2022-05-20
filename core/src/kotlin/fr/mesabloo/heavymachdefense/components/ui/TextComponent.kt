@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.ui
+package fr.mesabloo.heavymachdefense.components.ui
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.g2d.BitmapFont

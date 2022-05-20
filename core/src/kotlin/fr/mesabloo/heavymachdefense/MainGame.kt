@@ -1,20 +1,26 @@
 package fr.mesabloo.heavymachdefense
-
 import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.physics.box2d.Box2D
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.assetManager
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.backgroundAssetsManager
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.machAssetsManager
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.fontManager
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.screens.AbstractScreen
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.screens.LoadingScreen
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.screens.StageScreen
 import fr.mesabloo.heavymachdefense.log.ColoredLogger
+import fr.mesabloo.heavymachdefense.managers.assets.assetManager
+import fr.mesabloo.heavymachdefense.managers.assets.loadingAssetsManager
+import fr.mesabloo.heavymachdefense.managers.assets.welcomeAssetsManager
+import fr.mesabloo.heavymachdefense.managers.fontManager
+import fr.mesabloo.heavymachdefense.screens.AbstractScreen
+import fr.mesabloo.heavymachdefense.screens.WelcomeScreen
 import ktx.app.KtxGame
 
 class MainGame : KtxGame<AbstractScreen>() {
+    @PublishedApi
+    internal var `access$currentScreen`: Screen
+        get() = currentScreen
+        set(value) {
+            currentScreen = value
+        }
+
     override fun create() {
         // Put a custom application logger with colors
         Gdx.app.applicationLogger = ColoredLogger()
@@ -23,11 +29,12 @@ class MainGame : KtxGame<AbstractScreen>() {
         // Initialize Box2D right now
         Box2D.init()
 
-        fontManager.init()
-        backgroundAssetsManager.init()
+        // Load the minimal set of assets needed:
+        // - all the assets for the loading screen
+        // - assets for the welcome screen
 
-        this.addScreen(LoadingScreen())
-        this.setScreen<LoadingScreen>()
+        welcomeAssetsManager.preload()
+        loadingAssetsManager.preload()
 
         super.create()
     }
@@ -39,16 +46,20 @@ class MainGame : KtxGame<AbstractScreen>() {
         if (!assetManager.isFinished)
             assetManager.update()
 
-        // Set the current screen to the first stage.
-        // TODO: this will be tweaked when creating a menu screen.
-        if (machAssetsManager.isLoaded() && backgroundAssetsManager.isLoaded()) {
-            if (this.currentScreen !is StageScreen) {
-                this.addScreen(StageScreen(1))
-                this.setScreen<StageScreen>()
-            }
+        if (welcomeAssetsManager.isFullyLoaded() && loadingAssetsManager.isFullyLoaded()) {
+            changeScreen(lazy { WelcomeScreen(this) })
         }
 
         super.render()
+    }
+
+    inline fun <reified T : AbstractScreen> changeScreen(newScreen: Lazy<T>) {
+        if (this.`access$currentScreen` !is T) {
+            if (!this.containsScreen<T>()) {
+                this.addScreen(newScreen.value)
+            }
+            this.setScreen<T>()
+        }
     }
 
     override fun resize(width: Int, height: Int) {
@@ -62,8 +73,6 @@ class MainGame : KtxGame<AbstractScreen>() {
         if (DEBUG)
             Gdx.app.debug(this.javaClass.simpleName, "Quitting application")
 
-        machAssetsManager.dispose()
-        backgroundAssetsManager.dispose()
         assetManager.dispose()
 
         fontManager.dispose()

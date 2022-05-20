@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events
+package fr.mesabloo.heavymachdefense.events
 
 interface GameEvent {
 }

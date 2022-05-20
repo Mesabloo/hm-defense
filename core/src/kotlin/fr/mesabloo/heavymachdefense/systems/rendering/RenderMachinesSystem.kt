@@ -1,14 +1,14 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.rendering
+package fr.mesabloo.heavymachdefense.systems.rendering
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.PPM
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.PositionComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.MachAssetsManager
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets.machAssetsManager
+import fr.mesabloo.heavymachdefense.PPM
+import fr.mesabloo.heavymachdefense.components.PositionComponent
+import fr.mesabloo.heavymachdefense.components.machine.MachineComponent
+import fr.mesabloo.heavymachdefense.managers.assets.MachAssetsManager
+import fr.mesabloo.heavymachdefense.managers.assets.machAssetsManager
 import ktx.ashley.allOf
 import ktx.ashley.get
 

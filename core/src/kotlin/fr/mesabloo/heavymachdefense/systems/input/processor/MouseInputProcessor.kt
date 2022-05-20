@@ -1,10 +1,10 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.input.processor
+package fr.mesabloo.heavymachdefense.systems.input.processor
 
 import com.badlogic.ashley.signals.Signal
 import com.badlogic.gdx.Input
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.MouseInputEvent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.MouseLeftClickEvent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.MouseScrollEvent
+import fr.mesabloo.heavymachdefense.events.MouseInputEvent
+import fr.mesabloo.heavymachdefense.events.MouseLeftClickEvent
+import fr.mesabloo.heavymachdefense.events.MouseScrollEvent
 import ktx.app.KtxInputAdapter
 
 class MouseInputProcessor(private val signal: Signal<MouseInputEvent>): KtxInputAdapter {

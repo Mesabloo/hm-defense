@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine
+package fr.mesabloo.heavymachdefense.components.machine
 
 enum class MachineKind {
     RIFLE,

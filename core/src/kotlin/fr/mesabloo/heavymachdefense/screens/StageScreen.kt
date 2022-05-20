@@ -1,30 +1,31 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.screens
+package fr.mesabloo.heavymachdefense.screens
 
 import com.badlogic.ashley.signals.Signal
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import fr.mesabloo.heavymachdefense.DEBUG
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine.MachineKind
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.createBackground
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.createCamera
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.createMachine
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.entities.ui.createGameUI
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.MouseInputEvent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.MoveMachineSystem
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.camera.MoveCameraSystem
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.rendering.RenderMachinesSystem
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.rendering.debug.DebugWorldSystem
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.world.GameWorld
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.world.UIWorld
+import fr.mesabloo.heavymachdefense.MainGame
+import fr.mesabloo.heavymachdefense.components.machine.MachineKind
+import fr.mesabloo.heavymachdefense.entities.createBackground
+import fr.mesabloo.heavymachdefense.entities.createCamera
+import fr.mesabloo.heavymachdefense.entities.createMachine
+import fr.mesabloo.heavymachdefense.entities.ui.createGameUI
+import fr.mesabloo.heavymachdefense.events.MouseInputEvent
+import fr.mesabloo.heavymachdefense.systems.MoveMachineSystem
+import fr.mesabloo.heavymachdefense.systems.camera.MoveCameraSystem
+import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
+import fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
+import fr.mesabloo.heavymachdefense.systems.rendering.RenderMachinesSystem
+import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
+import fr.mesabloo.heavymachdefense.systems.rendering.debug.DebugWorldSystem
+import fr.mesabloo.heavymachdefense.world.GameWorld
+import fr.mesabloo.heavymachdefense.world.UIWorld
 
 /**
  * This is the base class for the main game.
  * This is where the game is played (spawning machines, etc.).
  */
-class StageScreen(private val number: Int) : AbstractScreen() {
+class StageScreen(game: MainGame, private val number: Int) : AbstractScreen(game) {
     /**
      * The Box2D world in which physics take place.
      * We do not have any gravity (in fact, the gravity should be pushing perpendicular to both X and Y axes).
@@ -52,8 +53,8 @@ class StageScreen(private val number: Int) : AbstractScreen() {
 
         //////////////////////////
 
-        ui.engine.addSystem(RenderPositionedTextures(ui.batch))
-        createGameUI(ui.engine)
+        this.ui.engine.addSystem(RenderPositionedTextures(ui.batch))
+        createGameUI(this.ui.engine)
     }
 
     override fun show() {

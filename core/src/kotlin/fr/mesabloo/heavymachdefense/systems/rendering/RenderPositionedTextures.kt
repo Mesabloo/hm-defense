@@ -1,11 +1,11 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.rendering
+package fr.mesabloo.heavymachdefense.systems.rendering
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.PositionComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.TextureComponent
+import fr.mesabloo.heavymachdefense.components.PositionComponent
+import fr.mesabloo.heavymachdefense.components.TextureComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
 
@@ -22,6 +22,7 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
 
         val renderingQueue = this.renderingQueue.toMutableList().sortedBy { e -> e[PositionComponent.mapper]!!.z }
 
+        this.batch.enableBlending()
         this.batch.begin()
 
         for (entity in renderingQueue) {
@@ -30,15 +31,14 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
 
             val texture = textureComponent.texture!!
             val sprite = Sprite(texture)
-            sprite.setOriginCenter()
 
-            this.batch.draw(
-                sprite,
-                positionComponent.x,
-                positionComponent.y,
-                textureComponent.width,
-                textureComponent.height
-            )
+            //sprite.setOrigin(sprite.width / 2, sprite.height / 2)
+            sprite.setOriginCenter()
+            sprite.setSize(textureComponent.width, textureComponent.height)
+            sprite.setPosition(positionComponent.x, positionComponent.y)
+            sprite.setAlpha(textureComponent.opacity)
+
+            sprite.draw(this.batch)
         }
 
         this.batch.end()

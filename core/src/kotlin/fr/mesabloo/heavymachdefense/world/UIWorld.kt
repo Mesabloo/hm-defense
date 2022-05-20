@@ -1,41 +1,44 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.world
+package fr.mesabloo.heavymachdefense.world
 
 import com.badlogic.ashley.core.PooledEngine
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Disposable
-import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.badlogic.gdx.utils.viewport.FitViewport
 
 const val UI_WIDTH = 768f // = 768f
 const val UI_HEIGHT = 1024f // the game screen is actually twice as high, but we only show half of it
 
 class UIWorld : Disposable {
     val camera: OrthographicCamera = OrthographicCamera(UI_WIDTH, UI_HEIGHT)
-    private val viewport: ExtendViewport = ExtendViewport(UI_WIDTH, UI_HEIGHT, this.camera)
-
-    val batch = SpriteBatch()
+    private val viewport: FitViewport = FitViewport(UI_WIDTH, UI_HEIGHT, this.camera)
 
     val engine = PooledEngine()
+
+    val batch = SpriteBatch()
 
     init {
         this.camera.position.set(UI_WIDTH / 2, UI_HEIGHT / 2, 0f)
         this.camera.update()
     }
 
-    fun resize(width: Int, height: Int) {
-        this.viewport.update(width, height, false)
+    fun show() {
+        this.viewport.update(Gdx.graphics.width, Gdx.graphics.height, true)
     }
 
-    fun render(deltaTime: Float) {
+    fun resize(width: Int, height: Int) {
+        this.viewport.update(width, height, true)
+    }
+
+    fun render(delta: Float) {
         this.camera.update()
         this.batch.projectionMatrix = this.camera.combined
 
-        this.engine.update(deltaTime)
+        this.engine.update(delta)
     }
 
     override fun dispose() {
-        this.engine.removeAllSystems()
-        this.engine.removeAllEntities()
-        this.engine.clearPools()
+        this.batch.dispose()
     }
 }

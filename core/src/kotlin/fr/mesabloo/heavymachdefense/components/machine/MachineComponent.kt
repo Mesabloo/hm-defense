@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.machine
+package fr.mesabloo.heavymachdefense.components.machine
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.physics.box2d.Body

@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.managers.assets
+package fr.mesabloo.heavymachdefense.managers.assets
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.utils.Disposable

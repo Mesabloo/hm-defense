@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.world
+package fr.mesabloo.heavymachdefense.world
 
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Gdx
@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.BG_BORDER
+import fr.mesabloo.heavymachdefense.BG_BORDER
 import ktx.box2d.createWorld
 
 const val WORLD_WIDTH = 512f

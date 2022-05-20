@@ -1,13 +1,13 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.systems.input
+package fr.mesabloo.heavymachdefense.systems.input
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.signals.Signal
 import com.badlogic.ashley.systems.IteratingSystem
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.components.input.MouseInputComponent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.EventQueue
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.MouseInputEvent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.MouseLeftClickEvent
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.events.MouseScrollEvent
+import fr.mesabloo.heavymachdefense.components.input.MouseInputComponent
+import fr.mesabloo.heavymachdefense.events.EventQueue
+import fr.mesabloo.heavymachdefense.events.MouseInputEvent
+import fr.mesabloo.heavymachdefense.events.MouseLeftClickEvent
+import fr.mesabloo.heavymachdefense.events.MouseScrollEvent
 import ktx.ashley.allOf
 import ktx.ashley.get
 
