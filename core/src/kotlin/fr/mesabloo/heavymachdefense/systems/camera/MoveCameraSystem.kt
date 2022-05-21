@@ -23,6 +23,8 @@ class MoveCameraSystem : IteratingSystem(allOf(CameraComponent::class, MouseInpu
 
         val camera = cameraComponent.camera
 
+        // TODO: use Tween here?
+
         if (abs(mouseInputComponent.scrollY) >= 0.00001) {
             this.currentlyScrolling = mouseInputComponent.scrollY
             mouseInputComponent.scrollY = 0f

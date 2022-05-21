@@ -37,6 +37,7 @@ class MouseInputSystem(private val signal: Signal<MouseInputEvent>) :
                 }
                 is MouseLeftClickEvent -> {
                     mouseInputComponent.leftClick = ev.pressed
+                    mouseInputComponent.clickPosition = ev.position
                 }
             }
         }

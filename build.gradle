@@ -78,6 +78,7 @@ project(":core") {
         api "io.github.libktx:ktx-json:$ktxVersion"
         api "io.github.libktx:ktx-log:$ktxVersion"
         api "io.github.libktx:ktx-math:$ktxVersion"
+        api "io.github.libktx:ktx-preferences:$ktxVersion"
         api "io.github.libktx:ktx-scene2d:$ktxVersion"
 
         // Universal Tween Engine: simplify animations
