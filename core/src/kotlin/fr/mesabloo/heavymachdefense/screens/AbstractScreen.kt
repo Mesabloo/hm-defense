@@ -4,11 +4,11 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.signals.Signal
 import com.badlogic.gdx.Gdx
 import fr.mesabloo.heavymachdefense.MainGame
+import fr.mesabloo.heavymachdefense.components.LoadingPartComponent
 import fr.mesabloo.heavymachdefense.components.PositionComponent
 import fr.mesabloo.heavymachdefense.components.TextureComponent
 import fr.mesabloo.heavymachdefense.components.animation.AmortizedTransformToComponent
 import fr.mesabloo.heavymachdefense.components.animation.ScaleComponent
-import fr.mesabloo.heavymachdefense.components.LoadingPartComponent
 import fr.mesabloo.heavymachdefense.managers.assets.LoadingAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.loadingAssetsManager
 import fr.mesabloo.heavymachdefense.systems.LoadingFinishedSystem
@@ -49,6 +49,11 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
 
     override fun resume() {
         Gdx.app.debug(this.javaClass.simpleName, "Resuming application")
+    }
+
+    override fun dispose() {
+        Gdx.app.debug(this.javaClass.simpleName, "Disposing screen")
+        super.dispose()
     }
 
     override fun resize(width: Int, height: Int) {

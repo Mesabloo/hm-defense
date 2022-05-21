@@ -34,6 +34,9 @@ class WelcomeNextScreenSystem(private val game: MainGame) : IteratingSystem(allO
             }) {
                 (this.changeScreen(lazy { MenuScreen(this, true) }) as AbstractScreen?)
                     ?.addLoadingOverlayEnd()
+
+                this.getScreen<WelcomeScreen>().dispose()
+                this.removeScreen<WelcomeScreen>()
             }
 
             mouseInputComponent.leftClick = false

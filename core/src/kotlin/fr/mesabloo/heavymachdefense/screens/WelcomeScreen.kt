@@ -88,4 +88,10 @@ class WelcomeScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen
 
         Gdx.input.inputProcessor = this.mux
     }
+
+    override fun dispose() {
+        super.dispose()
+
+        welcomeAssetsManager.dispose()
+    }
 }

@@ -75,13 +75,13 @@ class MainGame : KtxGame<AbstractScreen>() {
     }
 
     override fun dispose() {
+        super.dispose()
+
         if (DEBUG)
             Gdx.app.debug(this.javaClass.simpleName, "Quitting application")
 
         assetManager.dispose()
 
         fontManager.dispose()
-
-        super.dispose()
     }
 }

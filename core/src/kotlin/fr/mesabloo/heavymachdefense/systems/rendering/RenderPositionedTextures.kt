@@ -8,7 +8,7 @@ import fr.mesabloo.heavymachdefense.components.PositionComponent
 import fr.mesabloo.heavymachdefense.components.TextureComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
-import ktx.ashley.has
+import ktx.ashley.hasNot
 
 class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem(
     allOf(
@@ -23,13 +23,16 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
 
         val renderingQueue =
             this.renderingQueue.toMutableList()
-                .filter { it.has(PositionComponent.mapper) }
-                .sortedBy { it[PositionComponent.mapper]!!.z }
+                .sortedBy { it[PositionComponent.mapper]?.z ?: -1f }
 
-        //this.batch.enableBlending()
+        this.batch.enableBlending()
         this.batch.begin()
 
         for (entity in renderingQueue) {
+            if (entity.hasNot(PositionComponent.mapper) || entity.hasNot(TextureComponent.mapper)) {
+                continue
+            }
+
             val positionComponent = entity[PositionComponent.mapper]!!
             val textureComponent = entity[TextureComponent.mapper]!!
 
@@ -53,6 +56,10 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
         }
 
         this.batch.end()
+
+        this.renderingQueue.removeIf {
+            it.hasNot(PositionComponent.mapper) || it.hasNot(TextureComponent.mapper)
+        }
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
