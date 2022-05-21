@@ -66,7 +66,7 @@ class WelcomeScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen
             this.entity += textureComponent
             with<PositionComponent> {
                 x = UI_WIDTH / 2f - textureComponent.width / 2f
-                y = UI_HEIGHT / 3f - textureComponent.height / 2f
+                y = UI_HEIGHT / 2.25f - textureComponent.height / 2f
                 z = 15f
             }
             with<BlinkingComponent> {
