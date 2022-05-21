@@ -1,6 +1,7 @@
 package fr.mesabloo.heavymachdefense.managers.assets
 
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Disposable
 import ktx.assets.load
 
@@ -32,6 +33,8 @@ class LoadingAssetsManager : Disposable {
         assetManager.unload(LOADING_RIGHT)
         assetManager.unload(LOADING_CENTER)
     }
+
+    fun texture(name: String): TextureRegion = TextureRegion(assetManager.get<Texture>(name))
 }
 
 val loadingAssetsManager by lazy { LoadingAssetsManager() }

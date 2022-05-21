@@ -89,9 +89,7 @@ class RenderMachinesSystem(private val batch: SpriteBatch) : IteratingSystem(
         this.batch.end()
     }
 
-    override fun processEntity(entity: Entity?, deltaTime: Float) {
-        if (entity != null) {
-            this.renderingQueue.add(entity)
-        }
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        this.renderingQueue.add(entity)
     }
 }

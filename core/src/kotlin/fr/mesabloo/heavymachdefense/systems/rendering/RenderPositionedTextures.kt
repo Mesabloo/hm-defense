@@ -8,6 +8,7 @@ import fr.mesabloo.heavymachdefense.components.PositionComponent
 import fr.mesabloo.heavymachdefense.components.TextureComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
+import ktx.ashley.has
 
 class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem(
     allOf(
@@ -20,9 +21,12 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
     override fun update(deltaTime: Float) {
         super.update(deltaTime)
 
-        val renderingQueue = this.renderingQueue.toMutableList().sortedBy { e -> e[PositionComponent.mapper]!!.z }
+        val renderingQueue =
+            this.renderingQueue.toMutableList()
+                .filter { it.has(PositionComponent.mapper) }
+                .sortedBy { it[PositionComponent.mapper]!!.z }
 
-        this.batch.enableBlending()
+        //this.batch.enableBlending()
         this.batch.begin()
 
         for (entity in renderingQueue) {
@@ -32,10 +36,17 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
             val texture = textureComponent.texture!!
             val sprite = Sprite(texture)
 
+            val newWidth = textureComponent.width * textureComponent.scaleX
+            val newHeight = textureComponent.height * textureComponent.scaleY
+
+            val adaptFromScaleX = (textureComponent.width - newWidth) / 2f
+            val adaptFromScaleY = (textureComponent.height - newHeight) / 2f
+
             //sprite.setOrigin(sprite.width / 2, sprite.height / 2)
             sprite.setOriginCenter()
-            sprite.setSize(textureComponent.width, textureComponent.height)
-            sprite.setPosition(positionComponent.x, positionComponent.y)
+            //sprite.setScale(textureComponent.scaleX, textureComponent.scaleY)
+            sprite.setSize(newWidth, newHeight)
+            sprite.setPosition(positionComponent.x + adaptFromScaleX, positionComponent.y + adaptFromScaleY)
             sprite.setAlpha(textureComponent.opacity)
 
             sprite.draw(this.batch)
@@ -44,9 +55,7 @@ class RenderPositionedTextures(private val batch: SpriteBatch) : IteratingSystem
         this.batch.end()
     }
 
-    override fun processEntity(entity: Entity?, deltaTime: Float) {
-        if (entity != null) {
-            this.renderingQueue.add(entity)
-        }
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        this.renderingQueue.add(entity)
     }
 }

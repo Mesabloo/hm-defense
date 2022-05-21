@@ -10,5 +10,8 @@ fun main() {
     config.foregroundFPS = 60
     config.fullscreen = false
 
+    config.width = 768
+    config.height = 1024
+
     LwjglApplication(MainGame(), config)
 }

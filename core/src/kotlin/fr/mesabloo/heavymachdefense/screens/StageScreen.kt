@@ -19,7 +19,6 @@ import fr.mesabloo.heavymachdefense.systems.rendering.RenderMachinesSystem
 import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
 import fr.mesabloo.heavymachdefense.systems.rendering.debug.DebugWorldSystem
 import fr.mesabloo.heavymachdefense.world.GameWorld
-import fr.mesabloo.heavymachdefense.world.UIWorld
 
 /**
  * This is the base class for the main game.
@@ -31,7 +30,6 @@ class StageScreen(game: MainGame, private val number: Int) : AbstractScreen(game
      * We do not have any gravity (in fact, the gravity should be pushing perpendicular to both X and Y axes).
      */
     private val world = GameWorld()
-    private val ui = UIWorld()
 
     /////////////////// INTERNAL ///////////////////////
 

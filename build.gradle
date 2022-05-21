@@ -31,6 +31,7 @@ allprojects {
         gdxControllersVersion = '2.1.0'
         ashleyVersion = '1.7.4'
         ktxVersion = '1.10.0-rc2'
+        tweenVersion = '6.3.3'
     }
 
     tasks.withType(Jar).all {
@@ -78,5 +79,8 @@ project(":core") {
         api "io.github.libktx:ktx-log:$ktxVersion"
         api "io.github.libktx:ktx-math:$ktxVersion"
         api "io.github.libktx:ktx-scene2d:$ktxVersion"
+
+        // Universal Tween Engine: simplify animations
+        api "org.mini2Dx:universal-tween-engine:$tweenVersion"
     }
 }

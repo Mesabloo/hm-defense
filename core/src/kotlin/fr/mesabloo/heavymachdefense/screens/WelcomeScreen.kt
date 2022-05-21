@@ -1,5 +1,6 @@
 package fr.mesabloo.heavymachdefense.screens
 
+import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.signals.Signal
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
@@ -16,15 +17,14 @@ import fr.mesabloo.heavymachdefense.systems.input.WelcomeNextScreenSystem
 import fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
 import fr.mesabloo.heavymachdefense.systems.rendering.BlinkingSystem
 import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
-import fr.mesabloo.heavymachdefense.world.UIWorld
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import ktx.ashley.entity
 import ktx.ashley.plusAssign
 import ktx.ashley.with
 
-class WelcomeScreen(game: MainGame) : AbstractScreen(game) {
-    private val ui = UIWorld()
+class WelcomeScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(game, isLoading) {
+    lateinit var tapToStart: Entity
 
     private val mux: InputMultiplexer = InputMultiplexer()
 
@@ -33,11 +33,11 @@ class WelcomeScreen(game: MainGame) : AbstractScreen(game) {
     override fun show() {
         super.show()
 
+        if (this.isLoading)
+            return
+
         this.mux.addProcessor(MouseInputProcessor(this.touchSignal))
         Gdx.input.inputProcessor = this.mux
-
-        this.ui.engine.removeAllEntities()
-        this.ui.engine.removeAllSystems()
 
         this.ui.engine.addSystem(MouseInputSystem(this.touchSignal))
         this.ui.engine.addSystem(WelcomeNextScreenSystem(this.game))
@@ -59,7 +59,7 @@ class WelcomeScreen(game: MainGame) : AbstractScreen(game) {
 
             }
         }
-        this.ui.engine.entity {
+        this.tapToStart = this.ui.engine.entity {
             val textureComponent = TextureComponent()
             textureComponent.texture = welcomeAssetsManager.texture(WelcomeAssetsManager.TAP_TO_START)
 
@@ -77,15 +77,15 @@ class WelcomeScreen(game: MainGame) : AbstractScreen(game) {
         this.ui.show()
     }
 
-    override fun resize(width: Int, height: Int) {
-        super.resize(width, height)
+    override fun pause() {
+        super.pause()
 
-        this.ui.resize(width, height)
+        Gdx.input.inputProcessor = null
     }
 
-    override fun render(delta: Float) {
-        super.render(delta)
+    override fun resume() {
+        super.resume()
 
-        this.ui.render(delta)
+        Gdx.input.inputProcessor = this.mux
     }
 }

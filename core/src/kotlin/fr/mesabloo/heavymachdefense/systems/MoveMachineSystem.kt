@@ -11,14 +11,12 @@ class MoveMachineSystem : IteratingSystem(
         MachineComponent::class
     ).get()
 ) {
-    override fun processEntity(entity: Entity?, deltaTime: Float) {
-        if (entity != null) {
-            val machineComponent = entity[MachineComponent.mapper]!!
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        val machineComponent = entity[MachineComponent.mapper]!!
 
-            // For now, constant low velocity towards the right
+        // For now, constant low velocity towards the right
 
-            //machineComponent.body.setTransform(0f, 0f, 90f * MathUtils.degreesToRadians)
-            machineComponent.mainBody.setLinearVelocity(1f, 0f)
-        }
+        //machineComponent.body.setTransform(0f, 0f, 90f * MathUtils.degreesToRadians)
+        machineComponent.mainBody.setLinearVelocity(1f, 0f)
     }
 }

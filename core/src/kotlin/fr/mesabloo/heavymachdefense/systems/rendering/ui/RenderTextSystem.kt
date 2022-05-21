@@ -14,21 +14,19 @@ class RenderTextSystem(private val batch: SpriteBatch) :
 
     private val glyphLayout = GlyphLayout()
 
-    override fun processEntity(entity: Entity?, deltaTime: Float) {
-        if (entity != null) {
-            val textComponent = entity[TextComponent.mapper]!!
-            val positionComponent = entity[PositionComponent.mapper]!!
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        val textComponent = entity[TextComponent.mapper]!!
+        val positionComponent = entity[PositionComponent.mapper]!!
 
-            glyphLayout.setText(textComponent.font, textComponent.message)
+        glyphLayout.setText(textComponent.font, textComponent.message)
 
-            this.batch.begin()
-            textComponent.font.draw(
-                this.batch,
-                textComponent.message,
-                positionComponent.x - glyphLayout.width / 2,
-                positionComponent.y - glyphLayout.height / 2
-            )
-            this.batch.end()
-        }
+        this.batch.begin()
+        textComponent.font.draw(
+            this.batch,
+            textComponent.message,
+            positionComponent.x - glyphLayout.width / 2,
+            positionComponent.y - glyphLayout.height / 2
+        )
+        this.batch.end()
     }
 }

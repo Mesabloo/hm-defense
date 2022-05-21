@@ -26,19 +26,17 @@ class MouseInputSystem(private val signal: Signal<MouseInputEvent>) :
         super.update(deltaTime)
     }
 
-    override fun processEntity(entity: Entity?, deltaTime: Float) {
-        if (entity != null) {
-            val mouseInputComponent = entity[MouseInputComponent.mapper]!!
+    override fun processEntity(entity: Entity, deltaTime: Float) {
+        val mouseInputComponent = entity[MouseInputComponent.mapper]!!
 
-            for (ev: MouseInputEvent in this.mouseEvents) {
-                when (ev) {
-                    is MouseScrollEvent -> {
-                        mouseInputComponent.scrollX = ev.x
-                        mouseInputComponent.scrollY = ev.y
-                    }
-                    is MouseLeftClickEvent -> {
-                        mouseInputComponent.leftClick = ev.pressed
-                    }
+        for (ev: MouseInputEvent in this.mouseEvents) {
+            when (ev) {
+                is MouseScrollEvent -> {
+                    mouseInputComponent.scrollX = ev.x
+                    mouseInputComponent.scrollY = ev.y
+                }
+                is MouseLeftClickEvent -> {
+                    mouseInputComponent.leftClick = ev.pressed
                 }
             }
         }

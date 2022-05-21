@@ -21,6 +21,8 @@ class MainGame : KtxGame<AbstractScreen>() {
             currentScreen = value
         }
 
+    var justStarted: Boolean = true
+
     override fun create() {
         // Put a custom application logger with colors
         Gdx.app.applicationLogger = ColoredLogger()
@@ -35,6 +37,7 @@ class MainGame : KtxGame<AbstractScreen>() {
 
         welcomeAssetsManager.preload()
         loadingAssetsManager.preload()
+        fontManager.init()
 
         super.create()
     }
@@ -46,20 +49,22 @@ class MainGame : KtxGame<AbstractScreen>() {
         if (!assetManager.isFinished)
             assetManager.update()
 
-        if (welcomeAssetsManager.isFullyLoaded() && loadingAssetsManager.isFullyLoaded()) {
+        if (welcomeAssetsManager.isFullyLoaded() && loadingAssetsManager.isFullyLoaded() && justStarted) {
             changeScreen(lazy { WelcomeScreen(this) })
         }
 
         super.render()
     }
 
-    inline fun <reified T : AbstractScreen> changeScreen(newScreen: Lazy<T>) {
+    inline fun <reified T : AbstractScreen> changeScreen(newScreen: Lazy<T>): T? {
         if (this.`access$currentScreen` !is T) {
             if (!this.containsScreen<T>()) {
                 this.addScreen(newScreen.value)
             }
             this.setScreen<T>()
+            return this.getScreen()
         }
+        return null
     }
 
     override fun resize(width: Int, height: Int) {
