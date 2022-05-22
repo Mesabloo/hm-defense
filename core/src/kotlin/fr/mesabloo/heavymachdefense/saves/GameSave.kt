@@ -8,18 +8,12 @@ import fr.mesabloo.heavymachdefense.components.machine.TurretKind
 import ktx.json.readValue
 import java.util.*
 
-class GameSave {
-    companion object {
-        @Transient
-        const val PREFERENCES_PATH = "gamesaves"
-    }
-
-    var creationDate: Date = Date()
-    var lastAccessedDate: Date = Date()
-    var lastStageCompleted: Int = 0
-    var credits: Long = 0L
-    var name: String = "<<placeholder>>"
-    // TODO: upgrades (machine, turrets and general upgrades)
+data class GameSave(
+    var creationDate: Date = Date(),
+    var lastAccessedDate: Date = Date(),
+    var lastStageCompleted: Int = 0,
+    var credits: Long = 0L,
+    var name: String = "<<placeholder>>",
     var machineUpgrades: HashMap<MachineKind, Int> = hashMapOf(
         Pair(MachineKind.RIFLE, 1),
         Pair(MachineKind.MISSILE, 1),
@@ -28,7 +22,7 @@ class GameSave {
         Pair(MachineKind.PLASMA, 1),
         Pair(MachineKind.ION, 1),
         Pair(MachineKind.HEAVY_MISSILE, 1)
-    )
+    ),
     var turretUpgrades: HashMap<TurretKind, Int> = hashMapOf(
         Pair(TurretKind.RIFLE, 1),
         Pair(TurretKind.MISSILE, 1),
@@ -36,8 +30,13 @@ class GameSave {
         Pair(TurretKind.PLASMA, 1),
         Pair(TurretKind.ION, 1),
         Pair(TurretKind.LASER, 1)
-    )
+    ),
     var mainUpgrades: HashMap<String, Int> = hashMapOf()
+) {
+    companion object {
+        @Transient
+        const val PREFERENCES_PATH = "gamesaves"
+    }
 }
 
 object GameSaveJsonSerializer : Json.Serializer<GameSave> {
@@ -61,6 +60,12 @@ object GameSaveJsonSerializer : Json.Serializer<GameSave> {
     }
 
     override fun write(json: Json, `object`: GameSave, knownType: Class<*>) {
-        TODO("Not yet implemented")
+        json.writeObjectStart()
+        json.writeValue("creationDate", `object`.creationDate.time)
+        json.writeValue("lastAccessedDate", `object`.lastAccessedDate.time)
+        json.writeValue("lastStageCompleted", `object`.lastStageCompleted)
+        json.writeValue("credits", `object`.credits)
+        json.writeValue("name", `object`.name)
+        json.writeObjectEnd()
     }
 }

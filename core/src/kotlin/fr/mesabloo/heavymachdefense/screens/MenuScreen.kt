@@ -26,6 +26,7 @@ import fr.mesabloo.heavymachdefense.saves.GameSaveJsonSerializer
 import fr.mesabloo.heavymachdefense.systems.input.ButtonClickSystem
 import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
 import fr.mesabloo.heavymachdefense.systems.input.listener.MenuBackClickListener
+import fr.mesabloo.heavymachdefense.systems.input.listener.MenuDeleteClickListener
 import fr.mesabloo.heavymachdefense.systems.input.listener.MenuNewClickListener
 import fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
 import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
@@ -46,7 +47,8 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
     private val mouseInputSignal: Signal<MouseInputEvent> = Signal()
 
     private var saves: MutableList<GameSave> = mutableListOf()
-    private var refreshSaves = true
+    var focusedIndex: Int = 0
+        private set
 
     private var prefs: Preferences = Gdx.app.getPreferences(GameSave.PREFERENCES_PATH)
     private val json = Json()
@@ -94,6 +96,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         }
 
         val lastAccessed: GameSave? = this.saves.maxByOrNull { it.lastAccessedDate }
+        this.focusedIndex = lastAccessed?.let { this.saves.indexOf(it) } ?: -1
 
         this.ui.engine.entity {
             val textureComponent = TextureComponent()
@@ -129,9 +132,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             with<MouseInputComponent> {}
             with<OnClickListener> {
                 camera = this@MenuScreen.ui.camera
-                listener = {
-
-                }
+                listener = MenuDeleteClickListener(this@MenuScreen)
             }
             this.entity += textureComponent
         }
@@ -158,16 +159,6 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         var currentY = BASE_SAVE_Y
         for (save in this.saves) {
             currentY -= this.createSave(save, currentY) { it == lastAccessed } + SAVE_PADDING
-        }
-    }
-
-    override fun render(delta: Float) {
-        super.render(delta)
-
-        if (this.refreshSaves) {
-
-
-            this.refreshSaves = false
         }
     }
 
@@ -198,6 +189,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
 
         this.saves.add(save)
         val lastIndex = this.saves.lastIndex
+        this.focusedIndex = lastIndex
 
         this.prefs.flush {
             this["$lastIndex"] = this@MenuScreen.json.toJson(save)
@@ -236,6 +228,9 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         }
         this.ui.engine.entity {
             // creation date
+            with<SaveComponent> {
+                this.save = save
+            }
             with<TextComponent> {
                 message = dateFormatter.format(save.creationDate)
                 font = fontManager.bitmapFonts[FontManager.SET01B]!!
@@ -248,6 +243,9 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         }
         this.ui.engine.entity {
             // last access date
+            with<SaveComponent> {
+                this.save = save
+            }
             with<TextComponent> {
                 message = dateFormatter.format(save.lastAccessedDate)
                 font = fontManager.bitmapFonts[FontManager.SET01B]!!
@@ -260,6 +258,9 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         }
         this.ui.engine.entity {
             // stage number
+            with<SaveComponent> {
+                this.save = save
+            }
             with<TextComponent> {
                 message = (save.lastStageCompleted + 1).toString().padStart(2, '0')
                 font = fontManager.bitmapFonts[FontManager.CREDITS]!!
@@ -272,6 +273,9 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         }
         this.ui.engine.entity {
             // credits
+            with<SaveComponent> {
+                this.save = save
+            }
             with<TextComponent> {
                 message = save.credits.toString()
                 font = fontManager.bitmapFonts[FontManager.CREDITS]!!
@@ -285,6 +289,9 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         }
         this.ui.engine.entity {
             // name
+            with<SaveComponent> {
+                this.save = save
+            }
             with<TextComponent> {
                 message = save.name
                 font = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_BOLD_24]!!
@@ -308,6 +315,34 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         }
 
         return height
+    }
+
+    @Suppress("GDXKotlinMissingFlush")
+    fun removeSaveFromIndex(saveIndex: Int) {
+        if (saveIndex < 0 || saveIndex >= this.saves.size)
+            return
+
+        this.ui.engine.removeAllEntities(allOf(SaveComponent::class).get())
+        this.saves.removeAt(saveIndex)
+
+        this.prefs.flush {
+            this["count"] = this@MenuScreen.saves.size
+
+            this.remove("$saveIndex")
+
+            for (index in saveIndex until this@MenuScreen.saves.size) {
+                this["$index"] = this.getString("${index + 1}")
+            }
+            this.remove("${this@MenuScreen.saves.size}")
+        }
+
+        val newlyFocused = this.saves.maxByOrNull { it.lastAccessedDate }
+        this.focusedIndex = newlyFocused?.let { this.saves.indexOf(it) } ?: -1
+
+        var currentY = BASE_SAVE_Y
+        for (save in this.saves) {
+            currentY -= this.createSave(save, currentY) { it == newlyFocused } + SAVE_PADDING
+        }
     }
 
     private companion object {
