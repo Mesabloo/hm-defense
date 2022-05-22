@@ -15,7 +15,7 @@ class MachAssetsManager : Disposable {
             atlas.findRegion(regionName)
     }
 
-    fun machineTileName(machineName: String, level: Long): String =
+    fun machineTileName(machineName: String, level: Int): String =
         "${machineName}-${level.toString().padStart(2, '0')}"
 
     fun isLoaded() =

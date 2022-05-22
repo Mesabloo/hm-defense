@@ -72,7 +72,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
         this.isLoading = true
 
         this.ui.engine.addSystem(TransformAnimationSystem(this.loadingAnimationFinishedSignal))
-        this.ui.engine.addSystem(LoadingFinishedSystem(this.loadingAnimationFinishedSignal) {
+        this.ui.engine.addSystem(LoadingFinishedSystem(this.loadingAnimationFinishedSignal, this.loadingDoneSignal) {
             this.game.switchScreen()
         })
         this.ui.engine.addSystem(SignalWhenFinishedLoadingSystem(this.loadingDoneSignal, finishedLoading))
