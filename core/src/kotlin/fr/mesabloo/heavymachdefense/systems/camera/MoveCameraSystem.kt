@@ -9,8 +9,6 @@ import ktx.ashley.allOf
 import ktx.ashley.get
 import kotlin.math.abs
 
-private const val SCROLL_MULTIPLIER: Float = 1250.0f
-
 // This needs to be negative
 private const val FRICTION = -0.40f
 
@@ -32,7 +30,7 @@ class MoveCameraSystem : IteratingSystem(allOf(CameraComponent::class, MouseInpu
 
         if (abs(this.currentlyScrolling) >= 0.1) {
             // NOTE: See https://gamedev.stackexchange.com/a/128317 for why the formula
-            camera.position.add(0f, (-this.currentlyScrolling * SCROLL_MULTIPLIER) * deltaTime + 1 / 2 * FRICTION + deltaTime * deltaTime, 0f)
+            camera.position.add(0f, -this.currentlyScrolling * deltaTime + 1 / 2 * FRICTION + deltaTime * deltaTime, 0f)
 
             if (camera.position.y < WORLD_HEIGHT / 2) camera.position.set(
                 camera.position.x,

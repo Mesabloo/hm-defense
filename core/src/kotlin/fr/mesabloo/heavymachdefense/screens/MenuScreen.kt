@@ -28,6 +28,7 @@ import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
 import fr.mesabloo.heavymachdefense.systems.input.listener.MenuBackClickListener
 import fr.mesabloo.heavymachdefense.systems.input.listener.MenuDeleteClickListener
 import fr.mesabloo.heavymachdefense.systems.input.listener.MenuNewClickListener
+import fr.mesabloo.heavymachdefense.systems.input.listener.MenuSaveSelected
 import fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
 import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
 import fr.mesabloo.heavymachdefense.systems.rendering.ui.RenderTextSystem
@@ -48,7 +49,6 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
 
     private var saves: MutableList<GameSave> = mutableListOf()
     var focusedIndex: Int = 0
-        private set
 
     private var prefs: Preferences = Gdx.app.getPreferences(GameSave.PREFERENCES_PATH)
     private val json = Json()
@@ -157,8 +157,8 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         }
 
         var currentY = BASE_SAVE_Y
-        for (save in this.saves) {
-            currentY -= this.createSave(save, currentY) { it == lastAccessed } + SAVE_PADDING
+        this.saves.forEachIndexed { index, save ->
+            currentY -= this.createSave(save, index, currentY) { it == lastAccessed } + SAVE_PADDING
         }
     }
 
@@ -196,10 +196,10 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             this["count"] = lastIndex + 1
         }
 
-        this.createSave(save, currentY) { true }
+        this.createSave(save, lastIndex, currentY) { true }
     }
 
-    private fun createSave(save: GameSave, currentY: Float, isFocused: (GameSave) -> Boolean): Float {
+    private fun createSave(save: GameSave, index: Int, currentY: Float, isFocused: (GameSave) -> Boolean): Float {
         var height by Delegates.notNull<Float>()
 
         val currentlyFocused = isFocused(save)
@@ -222,6 +222,13 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
                 y = positionY
                 zIndex = 20
             }
+            with<MouseInputComponent> {}
+            with<OnClickListener> {
+                viewport = this@MenuScreen.ui.viewport
+                listener = MenuSaveSelected(this@MenuScreen, this@MenuScreen.ui.engine, this@entity.entity, index)
+            }
+            with<ButtonClickComponent> {}
+
             this.entity += textureComponent
 
             height = textureComponent.height
@@ -340,8 +347,8 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         this.focusedIndex = newlyFocused?.let { this.saves.indexOf(it) } ?: -1
 
         var currentY = BASE_SAVE_Y
-        for (save in this.saves) {
-            currentY -= this.createSave(save, currentY) { it == newlyFocused } + SAVE_PADDING
+        this.saves.forEachIndexed { index, save ->
+            currentY -= this.createSave(save, index, currentY) { it == newlyFocused } + SAVE_PADDING
         }
     }
 

@@ -3,7 +3,6 @@ package fr.mesabloo.heavymachdefense.systems.input
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import fr.mesabloo.heavymachdefense.components.PositionComponent
 import fr.mesabloo.heavymachdefense.components.TextureComponent
 import fr.mesabloo.heavymachdefense.components.input.MouseInputComponent
@@ -49,6 +48,10 @@ class ButtonClickSystem : IteratingSystem(
         } else {
             buttonClickComponent.alreadyClicked = false
         }
-        textureComponent.texture = buttonAssetsManager.texture(buttonClickComponent.buttonKind, buttonClickComponent.alreadyClicked)
+
+        if (buttonClickComponent.buttonKind != null) {
+            textureComponent.texture =
+                buttonAssetsManager.texture(buttonClickComponent.buttonKind!!, buttonClickComponent.alreadyClicked)
+        }
     }
 }
