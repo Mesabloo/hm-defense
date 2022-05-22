@@ -112,7 +112,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             }
             with<MouseInputComponent> {}
             with<OnClickListener> {
-                camera = this@MenuScreen.ui.camera
+                viewport = this@MenuScreen.ui.viewport
                 listener = MenuBackClickListener(this@MenuScreen, this@entity.entity)
             }
             this.entity += textureComponent
@@ -131,7 +131,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             }
             with<MouseInputComponent> {}
             with<OnClickListener> {
-                camera = this@MenuScreen.ui.camera
+                viewport = this@MenuScreen.ui.viewport
                 listener = MenuDeleteClickListener(this@MenuScreen)
             }
             this.entity += textureComponent
@@ -150,7 +150,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             }
             with<MouseInputComponent> {}
             with<OnClickListener> {
-                camera = this@MenuScreen.ui.camera
+                viewport = this@MenuScreen.ui.viewport
                 listener = MenuNewClickListener(this@MenuScreen)
             }
             this.entity += textureComponent

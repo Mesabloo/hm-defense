@@ -1,17 +1,14 @@
 package fr.mesabloo.heavymachdefense.desktop
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
 import fr.mesabloo.heavymachdefense.MainGame
 
 fun main() {
-    val config = LwjglApplicationConfiguration()
-    config.backgroundFPS = 30
-    config.foregroundFPS = 60
-    config.fullscreen = false
+    val config = Lwjgl3ApplicationConfiguration()
+    config.setIdleFPS(30)
+    config.setForegroundFPS(60)
+    config.setWindowedMode(768, 1024)
 
-    config.width = 768
-    config.height = 1024
-
-    LwjglApplication(MainGame(), config)
+    Lwjgl3Application(MainGame(), config)
 }

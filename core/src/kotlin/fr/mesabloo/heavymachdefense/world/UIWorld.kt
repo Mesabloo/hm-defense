@@ -7,12 +7,12 @@ import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.FitViewport
 import fr.mesabloo.heavymachdefense.internal.Batcher
 
-const val UI_WIDTH = 768f // = 768f
+const val UI_WIDTH = 768f
 const val UI_HEIGHT = 1024f // the game screen is actually twice as high, but we only show half of it
 
 class UIWorld : Disposable {
-    val camera: OrthographicCamera = OrthographicCamera(UI_WIDTH, UI_HEIGHT)
-    private val viewport: FitViewport = FitViewport(UI_WIDTH, UI_HEIGHT, this.camera)
+    private val camera: OrthographicCamera = OrthographicCamera(UI_WIDTH, UI_HEIGHT)
+    val viewport: FitViewport = FitViewport(UI_WIDTH, UI_HEIGHT, this.camera)
 
     val engine = PooledEngine()
 

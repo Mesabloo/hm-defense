@@ -2,6 +2,7 @@ package fr.mesabloo.heavymachdefense.systems.input
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import fr.mesabloo.heavymachdefense.components.PositionComponent
 import fr.mesabloo.heavymachdefense.components.TextureComponent
@@ -33,8 +34,8 @@ class ButtonClickSystem : IteratingSystem(
         val x = positionComponent.x
         val y = positionComponent.y
 
-        var clickPosition = Vector3(mouseInputComponent.clickPosition, 0f)
-        clickPosition = onClickListener.camera.unproject(clickPosition)
+        var clickPosition = Vector2(mouseInputComponent.clickPosition)
+        clickPosition = onClickListener.viewport.unproject(clickPosition)
 
         if (mouseInputComponent.leftClick) {
             if (!buttonClickComponent.alreadyClicked

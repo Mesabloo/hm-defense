@@ -66,6 +66,9 @@ object GameSaveJsonSerializer : Json.Serializer<GameSave> {
         json.writeValue("lastStageCompleted", `object`.lastStageCompleted)
         json.writeValue("credits", `object`.credits)
         json.writeValue("name", `object`.name)
+        json.writeValue("machineUpgrades", `object`.machineUpgrades)
+        json.writeValue("turretUpgrades", `object`.turretUpgrades)
+        json.writeValue("mainUpgrades", `object`.mainUpgrades)
         json.writeObjectEnd()
     }
 }
