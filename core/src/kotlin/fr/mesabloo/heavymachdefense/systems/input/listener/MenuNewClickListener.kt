@@ -1,13 +1,14 @@
 package fr.mesabloo.heavymachdefense.systems.input.listener
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
+import de.tomgrill.gdxdialogs.core.dialogs.GDXTextPrompt
+import de.tomgrill.gdxdialogs.core.listener.TextPromptListener
 import fr.mesabloo.heavymachdefense.saves.GameSave
 import fr.mesabloo.heavymachdefense.screens.MenuScreen
+import fr.mesabloo.heavymachdefense.systems.input.dialogs.dialogs
 
 class MenuNewClickListener (private val screen: MenuScreen) : () -> Unit {
-    private val inputListener = object : Input.TextInputListener {
-        override fun input(text: String) {
+    private val inputListener = object : TextPromptListener {
+        override fun confirm(text: String) {
             // TODO: create new save if possible (if there are slots remaining)
             //       however this is called on the rendering thread...
 
@@ -17,13 +18,17 @@ class MenuNewClickListener (private val screen: MenuScreen) : () -> Unit {
             screen.addSave(save)
         }
 
-        override fun canceled() {
+        override fun cancel() {
 
         }
-
     }
 
     override fun invoke() {
-        Gdx.input.getTextInput(this.inputListener, "Enter your username:", "", "Username")
+        dialogs.newDialog(GDXTextPrompt::class.java)
+            .setTitle("Heavy MACH: Defense")
+            .setMessage("Enter your username")
+            .setTextPromptListener(this.inputListener)
+            .build()
+            .show()
     }
 }
