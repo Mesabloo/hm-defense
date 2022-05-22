@@ -6,13 +6,11 @@ import java.util.*
 /**
  * A colored Gdx logger which logs to [System.err].
  *
- *
  *  * Log messages are colored in Blue
  *  * Debug messages are colored in Magenta
  *  * Error messages are colored in Red
  *
- *
- * @apiNote This uses ANSI color codes, which should now be supported on all major
+ * Note: This uses ANSI color codes, which should now be supported on all major
  * modern OSes (Linux, macOS and Windows).
  * In case your terminal does not support ANSI color codes, the output should contain
  * junk characters (e.g. `☐[32m`).

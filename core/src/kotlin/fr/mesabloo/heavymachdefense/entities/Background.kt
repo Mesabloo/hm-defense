@@ -18,6 +18,15 @@ import ktx.ashley.with
 import ktx.box2d.body
 import ktx.box2d.box
 
+/**
+ * A factory method to create all the necessary entities to create the background of a level.
+ *
+ * @param engine The [Engine] to add the entities to
+ * @param lvl The stage number
+ * @param world The Box2D [World] it lives in
+ *
+ * @return A list of [Entity]s already added to the given [Engine]
+ */
 fun createBackground(engine: Engine, lvl: Int, world: World): Collection<Entity> = listOf(
     engine.entity {
         with<TextureComponent> {

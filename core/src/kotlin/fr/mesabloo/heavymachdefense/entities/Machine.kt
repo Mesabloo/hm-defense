@@ -10,7 +10,7 @@ import ktx.ashley.entity
 import ktx.ashley.with
 import ktx.math.vec2
 
-fun createMachine(engine: Engine, world: World, kind: MachineKind, level: Long): Entity = engine.entity {
+fun createMachine(engine: Engine, world: World, kind: MachineKind, level: Int): Entity = engine.entity {
     val width = 32f
     val height = 32f
 
@@ -45,7 +45,7 @@ fun createMachine(engine: Engine, world: World, kind: MachineKind, level: Long):
 //        }
 //        position.set((x + 32f / 2f) / PPM, (y + 32f / 2f) / PPM)
 //    }
-    val (bodies, joints) = MachineModel("rifle", 1).toPositionedBody(world, vec2(x, y))
+    val (bodies, joints) = MachineModel("rifle", level).toPositionedBody(world, vec2(x, y))
 
     with<MachineComponent> {
         this.kind = kind

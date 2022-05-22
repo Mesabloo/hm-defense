@@ -8,6 +8,14 @@ import fr.mesabloo.heavymachdefense.components.input.MouseInputComponent
 import ktx.ashley.entity
 import ktx.ashley.with
 
+/**
+ * A factory method to create an [Entity] for a [com.badlogic.gdx.graphics.Camera] handling mouse input.
+ *
+ * @param engine The [Engine] to which to add the created [Entity]
+ * @param camera The [com.badlogic.gdx.graphics.Camera]
+ *
+ * @return The [Entity] created for the given [com.badlogic.gdx.graphics.Camera]
+ */
 fun createCamera(engine: Engine, camera: OrthographicCamera): Entity = engine.entity {
     with<CameraComponent> {
         this.camera = camera

@@ -4,6 +4,14 @@ import aurelienribon.tweenengine.TweenAccessor
 import com.badlogic.ashley.core.Component
 import ktx.ashley.Mapper
 
+/**
+ * A position is a triplet containing the X and Y positions (no unit given) and a Z-index which is used
+ * strictly for drawing onto a [fr.mesabloo.heavymachdefense.internal.Batcher].
+ *
+ * @property x The position on the X axis
+ * @property y The position on the Y axis
+ * @property zIndex The Z-index
+ */
 class PositionComponent(
     var x: Float = 0f,
     var y: Float = 0f,
@@ -12,8 +20,14 @@ class PositionComponent(
     companion object : Mapper<PositionComponent>()
 }
 
+/**
+ * A very simple accessor used by the Tween engine to manipulate the position.
+ */
 class PositionAccessor : TweenAccessor<PositionComponent> {
     companion object {
+        /**
+         * The identifier for animations using this accessor.
+         */
         const val POSITION: Int = 1
     }
 

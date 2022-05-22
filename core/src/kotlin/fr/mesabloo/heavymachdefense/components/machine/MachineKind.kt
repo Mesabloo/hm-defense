@@ -2,6 +2,11 @@ package fr.mesabloo.heavymachdefense.components.machine
 
 import java.io.Serializable
 
+/**
+ * An enumeration containing all the available machine kinds, mapped to their low-level names.
+ *
+ * @property machineName The low-level of each machine kind.
+ */
 enum class MachineKind(val machineName: String) : Serializable {
     RIFLE("rifle"),
     MISSILE("missile"),

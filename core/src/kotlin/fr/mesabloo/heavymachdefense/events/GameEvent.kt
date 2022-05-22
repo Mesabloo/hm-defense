@@ -1,4 +1,6 @@
 package fr.mesabloo.heavymachdefense.events
 
-interface GameEvent {
-}
+/**
+ * The base interface for all game events.
+ */
+interface GameEvent

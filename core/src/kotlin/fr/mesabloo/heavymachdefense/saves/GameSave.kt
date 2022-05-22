@@ -49,6 +49,8 @@ object GameSaveJsonSerializer : Json.Serializer<GameSave> {
             save.lastStageCompleted = json.readValue(data, "lastStageCompleted") ?: 0
             save.credits = json.readValue(data, "credits") ?: 0
             save.name = json.readValue(data, "name") ?: ""
+            // TODO: if name empty -> default one (e.g. "Username")
+
             json.readValue<HashMap<MachineKind, Int>?>(data, "machineUpgrades")?.let { save.machineUpgrades = it }
             json.readValue<HashMap<TurretKind, Int>?>(data, "turretUpgrades")?.let { save.turretUpgrades = it }
             json.readValue<HashMap<String, Int>?>(data, "mainUpgrades")?.let { save.mainUpgrades = it }

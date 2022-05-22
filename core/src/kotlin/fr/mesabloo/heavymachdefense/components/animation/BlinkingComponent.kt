@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.components
+package fr.mesabloo.heavymachdefense.components.animation
 
 import com.badlogic.ashley.core.Component
 import ktx.ashley.Mapper

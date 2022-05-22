@@ -4,8 +4,22 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import ktx.ashley.Mapper
 
+/**
+ * A component holding a message to be printed using the given font.
+ *
+ * @property message The message to print
+ */
 class TextComponent(var message: String = ""): Component {
+    /**
+     * The font to use to print the message onto the screen.
+     */
     lateinit var font: BitmapFont
+
+    /**
+     * An additional alignment constant which specifies where is the actual center.
+     *
+     * Defaults to the bottom-left corner of the bounding box.
+     */
     var align: Long = BOTTOM_LEFT
 
     companion object: Mapper<TextComponent>() {

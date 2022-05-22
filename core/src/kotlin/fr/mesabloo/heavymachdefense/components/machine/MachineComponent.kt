@@ -5,7 +5,8 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Joint
 import ktx.ashley.Mapper
 
-class MachineComponent(var level: Long = 0L) : Component {
+// TODO: might have to change
+class MachineComponent(var level: Int = 0) : Component {
     lateinit var kind: MachineKind
     lateinit var mainBody: Body
     lateinit var lWeaponBody: Body

@@ -1,9 +1,9 @@
-package fr.mesabloo.heavymachdefense.systems.rendering
+package fr.mesabloo.heavymachdefense.systems.rendering.animation
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import fr.mesabloo.heavymachdefense.components.BlinkingComponent
 import fr.mesabloo.heavymachdefense.components.TextureComponent
+import fr.mesabloo.heavymachdefense.components.animation.BlinkingComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
 import java.util.*
