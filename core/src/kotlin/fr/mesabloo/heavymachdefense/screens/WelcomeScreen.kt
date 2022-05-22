@@ -53,7 +53,7 @@ class WelcomeScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen
             with<PositionComponent> {
                 x = 0f
                 y = 0f
-                z = 0f
+                zIndex = 0
             }
             with<MouseInputComponent> {
 
@@ -67,7 +67,7 @@ class WelcomeScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen
             with<PositionComponent> {
                 x = UI_WIDTH / 2f - textureComponent.width / 2f
                 y = UI_HEIGHT / 2.25f - textureComponent.height / 2f
-                z = 15f
+                zIndex = 15
             }
             with<BlinkingComponent> {
                 frequency = 1f

@@ -90,7 +90,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = -textureComponent.width
                 y = 0f
-                z = 5000f
+                zIndex = 5000
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -107,7 +107,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = UI_WIDTH
                 y = 0f
-                z = 5000f
+                zIndex = 5000
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -124,7 +124,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = 0f
                 y = UI_HEIGHT + textureComponent.height
-                z = 5001f
+                zIndex = 5001
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -141,7 +141,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = 0f
                 y = -textureComponent.height - textureComponent.height
-                z = 5001f
+                zIndex = 5001
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -158,7 +158,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = UI_WIDTH / 2f - textureComponent.width / 2f
                 y = -1158f
-                z = 5002f
+                zIndex = 5002
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -205,7 +205,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = 0f
                 y = 0f
-                z = 5000f
+                zIndex = 5000
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -223,7 +223,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = UI_WIDTH - textureComponent.width
                 y = 0f
-                z = 5000f
+                zIndex = 5000
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -241,7 +241,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = 0f
                 y = UI_HEIGHT - textureComponent.height
-                z = 5001f
+                zIndex = 5001
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -259,7 +259,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = 0f
                 y = 0f
-                z = 5001f
+                zIndex = 5001
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -283,7 +283,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             with<PositionComponent> {
                 x = UI_WIDTH / 2f - textureComponent.width / 2f
                 y = UI_HEIGHT / 2f - textureComponent.height / 2.5f + 2f
-                z = 5002f
+                zIndex = 5002
             }
             with<LoadingPartComponent> {}
             this.entity += textureComponent
@@ -298,7 +298,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
         }
     }
 
-    companion object {
+    private companion object {
         const val LOADING_DURATION = 1.1f
         const val LOADING_END_DELAY = 0.5f
     }

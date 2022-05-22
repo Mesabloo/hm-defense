@@ -28,7 +28,7 @@ fun createBackground(engine: Engine, lvl: Int, world: World): Collection<Entity>
         with<PositionComponent> {
             x = 0f
             y = 0f
-            z = 0f
+            zIndex = 0
         }
     },
     engine.entity {
@@ -40,7 +40,7 @@ fun createBackground(engine: Engine, lvl: Int, world: World): Collection<Entity>
         with<PositionComponent> {
             x = 0f
             y = 1024f
-            z = 0f
+            zIndex = 0
         }
     },
     engine.entity {

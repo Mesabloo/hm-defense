@@ -3,43 +3,66 @@ package fr.mesabloo.heavymachdefense.screens
 import com.badlogic.ashley.signals.Signal
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.utils.Json
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.components.PositionComponent
 import fr.mesabloo.heavymachdefense.components.TextureComponent
 import fr.mesabloo.heavymachdefense.components.input.MouseInputComponent
+import fr.mesabloo.heavymachdefense.components.saves.SaveComponent
 import fr.mesabloo.heavymachdefense.components.ui.Button
 import fr.mesabloo.heavymachdefense.components.ui.ButtonClickComponent
 import fr.mesabloo.heavymachdefense.components.ui.OnClickListener
+import fr.mesabloo.heavymachdefense.components.ui.TextComponent
+import fr.mesabloo.heavymachdefense.components.ui.TextComponent.Companion.BOTTOM_RIGHT
 import fr.mesabloo.heavymachdefense.events.MouseInputEvent
+import fr.mesabloo.heavymachdefense.managers.FontManager
 import fr.mesabloo.heavymachdefense.managers.assets.MenuAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.buttonAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.menuAssetsManager
+import fr.mesabloo.heavymachdefense.managers.fontManager
 import fr.mesabloo.heavymachdefense.saves.GameSave
+import fr.mesabloo.heavymachdefense.saves.GameSaveJsonSerializer
 import fr.mesabloo.heavymachdefense.systems.input.ButtonClickSystem
 import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
 import fr.mesabloo.heavymachdefense.systems.input.listener.MenuBackClickListener
+import fr.mesabloo.heavymachdefense.systems.input.listener.MenuNewClickListener
 import fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
 import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
+import fr.mesabloo.heavymachdefense.systems.rendering.ui.RenderTextSystem
+import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
-import ktx.ashley.entity
-import ktx.ashley.plusAssign
-import ktx.ashley.with
+import ktx.ashley.*
+import ktx.json.fromJson
+import ktx.json.setSerializer
+import ktx.preferences.flush
 import ktx.preferences.get
+import ktx.preferences.set
+import java.text.SimpleDateFormat
+import kotlin.properties.Delegates
 
 class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(game, isLoading) {
     private val mux = InputMultiplexer()
     private val mouseInputSignal: Signal<MouseInputEvent> = Signal()
 
     private var saves: MutableList<GameSave> = mutableListOf()
+    private var refreshSaves = true
+
+    private var prefs: Preferences = Gdx.app.getPreferences(GameSave.PREFERENCES_PATH)
+    private val json = Json()
 
     init {
-        val json = Json()
-        val prefs = Gdx.app.getPreferences(GameSave.PREFERENCES_PATH)
-        val numberOfSaves: Int = prefs["count"] ?: 0
+        this.json.setSerializer(GameSaveJsonSerializer)
+
+        val numberOfSaves: Int = this.prefs["count"] ?: 0
+
+        Gdx.app.debug(this.javaClass.simpleName, "Found $numberOfSaves saves in preferences")
 
         for (i in 0 until numberOfSaves) {
-            this.saves[i] = prefs.get<String>("$i")?.let { json.fromJson(GameSave::class.java, it) } ?: GameSave()
+            this.saves.add(
+                i,
+                this.prefs.get<String>("$i")?.let { this.json.fromJson(it) } ?: GameSave()
+            )
         }
         this.saves.sortBy { it.creationDate }
     }
@@ -57,6 +80,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         this.ui.engine.addSystem(ButtonClickSystem())
         // NOTE: this should have already been added by the loading component
         this.ui.engine.addSystem(RenderPositionedTextures(this.ui.batch))
+        this.ui.engine.addSystem(RenderTextSystem(this.ui.batch))
 
         this.ui.engine.entity {
             with<TextureComponent> {
@@ -65,7 +89,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             with<PositionComponent> {
                 x = 0f
                 y = 0f
-                z = 0f
+                zIndex = 0
             }
         }
 
@@ -78,7 +102,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             with<PositionComponent> {
                 x = UI_WIDTH * 1f / 4f - textureComponent.width / 2f + 32f
                 y = 30f
-                z = 10f
+                zIndex = 10
             }
             with<ButtonClickComponent> {
                 buttonKind = Button.BACK
@@ -97,7 +121,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             with<PositionComponent> {
                 x = UI_WIDTH * 2f / 4f - textureComponent.width / 2f
                 y = 30f
-                z = 10f
+                zIndex = 10
             }
             with<ButtonClickComponent> {
                 buttonKind = Button.DELETE
@@ -118,7 +142,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             with<PositionComponent> {
                 x = UI_WIDTH * 3f / 4f - textureComponent.width / 2f - 32f
                 y = 30f
-                z = 10f
+                zIndex = 10
             }
             with<ButtonClickComponent> {
                 buttonKind = Button.NEW
@@ -126,22 +150,24 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             with<MouseInputComponent> {}
             with<OnClickListener> {
                 camera = this@MenuScreen.ui.camera
-                listener = {
-
-                }
+                listener = MenuNewClickListener(this@MenuScreen)
             }
             this.entity += textureComponent
         }
 
-        run {
-            var currentX = 0f
-            var currentY = 0f
+        var currentY = BASE_SAVE_Y
+        for (save in this.saves) {
+            currentY -= this.createSave(save, currentY) { it == lastAccessed } + SAVE_PADDING
+        }
+    }
+
+    override fun render(delta: Float) {
+        super.render(delta)
+
+        if (this.refreshSaves) {
 
 
-            for (save in this.saves) {
-                // TODO: add entities to position every info
-                //       + select last accessed by default
-            }
+            this.refreshSaves = false
         }
     }
 
@@ -150,5 +176,142 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
 
         menuAssetsManager.dispose()
         buttonAssetsManager.dispose()
+    }
+
+    fun addSave(save: GameSave) {
+        val lastSave = this.saves.lastOrNull()
+
+        val currentY = this.ui.engine.getEntitiesFor(
+            allOf(
+                SaveComponent::class,
+                PositionComponent::class,
+                TextureComponent::class
+            ).get()
+        )
+            .firstOrNull {
+                it[SaveComponent.mapper]!!.save.creationDate == lastSave?.creationDate
+            }
+            ?.let {
+                it[PositionComponent.mapper]!!.y - SAVE_PADDING
+            }
+            ?: BASE_SAVE_Y
+
+        this.saves.add(save)
+        val lastIndex = this.saves.lastIndex
+
+        this.prefs.flush {
+            this["$lastIndex"] = this@MenuScreen.json.toJson(save)
+            this["count"] = lastIndex + 1
+        }
+
+        this.createSave(save, currentY) { true }
+    }
+
+    private fun createSave(save: GameSave, currentY: Float, isFocused: (GameSave) -> Boolean): Float {
+        var height by Delegates.notNull<Float>()
+
+        val currentlyFocused = isFocused(save)
+
+        val textureComponent = TextureComponent()
+        textureComponent.texture = menuAssetsManager.getSlot(currentlyFocused)
+
+        val positionX = UI_WIDTH / 2f - textureComponent.width / 2f
+        val positionY = currentY - textureComponent.height
+
+        val dateFormatter = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+
+        val newEntity = this.ui.engine.entity {
+            with<SaveComponent> {
+                this.save = save
+                this.focused = currentlyFocused
+            }
+            with<PositionComponent> {
+                x = positionX
+                y = positionY
+                zIndex = 20
+            }
+            this.entity += textureComponent
+
+            height = textureComponent.height
+        }
+        this.ui.engine.entity {
+            // creation date
+            with<TextComponent> {
+                message = dateFormatter.format(save.creationDate)
+                font = fontManager.bitmapFonts[FontManager.SET01B]!!
+            }
+            with<PositionComponent> {
+                x = positionX + 150f
+                y = positionY + 65f
+                zIndex = 30
+            }
+        }
+        this.ui.engine.entity {
+            // last access date
+            with<TextComponent> {
+                message = dateFormatter.format(save.lastAccessedDate)
+                font = fontManager.bitmapFonts[FontManager.SET01B]!!
+            }
+            with<PositionComponent> {
+                x = positionX + 150f
+                y = positionY + 44f
+                zIndex = 30
+            }
+        }
+        this.ui.engine.entity {
+            // stage number
+            with<TextComponent> {
+                message = (save.lastStageCompleted + 1).toString().padStart(2, '0')
+                font = fontManager.bitmapFonts[FontManager.CREDITS]!!
+            }
+            with<PositionComponent> {
+                x = positionX + 377f
+                y = positionY + 63f
+                zIndex = 30
+            }
+        }
+        this.ui.engine.entity {
+            // credits
+            with<TextComponent> {
+                message = save.credits.toString()
+                font = fontManager.bitmapFonts[FontManager.CREDITS]!!
+                align = BOTTOM_RIGHT
+            }
+            with<PositionComponent> {
+                x = positionX + 430f
+                y = positionY + 37f
+                zIndex = 30
+            }
+        }
+        this.ui.engine.entity {
+            // name
+            with<TextComponent> {
+                message = save.name
+                font = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_BOLD_24]!!
+            }
+            with<PositionComponent> {
+                x = positionX + 86f
+                y = positionY + 102f
+                zIndex = 30
+            }
+        }
+
+        // TODO: render text behind loading screen (take Z-index in account)
+
+        if (currentlyFocused) {
+            this.ui.engine.getEntitiesFor(allOf(SaveComponent::class, TextureComponent::class).get()).forEach {
+                if (it != newEntity) {
+                    it[SaveComponent.mapper]!!.focused = false
+                    it[TextureComponent.mapper]!!.texture = menuAssetsManager.getSlot(false)
+                }
+            }
+        }
+
+        return height
+    }
+
+    private companion object {
+        const val SAVE_PADDING = 10f
+        const val BASE_SAVE_Y = UI_HEIGHT * 8f / 10f - 12f
     }
 }

@@ -1,6 +1,7 @@
 package fr.mesabloo.heavymachdefense.managers
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.utils.Disposable
 
@@ -10,16 +11,19 @@ class FontManager : Disposable {
         const val LEVEL: String = "level"
         const val MINERAL: String = "mineral"
         const val STAGE: String = "stage"
+        const val SET01B: String = "set_01b"
 
-        const val TREBUCHET_MS: String = "trebuchet_ms"
-        const val TREBUCHET_MS_BOLD: String = "trebuchet_ms_bd"
+        const val TREBUCHET_MS_12: String = "trebuchet_ms"
+        const val TREBUCHET_MS_BOLD_24: String = "trebuchet_ms_bd_24"
+        const val TREBUCHET_MS_BOLD_12: String = "trebuchet_ms_bd"
     }
 
     fun init() {
-        listOf(CREDITS, LEVEL, MINERAL, STAGE, TREBUCHET_MS, TREBUCHET_MS_BOLD)
+        listOf(CREDITS, LEVEL, MINERAL, STAGE, SET01B, TREBUCHET_MS_12, TREBUCHET_MS_BOLD_24, TREBUCHET_MS_BOLD_12)
             .forEach { fontName ->
                 this.bitmapFonts[fontName] = BitmapFont(Gdx.files.internal("fonts/${fontName}.fnt"))
             }
+        this.bitmapFonts[TREBUCHET_MS_BOLD_24]!!.color = Color.CYAN
     }
 
     override fun dispose() {

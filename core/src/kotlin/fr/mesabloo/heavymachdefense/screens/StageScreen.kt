@@ -15,7 +15,6 @@ import fr.mesabloo.heavymachdefense.systems.MoveMachineSystem
 import fr.mesabloo.heavymachdefense.systems.camera.MoveCameraSystem
 import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
 import fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
-import fr.mesabloo.heavymachdefense.systems.rendering.RenderMachinesSystem
 import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
 import fr.mesabloo.heavymachdefense.systems.rendering.debug.DebugWorldSystem
 import fr.mesabloo.heavymachdefense.world.GameWorld
@@ -40,8 +39,8 @@ class StageScreen(game: MainGame, private val number: Int) : AbstractScreen(game
         world.engine.addSystem(MouseInputSystem(mouseInputSignal))
         world.engine.addSystem(MoveCameraSystem())
         ///// RENDERING
-        world.engine.addSystem(RenderPositionedTextures(world.batch))
-        world.engine.addSystem(RenderMachinesSystem(world.batch))
+        //world.engine.addSystem(RenderPositionedTextures(world.batch))
+        //world.engine.addSystem(RenderMachinesSystem(world.batch))
         if (DEBUG)
             world.engine.addSystem(DebugWorldSystem(world.world, world.camera))
 
