@@ -1,4 +1,5 @@
 package fr.mesabloo.heavymachdefense
+
 import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
@@ -50,22 +51,21 @@ class MainGame : KtxGame<AbstractScreen>() {
             assetManager.update()
 
         if (welcomeAssetsManager.isFullyLoaded() && loadingAssetsManager.isFullyLoaded() && justStarted) {
-            changeScreen(lazy { WelcomeScreen(this) })
+            changeScreen(lazy { WelcomeScreen(this) })?.setupInputProcessor()
         }
 
         super.render()
     }
 
-    inline fun <reified T : AbstractScreen> changeScreen(newScreen: Lazy<T>): T? {
+    inline fun <reified T : AbstractScreen> changeScreen(newScreen: Lazy<T>): T? =
         if (this.`access$currentScreen` !is T) {
             if (!this.containsScreen<T>()) {
                 this.addScreen(newScreen.value)
             }
             this.setScreen<T>()
-            return this.getScreen()
-        }
-        return null
-    }
+
+            this.getScreen()
+        } else null
 
     override fun resize(width: Int, height: Int) {
         if (DEBUG)

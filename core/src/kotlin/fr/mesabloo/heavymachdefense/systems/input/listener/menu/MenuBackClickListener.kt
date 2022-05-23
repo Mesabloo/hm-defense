@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.systems.input.listener
+package fr.mesabloo.heavymachdefense.systems.input.listener.menu
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx

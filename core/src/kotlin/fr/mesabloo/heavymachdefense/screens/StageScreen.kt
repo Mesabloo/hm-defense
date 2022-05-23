@@ -30,6 +30,8 @@ class StageScreen(game: MainGame, private val number: Int) : AbstractScreen(game
      */
     private val world = GameWorld()
 
+    private val mux: InputMultiplexer = InputMultiplexer()
+
     /////////////////// INTERNAL ///////////////////////
 
     private val mouseInputSignal = Signal<MouseInputEvent>()
@@ -54,13 +56,14 @@ class StageScreen(game: MainGame, private val number: Int) : AbstractScreen(game
         createGameUI(this.ui.engine)
     }
 
+    override fun setupInputProcessor() {
+        Gdx.input.inputProcessor = this.mux
+    }
+
     override fun show() {
         super.show()
 
-        val inputMux = InputMultiplexer()
-        inputMux.addProcessor(MouseInputProcessor(this.mouseInputSignal))
-
-        Gdx.input.inputProcessor = inputMux
+        this.mux.addProcessor(MouseInputProcessor(this.mouseInputSignal))
     }
 
     override fun render(delta: Float) {

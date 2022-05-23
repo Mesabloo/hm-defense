@@ -1,5 +1,6 @@
-package fr.mesabloo.heavymachdefense.systems.input.listener
+package fr.mesabloo.heavymachdefense.systems.input.listener.menu
 
+import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog
 import de.tomgrill.gdxdialogs.core.dialogs.GDXTextPrompt
 import de.tomgrill.gdxdialogs.core.listener.TextPromptListener
 import fr.mesabloo.heavymachdefense.saves.GameSave
@@ -12,7 +13,7 @@ class MenuNewClickListener (private val screen: MenuScreen) : () -> Unit {
             // TODO: create new save if possible (if there are slots remaining)
             //       however this is called on the rendering thread...
 
-            val save =  GameSave()
+            val save = GameSave()
             save.name = text
 
             screen.addSave(save)
@@ -24,11 +25,20 @@ class MenuNewClickListener (private val screen: MenuScreen) : () -> Unit {
     }
 
     override fun invoke() {
-        dialogs.newDialog(GDXTextPrompt::class.java)
-            .setTitle("Heavy MACH: Defense")
-            .setMessage("Enter your username")
-            .setTextPromptListener(this.inputListener)
-            .build()
-            .show()
+        if (screen.numberOfSaves < 5) {
+            dialogs.newDialog(GDXTextPrompt::class.java)
+                .setTitle("Heavy MACH: Defense")
+                .setMessage("Enter your username")
+                .setTextPromptListener(this.inputListener)
+                .build()
+                .show()
+        } else {
+            dialogs.newDialog(GDXButtonDialog::class.java)
+                .setTitle("Heavy MACH: Defense")
+                .setMessage("Not enough slots to create a new save")
+                .addButton("Ok")
+                .build()
+                .show()
+        }
     }
 }

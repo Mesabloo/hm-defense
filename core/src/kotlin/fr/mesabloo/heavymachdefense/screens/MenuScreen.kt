@@ -25,10 +25,10 @@ import fr.mesabloo.heavymachdefense.saves.GameSave
 import fr.mesabloo.heavymachdefense.saves.GameSaveJsonSerializer
 import fr.mesabloo.heavymachdefense.systems.input.ButtonClickSystem
 import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
-import fr.mesabloo.heavymachdefense.systems.input.listener.MenuBackClickListener
-import fr.mesabloo.heavymachdefense.systems.input.listener.MenuDeleteClickListener
-import fr.mesabloo.heavymachdefense.systems.input.listener.MenuNewClickListener
-import fr.mesabloo.heavymachdefense.systems.input.listener.MenuSaveSelected
+import fr.mesabloo.heavymachdefense.systems.input.listener.menu.MenuBackClickListener
+import fr.mesabloo.heavymachdefense.systems.input.listener.menu.MenuDeleteClickListener
+import fr.mesabloo.heavymachdefense.systems.input.listener.menu.MenuNewClickListener
+import fr.mesabloo.heavymachdefense.systems.input.listener.menu.MenuSaveSelected
 import fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
 import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
 import fr.mesabloo.heavymachdefense.systems.rendering.ui.RenderTextSystem
@@ -49,6 +49,8 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
 
     private var saves: MutableList<GameSave> = mutableListOf()
     var focusedIndex: Int = 0
+    val numberOfSaves: Int
+        get() = saves.size
 
     private var prefs: Preferences = Gdx.app.getPreferences(GameSave.PREFERENCES_PATH)
     private val json = Json()
@@ -69,6 +71,10 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         this.saves.sortBy { it.creationDate }
     }
 
+    override fun setupInputProcessor() {
+        Gdx.input.inputProcessor = this.mux
+    }
+
     override fun show() {
         super.show()
 
@@ -76,7 +82,6 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             return
 
         mux.addProcessor(MouseInputProcessor(this.mouseInputSignal))
-        Gdx.input.inputProcessor = mux
 
         this.ui.engine.addSystem(MouseInputSystem(this.mouseInputSignal))
         this.ui.engine.addSystem(ButtonClickSystem())
@@ -166,7 +171,6 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
         super.dispose()
 
         menuAssetsManager.dispose()
-        buttonAssetsManager.dispose()
     }
 
     fun addSave(save: GameSave) {
@@ -225,7 +229,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             with<MouseInputComponent> {}
             with<OnClickListener> {
                 viewport = this@MenuScreen.ui.viewport
-                listener = MenuSaveSelected(this@MenuScreen, this@MenuScreen.ui.engine, this@entity.entity, index)
+                listener = MenuSaveSelected(this@MenuScreen.game, this@MenuScreen, this@MenuScreen.ui.engine, this@entity.entity, index)
             }
             with<ButtonClickComponent> {}
 

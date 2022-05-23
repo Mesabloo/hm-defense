@@ -35,6 +35,8 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
     var isLoading: Boolean = isLoading
         private set
 
+    abstract fun setupInputProcessor()
+
     override fun hide() {
         Gdx.app.debug(this.javaClass.simpleName, "Hiding application")
     }
@@ -190,6 +192,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
             Gdx.app.debug(this.javaClass.simpleName, "Removing entities")
 
             this@AbstractScreen.removeLoadingOverlayEnd()
+            this.setupInputProcessor()
         }
 
         this.ui.engine.entity {

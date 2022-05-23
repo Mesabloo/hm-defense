@@ -13,8 +13,9 @@ enum class Button(val str: String) {
     NEW("new"),
     NEXT("next"),
     NO("no"),
+    OK("ok"),
     PREVIOUS("previous"),
     RANKING("ranking"),
-    SUPPORt("support"),
+    SUPPORT("support"),
     YES("yes")
 }

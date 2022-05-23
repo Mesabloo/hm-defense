@@ -5,9 +5,9 @@ import com.badlogic.ashley.signals.Signal
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import fr.mesabloo.heavymachdefense.MainGame
-import fr.mesabloo.heavymachdefense.components.animation.BlinkingComponent
 import fr.mesabloo.heavymachdefense.components.PositionComponent
 import fr.mesabloo.heavymachdefense.components.TextureComponent
+import fr.mesabloo.heavymachdefense.components.animation.BlinkingComponent
 import fr.mesabloo.heavymachdefense.components.input.MouseInputComponent
 import fr.mesabloo.heavymachdefense.events.MouseInputEvent
 import fr.mesabloo.heavymachdefense.managers.assets.WelcomeAssetsManager
@@ -15,8 +15,8 @@ import fr.mesabloo.heavymachdefense.managers.assets.welcomeAssetsManager
 import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
 import fr.mesabloo.heavymachdefense.systems.input.WelcomeNextScreenSystem
 import fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
-import fr.mesabloo.heavymachdefense.systems.rendering.animation.BlinkingSystem
 import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
+import fr.mesabloo.heavymachdefense.systems.rendering.animation.BlinkingSystem
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import ktx.ashley.entity
@@ -37,7 +37,6 @@ class WelcomeScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen
             return
 
         this.mux.addProcessor(MouseInputProcessor(this.touchSignal))
-        Gdx.input.inputProcessor = this.mux
 
         this.ui.engine.addSystem(MouseInputSystem(this.touchSignal))
         this.ui.engine.addSystem(WelcomeNextScreenSystem(this.game))
@@ -75,6 +74,10 @@ class WelcomeScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen
         }
 
         this.ui.show()
+    }
+
+    override fun setupInputProcessor() {
+        Gdx.input.inputProcessor = this.mux
     }
 
     override fun pause() {

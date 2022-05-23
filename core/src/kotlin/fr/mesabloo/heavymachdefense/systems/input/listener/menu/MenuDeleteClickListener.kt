@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.systems.input.listener
+package fr.mesabloo.heavymachdefense.systems.input.listener.menu
 
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog
 import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener
