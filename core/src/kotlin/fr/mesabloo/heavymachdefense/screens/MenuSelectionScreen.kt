@@ -17,8 +17,10 @@ import fr.mesabloo.heavymachdefense.managers.assets.levelSelectionAssetsManager
 import fr.mesabloo.heavymachdefense.saves.GameSave
 import fr.mesabloo.heavymachdefense.systems.input.ButtonClickSystem
 import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
+import fr.mesabloo.heavymachdefense.systems.input.listener.stage_select.SelectBackClickListener
 import fr.mesabloo.heavymachdefense.systems.input.processor.MouseInputProcessor
 import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
+import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import ktx.ashley.entity
 import ktx.ashley.plusAssign
@@ -81,7 +83,7 @@ class MenuSelectionScreen(game: MainGame, private val save: GameSave, isLoading:
             with<MouseInputComponent> {}
             with<OnClickListener> {
                 viewport = this@MenuSelectionScreen.ui.viewport
-                listener = {}
+                listener = SelectBackClickListener(this@MenuSelectionScreen, this@entity.entity)
             }
             this.entity += textureComponent
         }
@@ -123,11 +125,25 @@ class MenuSelectionScreen(game: MainGame, private val save: GameSave, isLoading:
             }
             this.entity += textureComponent
         }
+
+        var currentY = STAGE_UI_HEIGHT
+        (1..80).forEach {
+            currentY -= this.addStageButton(it, currentY, it > this.save.lastStageCompleted + 1) + STAGE_PADDING
+        }
+    }
+
+    private fun addStageButton(level: Int, currentY: Float, isDisabled: Boolean): Float {
+        return 0f
     }
 
     override fun dispose() {
         super.dispose()
 
         levelSelectionAssetsManager.dispose()
+    }
+
+    private companion object {
+        const val STAGE_UI_HEIGHT = UI_HEIGHT * 8f / 10f
+        const val STAGE_PADDING = 5f
     }
 }
