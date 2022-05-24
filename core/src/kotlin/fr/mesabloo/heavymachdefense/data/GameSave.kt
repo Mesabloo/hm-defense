@@ -1,10 +1,10 @@
-package fr.mesabloo.heavymachdefense.saves
+package fr.mesabloo.heavymachdefense.data
 
 import com.badlogic.gdx.utils.GdxRuntimeException
 import com.badlogic.gdx.utils.Json
 import com.badlogic.gdx.utils.JsonValue
-import fr.mesabloo.heavymachdefense.components.machine.MachineKind
-import fr.mesabloo.heavymachdefense.components.machine.TurretKind
+import fr.mesabloo.heavymachdefense.data.MachineKind
+import fr.mesabloo.heavymachdefense.data.TurretKind
 import ktx.json.readValue
 import java.util.*
 

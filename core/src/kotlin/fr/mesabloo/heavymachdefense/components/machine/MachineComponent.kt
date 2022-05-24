@@ -3,6 +3,7 @@ package fr.mesabloo.heavymachdefense.components.machine
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.Joint
+import fr.mesabloo.heavymachdefense.data.MachineKind
 import ktx.ashley.Mapper
 
 // TODO: might have to change

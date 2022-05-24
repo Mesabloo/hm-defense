@@ -1,7 +1,7 @@
 package fr.mesabloo.heavymachdefense.components.saves
 
 import com.badlogic.ashley.core.Component
-import fr.mesabloo.heavymachdefense.saves.GameSave
+import fr.mesabloo.heavymachdefense.data.GameSave
 import ktx.ashley.Mapper
 
 /**

@@ -21,8 +21,8 @@ import fr.mesabloo.heavymachdefense.managers.assets.MenuAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.buttonAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.menuAssetsManager
 import fr.mesabloo.heavymachdefense.managers.fontManager
-import fr.mesabloo.heavymachdefense.saves.GameSave
-import fr.mesabloo.heavymachdefense.saves.GameSaveJsonSerializer
+import fr.mesabloo.heavymachdefense.data.GameSave
+import fr.mesabloo.heavymachdefense.data.GameSaveJsonSerializer
 import fr.mesabloo.heavymachdefense.systems.input.ButtonClickSystem
 import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
 import fr.mesabloo.heavymachdefense.systems.input.listener.menu.MenuBackClickListener

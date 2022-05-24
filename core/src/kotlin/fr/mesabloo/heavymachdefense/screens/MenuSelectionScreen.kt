@@ -15,7 +15,7 @@ import fr.mesabloo.heavymachdefense.managers.assets.LevelSelectionAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.buttonAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.levelSelectionAssetsManager
 import fr.mesabloo.heavymachdefense.managers.fontManager
-import fr.mesabloo.heavymachdefense.saves.GameSave
+import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.systems.input.ButtonClickSystem
 import fr.mesabloo.heavymachdefense.systems.input.MouseInputSystem
 import fr.mesabloo.heavymachdefense.systems.input.listener.stage_select.SelectBackClickListener

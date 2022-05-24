@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.components.models
+package fr.mesabloo.heavymachdefense.data.models
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2

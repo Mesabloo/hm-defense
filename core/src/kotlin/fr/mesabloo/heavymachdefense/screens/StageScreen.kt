@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import fr.mesabloo.heavymachdefense.DEBUG
 import fr.mesabloo.heavymachdefense.MainGame
-import fr.mesabloo.heavymachdefense.components.machine.MachineKind
+import fr.mesabloo.heavymachdefense.data.MachineKind
 import fr.mesabloo.heavymachdefense.entities.createBackground
 import fr.mesabloo.heavymachdefense.entities.createCamera
 import fr.mesabloo.heavymachdefense.entities.createMachine

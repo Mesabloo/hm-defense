@@ -3,7 +3,7 @@ package fr.mesabloo.heavymachdefense.systems.input.listener.menu
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog
 import de.tomgrill.gdxdialogs.core.dialogs.GDXTextPrompt
 import de.tomgrill.gdxdialogs.core.listener.TextPromptListener
-import fr.mesabloo.heavymachdefense.saves.GameSave
+import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.screens.MenuScreen
 import fr.mesabloo.heavymachdefense.systems.input.dialogs.dialogs
 

@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.World
 import fr.mesabloo.heavymachdefense.components.machine.MachineComponent
-import fr.mesabloo.heavymachdefense.components.machine.MachineKind
-import fr.mesabloo.heavymachdefense.components.models.MachineModel
+import fr.mesabloo.heavymachdefense.data.MachineKind
+import fr.mesabloo.heavymachdefense.data.models.MachineModel
 import ktx.ashley.entity
 import ktx.ashley.with
 import ktx.math.vec2
