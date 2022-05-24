@@ -293,7 +293,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
                 align = BOTTOM_RIGHT
             }
             with<PositionComponent> {
-                x = positionX + 430f
+                x = positionX + 445f
                 y = positionY + 37f
                 zIndex = 30
             }
@@ -305,7 +305,7 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
             }
             with<TextComponent> {
                 message = save.name
-                font = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_BOLD_24]!!
+                font = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_20_BLUE]!!
             }
             with<PositionComponent> {
                 x = positionX + 86f
@@ -313,8 +313,6 @@ class MenuScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(ga
                 zIndex = 30
             }
         }
-
-        // TODO: render text behind loading screen (take Z-index in account)
 
         if (currentlyFocused) {
             this.ui.engine.getEntitiesFor(allOf(SaveComponent::class, TextureComponent::class).get()).forEach {

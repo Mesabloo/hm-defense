@@ -13,6 +13,31 @@ let
     sha256 = "1lvr4qa0qjs103nkbl2gyc0d0syza12ghf0qpwqcqqn1v3hiq765";
   };
 
+  hiero = pkgs.stdenv.mkDerivation {
+    name = "hiero";
+
+    nativeBuildInputs = with pkgs; [
+      wrapGAppsHook
+      glib
+      jdk11
+    ];
+
+    src = null;
+
+    unpackPhase = ":";
+
+    installPhase = ''
+      mkdir -p $out/bin
+
+      cat >$out/bin/hiero <<-'EOF'
+        #!/usr/bin/env bash
+
+        java -jar ${hiero-jar}
+      EOF
+      chmod +x $out/bin/hiero
+    '';
+  };
+
   gdx-texture-packer = pkgs.stdenv.mkDerivation {
     name = "gdx-texture-packer";
 
@@ -58,6 +83,7 @@ pkgs.mkShell {
     jetbrains.idea-community
 
     gdx-texture-packer
+    hiero
 
     (python3.withPackages (ps: with ps; [
       pillow
@@ -70,5 +96,4 @@ pkgs.mkShell {
   LD_LIBRARY_PATH = "${pkgs.xorg.libXxf86vm}/lib:${pkgs.openal}/lib";
   GDX_SETUP = "java -jar ${gdx-setup-tool-jar}";
   JAVA_HOME = "${pkgs.jdk11}/lib/openjdk";
-  GDX_GENFONT = "java -jar ${hiero-jar}";
 }

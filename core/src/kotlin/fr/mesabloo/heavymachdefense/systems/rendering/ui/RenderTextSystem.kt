@@ -27,16 +27,16 @@ class RenderTextSystem(private val batcher: Batcher) :
         val size = vec2(this.glyphLayout.width, this.glyphLayout.height)
 
         val align = textComponent.align
-        val alignmentX = if ((align and RIGHT_X) == 0b1L) {
+        val alignmentX = if ((align and RIGHT_X) == RIGHT_X) {
             -size.x
-        } else if ((align and CENTER_X) == 0b1L) {
+        } else if ((align and CENTER_X) == CENTER_X) {
             -size.x / 2f
         } else {
             0f
         }
-        val alignmentY = if ((align and TOP_Y) == 0b1L) {
+        val alignmentY = if ((align and TOP_Y) == TOP_Y) {
             -size.y
-        } else if ((align and CENTER_Y) == 0b1L) {
+        } else if ((align and CENTER_Y) == CENTER_Y) {
             -size.y / 2f
         } else {
             0f

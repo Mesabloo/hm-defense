@@ -1,9 +1,9 @@
 package fr.mesabloo.heavymachdefense.managers
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.utils.Disposable
+import ktx.graphics.color
 
 class FontManager : Disposable {
     companion object {
@@ -13,17 +13,30 @@ class FontManager : Disposable {
         const val STAGE: String = "stage"
         const val SET01B: String = "set_01b"
 
-        const val TREBUCHET_MS_12: String = "trebuchet_ms"
-        const val TREBUCHET_MS_BOLD_24: String = "trebuchet_ms_bd_24"
-        const val TREBUCHET_MS_BOLD_12: String = "trebuchet_ms_bd"
+        const val TREBUCHET_MS_20_BLUE: String = "trebuchet_ms_20_blue"
+
+        const val TREBUCHET_MS_BOLD_28_BLUE: String = "trebuchet_ms_bd_28_blue"
+        const val TREBUCHET_MS_BOLD_28_BLACK: String = "trebuchet_ms_bd_28_black"
     }
 
     fun init() {
-        listOf(CREDITS, LEVEL, MINERAL, STAGE, SET01B, TREBUCHET_MS_12, TREBUCHET_MS_BOLD_24, TREBUCHET_MS_BOLD_12)
+        listOf(
+            CREDITS,
+            LEVEL,
+            MINERAL,
+            STAGE,
+            SET01B,
+            TREBUCHET_MS_BOLD_28_BLUE,
+            TREBUCHET_MS_BOLD_28_BLACK,
+            TREBUCHET_MS_20_BLUE
+        )
             .forEach { fontName ->
                 this.bitmapFonts[fontName] = BitmapFont(Gdx.files.internal("fonts/${fontName}.fnt"))
             }
-        this.bitmapFonts[TREBUCHET_MS_BOLD_24]!!.color = Color.CYAN
+
+        this.bitmapFonts[TREBUCHET_MS_20_BLUE]!!.color = color(0.478f, 1.000f, 0.933f)
+        this.bitmapFonts[TREBUCHET_MS_BOLD_28_BLUE]!!.color = color(0.478f, 1.000f, 0.933f)
+        this.bitmapFonts[TREBUCHET_MS_BOLD_28_BLACK]!!.color = color(0.000f, 0.000f, 0.000f)
     }
 
     override fun dispose() {
