@@ -302,7 +302,7 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
     }
 
     private companion object {
-        const val LOADING_DURATION = 0.8f
+        const val LOADING_DURATION = 0.65f
         const val LOADING_END_DELAY = 0.5f
     }
 }
