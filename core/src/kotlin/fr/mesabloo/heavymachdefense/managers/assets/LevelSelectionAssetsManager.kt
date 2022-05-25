@@ -61,6 +61,8 @@ class LevelSelectionAssetsManager : Disposable {
     override fun dispose() {
         this.allBackgroundPaths().forEach { assetManager.unload(it) }
         assetManager.unload(SELECT_BUTTONS)
+        assetManager.unload(BACKGROUND)
+        assetManager.unload(FOREGROUND)
     }
 }
 

@@ -38,6 +38,36 @@ let
     '';
   };
 
+  gdx-skin-composer-jar = pkgs.fetchurl {
+    url = "https://github.com/raeleus/skin-composer/releases/download/50/SkinComposer.jar";
+    sha256 = "1jgcns5k4a3ps0zfps30mp7j9vmqi3wnnwhr9pd4fi56jlbnaw2k";
+  };
+
+  skin-composer = pkgs.stdenv.mkDerivation {
+    name = "skin-composer";
+
+    nativeBuildInputs = with pkgs; [
+      wrapGAppsHook
+      glib
+      jdk11
+    ];
+
+    src = null;
+
+    unpackPhase = ":";
+
+    installPhase = ''
+      mkdir -p $out/bin
+
+      cat >$out/bin/skin-composer <<-'EOF'
+        #!/usr/bin/env bash
+
+        java -jar ${gdx-skin-composer-jar}
+      EOF
+      chmod +x $out/bin/skin-composer
+    '';
+  };
+
   gdx-texture-packer = pkgs.stdenv.mkDerivation {
     name = "gdx-texture-packer";
 
@@ -84,6 +114,7 @@ pkgs.mkShell {
 
     gdx-texture-packer
     hiero
+    skin-composer
 
     (python3.withPackages (ps: with ps; [
       pillow

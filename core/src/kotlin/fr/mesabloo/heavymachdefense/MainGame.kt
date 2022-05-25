@@ -8,10 +8,10 @@ import com.badlogic.gdx.physics.box2d.Box2D
 import fr.mesabloo.heavymachdefense.log.ColoredLogger
 import fr.mesabloo.heavymachdefense.managers.assets.assetManager
 import fr.mesabloo.heavymachdefense.managers.assets.loadingAssetsManager
-import fr.mesabloo.heavymachdefense.managers.assets.welcomeAssetsManager
+import fr.mesabloo.heavymachdefense.managers.assets.startAssetsManager
 import fr.mesabloo.heavymachdefense.managers.fontManager
 import fr.mesabloo.heavymachdefense.screens.AbstractScreen
-import fr.mesabloo.heavymachdefense.screens.WelcomeScreen
+import fr.mesabloo.heavymachdefense.screens.StartScreen
 import ktx.app.KtxGame
 
 class MainGame : KtxGame<AbstractScreen>() {
@@ -36,7 +36,7 @@ class MainGame : KtxGame<AbstractScreen>() {
         // - all the assets for the loading screen
         // - assets for the welcome screen
 
-        welcomeAssetsManager.preload()
+        startAssetsManager.preload()
         loadingAssetsManager.preload()
         fontManager.init()
 
@@ -50,8 +50,8 @@ class MainGame : KtxGame<AbstractScreen>() {
         if (!assetManager.isFinished)
             assetManager.update()
 
-        if (welcomeAssetsManager.isFullyLoaded() && loadingAssetsManager.isFullyLoaded() && justStarted) {
-            changeScreen(lazy { WelcomeScreen(this) })?.setupInputProcessor()
+        if (startAssetsManager.isFullyLoaded() && loadingAssetsManager.isFullyLoaded() && justStarted) {
+            (changeScreen(lazy { StartScreen(this) }) as AbstractScreen?)?.removeLoadingOverlayEnd()
         }
 
         super.render()

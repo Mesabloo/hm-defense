@@ -3,11 +3,9 @@ package fr.mesabloo.heavymachdefense.entities
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.physics.box2d.World
-import fr.mesabloo.heavymachdefense.components.machine.MachineComponent
 import fr.mesabloo.heavymachdefense.data.MachineKind
 import fr.mesabloo.heavymachdefense.data.models.MachineModel
 import ktx.ashley.entity
-import ktx.ashley.with
 import ktx.math.vec2
 
 fun createMachine(engine: Engine, world: World, kind: MachineKind, level: Int): Entity = engine.entity {
@@ -47,16 +45,16 @@ fun createMachine(engine: Engine, world: World, kind: MachineKind, level: Int): 
 //    }
     val (bodies, joints) = MachineModel("rifle", level).toPositionedBody(world, vec2(x, y))
 
-    with<MachineComponent> {
-        this.kind = kind
-        this.level = level
-
-        this.mainBody = bodies[0]
-        this.lWeaponBody = bodies[1]
-        this.rWeaponBody = bodies[2]
-
-        this.joints = joints
-    }
+//    with<MachineComponent> {
+//        this.kind = kind
+//        this.level = level
+//
+//        this.mainBody = bodies[0]
+//        this.lWeaponBody = bodies[1]
+//        this.rWeaponBody = bodies[2]
+//
+//        this.joints = joints
+//    }
 //    with<MachineMovementComponent> {
 //
 //    }

@@ -1,3 +1,3 @@
 package fr.mesabloo.heavymachdefense
 
-const val DEBUG = true
+const val DEBUG = false

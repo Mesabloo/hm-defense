@@ -1,6 +1,5 @@
 package fr.mesabloo.heavymachdefense.world
 
-import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -21,8 +20,6 @@ class GameWorld : Disposable {
 
     val batch = SpriteBatch()
 
-    val engine = PooledEngine()
-
     init {
         this.camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0f)
         this.camera.update()
@@ -31,6 +28,8 @@ class GameWorld : Disposable {
             override fun beginContact(p0: Contact) {
                 val bodyA = p0.fixtureA
                 val bodyB = p0.fixtureB
+
+                Gdx.app.debug(this.javaClass.simpleName, "Contact detected")
 
                 if (bodyA.userData == BG_BORDER || bodyB.userData == BG_BORDER) {
                     Gdx.app.debug(this.javaClass.simpleName, "Contact with border detected")
@@ -59,15 +58,10 @@ class GameWorld : Disposable {
         this.camera.update()
         this.batch.projectionMatrix = this.camera.combined
 
-        this.engine.update(deltaTime)
         this.world.step(1 / 60f, 6, 2)
     }
 
     override fun dispose() {
-        this.engine.removeAllSystems()
-        this.engine.removeAllEntities()
-        this.engine.clearPools()
-
         this.world.dispose()
     }
 }

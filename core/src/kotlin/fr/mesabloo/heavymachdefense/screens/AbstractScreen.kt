@@ -1,32 +1,64 @@
 package fr.mesabloo.heavymachdefense.screens
 
-import com.badlogic.ashley.core.EntitySystem
-import com.badlogic.ashley.signals.Signal
+import aurelienribon.tweenengine.Timeline
+import aurelienribon.tweenengine.Tween
+import aurelienribon.tweenengine.TweenCallback.COMPLETE
+import aurelienribon.tweenengine.TweenManager
+import aurelienribon.tweenengine.equations.Quart
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.Group
 import fr.mesabloo.heavymachdefense.MainGame
-import fr.mesabloo.heavymachdefense.components.LoadingPartComponent
-import fr.mesabloo.heavymachdefense.entities.ui.createLoadingClose
-import fr.mesabloo.heavymachdefense.entities.ui.createLoadingOpen
-import fr.mesabloo.heavymachdefense.systems.LoadingFinishedSystem
-import fr.mesabloo.heavymachdefense.systems.SignalWhenFinishedLoadingSystem
-import fr.mesabloo.heavymachdefense.systems.rendering.RenderPositionedTextures
-import fr.mesabloo.heavymachdefense.systems.rendering.animation.ScaleAnimationSystem
-import fr.mesabloo.heavymachdefense.systems.rendering.animation.TransformAnimationSystem
+import fr.mesabloo.heavymachdefense.tweens.ActorAccessor
+import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.POSITION
+import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.SCALE
+import fr.mesabloo.heavymachdefense.ui.loading.*
 import fr.mesabloo.heavymachdefense.world.UIWorld
+import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
+import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import ktx.app.KtxScreen
-import ktx.ashley.allOf
+import kotlin.properties.Delegates
 
-abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean = false) : KtxScreen {
+abstract class AbstractScreen(val game: MainGame, isLoading: Boolean = false) : KtxScreen {
     val ui = UIWorld()
+    val background = Group()
+    private val foreground = Group()
 
-    private val loadingDoneSignal: Signal<Unit> = Signal()
-    private val loadingAnimationFinishedSignal: Signal<Unit> = Signal()
-    private val loadingAnimationFinishedSignal2: Signal<Unit> = Signal()
+    init {
+        this.ui.addActor(this.background)
+        this.ui.addActor(this.foreground)
+    }
+
+    private var loadingAnimationDone: Boolean by Delegates.observable(false) { _, _, new ->
+        if (new && loadingDone) {
+            this.game.nextScreen()
+        }
+    }
+    private var loadingDone: Boolean by Delegates.observable(false) { _, _, new ->
+        if (new && loadingAnimationDone) {
+            this.game.nextScreen()
+        }
+    }
+    private lateinit var nextScreen: MainGame.() -> Unit
+
+    protected val mux = InputMultiplexer()
+
+    private val tweenManager = TweenManager()
+
+    private companion object {
+        const val LOADING_DURATION = 0.65f
+        const val LOADING_END_DELAY = 0.5f
+
+        private val easeEquation = Quart.INOUT
+    }
 
     var isLoading: Boolean = isLoading
         private set
 
-    abstract fun setupInputProcessor()
+    init {
+        Tween.registerAccessor(Actor::class.java, ActorAccessor())
+    }
 
     override fun hide() {
         Gdx.app.debug(this.javaClass.simpleName, "Hiding application")
@@ -34,18 +66,28 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
 
     override fun show() {
         Gdx.app.debug(this.javaClass.simpleName, "Showing application")
+
+        if (this.isLoading)
+            return
+
+        this.mux.addProcessor(this.ui)
     }
 
     override fun pause() {
         Gdx.app.debug(this.javaClass.simpleName, "Pausing application")
+
+        Gdx.input.inputProcessor = null
     }
 
     override fun resume() {
         Gdx.app.debug(this.javaClass.simpleName, "Resuming application")
+
+        Gdx.input.inputProcessor = this.mux
     }
 
     override fun dispose() {
         Gdx.app.debug(this.javaClass.simpleName, "Disposing screen")
+
         super.dispose()
     }
 
@@ -58,58 +100,156 @@ abstract class AbstractScreen(protected val game: MainGame, isLoading: Boolean =
     override fun render(delta: Float) {
         super.render(delta)
 
-        this.ui.render(delta)
+        this.ui.act(delta)
+        this.tweenManager.update(delta)
+        this.ui.draw()
     }
 
     fun addLoadingOverlay(finishedLoading: () -> Boolean, switchScreen: MainGame.() -> Unit) {
         this.isLoading = true
 
-        this.ui.engine.addSystem(TransformAnimationSystem(this.loadingAnimationFinishedSignal))
-        this.ui.engine.addSystem(LoadingFinishedSystem(this.loadingAnimationFinishedSignal, this.loadingDoneSignal) {
-            this.game.switchScreen()
+        this.nextScreen = switchScreen
+
+        Tween.call { _, source ->
+            if (finishedLoading()) {
+                this.loadingDone = true
+                source.kill()
+            }
+        }
+            .repeat(-1, 0.1f)
+            .start(this.tweenManager)
+
+        val tweens = mutableListOf<Tween>()
+
+        this.foreground.addActor(LeftPane().also {
+            it.setPosition(-it.width, 0f)
+
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(0f, 0f)
+                    .ease(easeEquation)
+            )
         })
-        this.ui.engine.addSystem(SignalWhenFinishedLoadingSystem(this.loadingDoneSignal, finishedLoading))
-        this.ui.engine.addSystem(RenderPositionedTextures(this.ui.batch))
+        this.foreground.addActor(RightPane().also {
+            it.setPosition(UI_WIDTH, 0f)
 
-        createLoadingClose(this.ui.engine)
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(UI_WIDTH - it.width, 0f)
+                    .ease(easeEquation)
+            )
+        })
+        this.foreground.addActor(TopPane().also {
+            it.setPosition(0f, UI_HEIGHT + it.height)
+
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(0f, UI_HEIGHT - it.height)
+                    .ease(easeEquation)
+            )
+        })
+        this.foreground.addActor(BottomPane().also {
+            it.setPosition(0f, -2f * it.height)
+
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(0f, 0f)
+                    .ease(easeEquation)
+            )
+        })
+        this.foreground.addActor(CenterDot().also {
+            it.setPosition(UI_WIDTH / 2f - it.width / 2f, -1158f)
+
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(UI_WIDTH / 2f - it.width / 2f, UI_HEIGHT / 2f - it.height / 2.5f + 2f)
+                    .ease(easeEquation)
+            )
+        })
+
+        tweens.fold(Timeline.createParallel()) { timeline, tween -> timeline.push(tween) }
+            .setCallbackTriggers(COMPLETE)
+            .setCallback { _, _ -> this.loadingAnimationDone = true }
+            .start(this.tweenManager)
     }
-
-    private lateinit var loadingOverlaySystems: List<EntitySystem>
 
     fun addLoadingOverlayEnd() {
         this.isLoading = true
-        //this.loadingDoneSignal.add { _, _ -> this.game.switchScreen() }
 
-        this.loadingOverlaySystems = listOf(
-            TransformAnimationSystem(this.loadingAnimationFinishedSignal2),
-            ScaleAnimationSystem(this.loadingAnimationFinishedSignal),
-            RenderPositionedTextures(this.ui.batch)
-        )
-        for (system in this.loadingOverlaySystems) {
-            this.ui.engine.addSystem(system)
-        }
+        val tweens = mutableListOf<Tween>()
 
-        this.loadingAnimationFinishedSignal.add { _, _ ->
-            Gdx.app.debug(this.javaClass.simpleName, "Finished scaling animation")
+        this.foreground.addActor(LeftPane().also {
+            it.setPosition(0f, 0f)
 
-            this.isLoading = false
-            this.show()
-        }
-        this.loadingAnimationFinishedSignal2.add { _, _ ->
-            Gdx.app.debug(this.javaClass.simpleName, "Removing entities")
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(-it.width, 0f)
+                    .ease(easeEquation)
+                    .delay(LOADING_END_DELAY)
+            )
+        })
+        this.foreground.addActor(RightPane().also {
+            it.setPosition(UI_WIDTH - it.width, 0f)
 
-            this@AbstractScreen.removeLoadingOverlayEnd()
-            this.setupInputProcessor()
-        }
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(UI_WIDTH, 0f)
+                    .ease(easeEquation)
+                    .delay(LOADING_END_DELAY)
+            )
+        })
+        this.foreground.addActor(TopPane().also {
+            it.setPosition(0f, UI_HEIGHT - it.height)
 
-        createLoadingOpen(this.ui.engine)
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(0f, UI_HEIGHT + it.height)
+                    .ease(easeEquation)
+                    .delay(LOADING_END_DELAY)
+            )
+        })
+        this.foreground.addActor(BottomPane().also {
+            it.setPosition(0f, 0f)
+
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(0f, -2f * it.height)
+                    .ease(easeEquation)
+                    .delay(LOADING_END_DELAY)
+            )
+        })
+        this.foreground.addActor(CenterDot().also {
+            it.setPosition(UI_WIDTH / 2f - it.width / 2f, UI_HEIGHT / 2f - it.height / 2.5f + 2f)
+
+            tweens.add(Tween.to(it, SCALE, 0.25f)
+                .target(0.75f, 0.75f)
+                .ease(easeEquation)
+                .setCallbackTriggers(COMPLETE)
+                .setCallback { _, _ ->
+                    this.isLoading = false
+                    this.show()
+                })
+            tweens.add(
+                Tween.to(it, POSITION, LOADING_DURATION)
+                    .target(UI_WIDTH / 2f - it.width / 2f, -1158f)
+                    .ease(easeEquation)
+                    .delay(LOADING_END_DELAY)
+            )
+        })
+
+        tweens.fold(Timeline.createParallel()) { timeline, tween -> timeline.push(tween) }
+            .setCallbackTriggers(COMPLETE)
+            .setCallback { _, _ -> this@AbstractScreen.removeLoadingOverlayEnd() }
+            .start(this.tweenManager)
     }
 
-    private fun removeLoadingOverlayEnd() {
-        this.ui.engine.removeAllEntities(allOf(LoadingPartComponent::class).get())
+    fun removeLoadingOverlayEnd() {
+        Gdx.app.debug(this.javaClass.simpleName, "Removing loading screen actors")
 
-        for (system in this.loadingOverlaySystems) {
-            this.ui.engine.removeSystem(system)
-        }
+        this.foreground.children
+            .filter { it is BottomPane || it is CenterDot || it is LeftPane || it is RightPane || it is TopPane }
+            .forEach { it.remove() }
+
+        Gdx.input.inputProcessor = this.mux
     }
 }

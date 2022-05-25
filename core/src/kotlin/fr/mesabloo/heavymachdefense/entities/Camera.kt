@@ -3,10 +3,7 @@ package fr.mesabloo.heavymachdefense.entities
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.OrthographicCamera
-import fr.mesabloo.heavymachdefense.components.CameraComponent
-import fr.mesabloo.heavymachdefense.components.input.MouseInputComponent
 import ktx.ashley.entity
-import ktx.ashley.with
 
 /**
  * A factory method to create an [Entity] for a [com.badlogic.gdx.graphics.Camera] handling mouse input.
@@ -17,10 +14,10 @@ import ktx.ashley.with
  * @return The [Entity] created for the given [com.badlogic.gdx.graphics.Camera]
  */
 fun createCamera(engine: Engine, camera: OrthographicCamera): Entity = engine.entity {
-    with<CameraComponent> {
-        this.camera = camera
-    }
-    with<MouseInputComponent> {
-
-    }
+//    with<CameraComponent> {
+//        this.camera = camera
+//    }
+//    with<MouseInputComponent> {
+//
+//    }
 }
