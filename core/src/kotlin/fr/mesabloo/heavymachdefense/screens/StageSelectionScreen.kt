@@ -4,8 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.listeners.stage_selection.SelectOrLoadStage
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.ui.stage_selection.StageList
+import fr.mesabloo.heavymachdefense.listeners.stage_selection.SelectOrLoadStage
+import fr.mesabloo.heavymachdefense.ui.stage_selection.StageList
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.BackToSaves
 import fr.mesabloo.heavymachdefense.managers.assets.levelSelectionAssetsManager
 import fr.mesabloo.heavymachdefense.ui.common.BackButton

@@ -1,3 +1,3 @@
 package fr.mesabloo.heavymachdefense
 
-const val DEBUG = false
+val DEBUG: Boolean = !BuildConfig.RELEASE

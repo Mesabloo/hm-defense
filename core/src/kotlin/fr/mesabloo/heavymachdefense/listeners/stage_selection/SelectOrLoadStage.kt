@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.listeners.stage_selection
+package fr.mesabloo.heavymachdefense.listeners.stage_selection
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.InputEvent

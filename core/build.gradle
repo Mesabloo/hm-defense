@@ -1,5 +1,29 @@
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+buildConfig {
+    useKotlinOutput() // { topLevelConstants = true }
+
+    className('BuildConfig')
+    packageName('fr.mesabloo.heavymachdefense')
+    // exposeObjectWithName = 'YourAwesomePublicConfig'
+
+    if (project.hasProperty("releaseType")) {
+        def releaseType = project.property("releaseType")
+
+        if (releaseType == "dev") {
+            buildConfigField("Boolean", "RELEASE", "false")
+        } else if (releaseType == "release") {
+            buildConfigField("Boolean", "RELEASE", "true")
+        } else {
+            throw new InvalidPropertiesFormatException("Expected either 'dev' or 'release' for property 'releaseType' but got '$releaseType'")
+        }
+    } else {
+        println("Defaulting to release type 'release'")
+
+        buildConfigField("Boolean", "RELEASE", "true")
+    }
+}
+
 compileJava {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -12,11 +36,13 @@ compileKotlin {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
+
+    dependsOn generateBuildConfig
 }
 
 sourceSets {
-    main.java.srcDirs = [ "src/java" ]
-    main.kotlin.srcDirs = [ "src/kotlin" ]
+    main.java.srcDirs = ["src/java"]
+    main.kotlin.srcDirs = ["src/kotlin", "${buildDir}/generated/source/buildConfig/main/main"]
 }
 
 eclipse.project.name = appName + "-core"
