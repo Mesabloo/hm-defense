@@ -11,16 +11,16 @@ buildConfig {
         def releaseType = project.property("releaseType")
 
         if (releaseType == "dev") {
-            buildConfigField("Boolean", "RELEASE", "false")
+            buildConfigField("boolean", "RELEASE", "false")
         } else if (releaseType == "release") {
-            buildConfigField("Boolean", "RELEASE", "true")
+            buildConfigField("boolean", "RELEASE", "true")
         } else {
             throw new InvalidPropertiesFormatException("Expected either 'dev' or 'release' for property 'releaseType' but got '$releaseType'")
         }
     } else {
         println("Defaulting to release type 'release'")
 
-        buildConfigField("Boolean", "RELEASE", "true")
+        buildConfigField("boolean", "RELEASE", "true")
     }
 }
 

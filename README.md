@@ -15,7 +15,24 @@ Many people seem to miss this game as much as I do, and I would like to try recr
 
 ## Installation
 
-TODO
+### Desktop
+
+From the root of the project, run the command `./gradlew :desktop:dist` (or `gradlew.bat :desktop:dist` on Windows).
+This will generate the JAR file `desktop/build/libs/desktop-VER.jar` (where `VER` is the version number).
+
+On Windows, if Java has been installed globally, you should be able to launch it with a simple double-click in the explorer.
+If not, resort to using the command-line (CMD, Powershell, or others) and type the command `java -jar path/to/desktop-VER.jar`.
+On Linux and MacOS, the above command should work, provided that `java` is installed on your computer.
+
+> TODO: create wrapper scripts around `java -jar desktop-VER.jar`
+
+### Android
+
+> TODO (not yet provided)
+
+### iOS
+
+> TODO (not yet provided)
 
 ## Gameplay
 
