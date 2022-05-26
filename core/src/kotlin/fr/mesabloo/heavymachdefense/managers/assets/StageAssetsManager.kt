@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Disposable
-import fr.mesabloo.heavymachdefense.managers.assets.assetManager
+import fr.mesabloo.heavymachdefense.data.getBackgroundForLevel
 import ktx.assets.load
 
 class StageAssetsManager : Disposable {
@@ -12,8 +12,9 @@ class StageAssetsManager : Disposable {
 
     companion object {
         private fun backgrounds(level: Int): Pair<String, String> =
-            level.toString().padStart(2, '0').let {
-                Pair("gfx/terrains/$it/01.jpg", "gfx/terrains/$it/02.jpg")
+            getBackgroundForLevel(level).let {
+                val nb = it.toString().padStart(2, '0')
+                Pair("gfx/terrains/$nb/01.jpg", "gfx/terrains/$nb/02.jpg")
             }
 
         const val MACHINE_BODIES = "gfx/models/machines/bodies.atlas"
@@ -46,6 +47,10 @@ class StageAssetsManager : Disposable {
         const val HP_GAUGE = "gfx/ui/game/hp-gauge.png"
         const val BUTTONS = "gfx/ui/buttons/stage.atlas"
         const val TITLE = "gfx/ui/game/title.atlas"
+        const val MENU_BUTTONS = "gfx/ui/game/menu-buttons.atlas"
+        const val RADAR_MARKS = "gfx/ui/game/radar/marks.atlas"
+        const val RADAR_BACKGROUND = "gfx/ui/game/radar/background.png"
+        const val RADAR_BORDER = "gfx/ui/game/radar/border.png"
 
         enum class ButtonKind(internal val str: String) {
             MENU("menu"),
@@ -64,6 +69,9 @@ class StageAssetsManager : Disposable {
         fun title(kind: TitleKind): TextureRegion =
             assetManager.get<TextureAtlas>(TITLE)
                 .findRegion(kind.str)
+
+        fun unsafeAnimationTile(path: String, tile: String): TextureRegion =
+            assetManager.get<TextureAtlas>(path).findRegion(tile)
     }
 
     private fun allAtlases() = listOf(
@@ -80,13 +88,25 @@ class StageAssetsManager : Disposable {
         ALLY_BASE,
         ENEMY_BASE,
         UI.BUTTONS,
-        UI.TITLE
+        UI.TITLE,
+        UI.MENU_BUTTONS,
+        UI.RADAR_MARKS
     )
 
     private fun allTextures() = this.stageLevel?.let {
         val (bg1, bg2) = backgrounds(it)
 
-        listOf(bg1, bg2, ALLY_PLANE, UI.BUILD_SLOT, UI.MACH_SLOT, UI.CONTROLS, UI.HP_GAUGE)
+        listOf(
+            bg1,
+            bg2,
+            ALLY_PLANE,
+            UI.BUILD_SLOT,
+            UI.MACH_SLOT,
+            UI.CONTROLS,
+            UI.HP_GAUGE,
+            UI.RADAR_BORDER,
+            UI.RADAR_BACKGROUND
+        )
     } ?: listOf()
 
     fun preload(level: Int) {

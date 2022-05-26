@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import fr.mesabloo.heavymachdefense.managers.assets.assetManager
+import fr.mesabloo.heavymachdefense.managers.assets.buttonAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.startAssetsManager
 import fr.mesabloo.heavymachdefense.screens.AbstractScreen
 import fr.mesabloo.heavymachdefense.screens.SavesSelectionScreen
@@ -28,6 +29,8 @@ class BackToStart(private val screen: SavesSelectionScreen, private val actor: A
 
             this.getScreen<SavesSelectionScreen>().dispose()
             this.removeScreen<SavesSelectionScreen>()
+
+            buttonAssetsManager.dispose()
         }
     }
 }

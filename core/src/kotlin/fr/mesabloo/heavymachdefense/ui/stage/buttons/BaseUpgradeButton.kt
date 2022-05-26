@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.ui.stage
+package fr.mesabloo.heavymachdefense.ui.stage.buttons
 
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable

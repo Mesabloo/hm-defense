@@ -4,16 +4,16 @@ import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
+import fr.mesabloo.heavymachdefense.listeners.stage_selection.BackToSaves
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.LoadStage
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.SelectOrLoadStage
-import fr.mesabloo.heavymachdefense.ui.stage_selection.StageList
-import fr.mesabloo.heavymachdefense.listeners.stage_selection.BackToSaves
 import fr.mesabloo.heavymachdefense.managers.assets.levelSelectionAssetsManager
 import fr.mesabloo.heavymachdefense.ui.common.BackButton
 import fr.mesabloo.heavymachdefense.ui.common.OkButton
 import fr.mesabloo.heavymachdefense.ui.common.SupportButton
 import fr.mesabloo.heavymachdefense.ui.stage_selection.Background
 import fr.mesabloo.heavymachdefense.ui.stage_selection.Foreground
+import fr.mesabloo.heavymachdefense.ui.stage_selection.StageList
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import ktx.actors.setScrollFocus
 
@@ -42,7 +42,12 @@ class StageSelectionScreen(
                     cell.actor.addListener(SelectOrLoadStage(this@StageSelectionScreen, index))
                 }
 
-            it.layout()
+            val table = it.getChild(0) as Table
+            val cellHeight = table.cells[0].prefHeight
+            val offsetY = table.prefHeight - (it.selected.toFloat() - 2) * cellHeight
+
+            it.scrollTo(0f, offsetY, it.width, it.height)
+            //it.layout()
         }
         this.background.addActor(Table().also {
             it.setPosition(128f, 140f)
