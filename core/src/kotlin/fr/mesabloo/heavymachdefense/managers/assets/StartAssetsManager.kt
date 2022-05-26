@@ -16,11 +16,7 @@ class StartAssetsManager : Disposable {
         assetManager.load<Texture>(TAP_TO_START)
     }
 
-    fun isFullyLoaded(): Boolean =
-        listOf(TITLE_BACKGROUND, TAP_TO_START)
-            .fold(true) { acc, path ->
-                acc && assetManager.isLoaded(path)
-            }
+    fun isFullyLoaded(): Boolean = listOf(TITLE_BACKGROUND, TAP_TO_START).all { assetManager.isLoaded(it) }
 
     override fun dispose() {
         assetManager.unload(TITLE_BACKGROUND)

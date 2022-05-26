@@ -24,7 +24,7 @@ class LoadingAssetsManager : Disposable {
 
     fun isFullyLoaded(): Boolean =
         listOf(LOADING_BOTTOM, LOADING_RIGHT, LOADING_LEFT, LOADING_CENTER, LOADING_TOP)
-            .fold(true) { acc, path -> acc && assetManager.isLoaded(path) }
+            .all { assetManager.isLoaded(it) }
 
     override fun dispose() {
         assetManager.unload(LOADING_BOTTOM)

@@ -1,0 +1,27 @@
+
+title.png
+size: 256, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+build-mach
+  rotate: false
+  xy: 0, 42
+  size: 256, 32
+  orig: 256, 32
+  offset: 0, 0
+  index: -1
+formation
+  rotate: false
+  xy: 0, 79
+  size: 256, 32
+  orig: 256, 32
+  offset: 0, 0
+  index: -1
+special-attack
+  rotate: false
+  xy: 0, 5
+  size: 256, 32
+  orig: 256, 32
+  offset: 0, 0
+  index: -1

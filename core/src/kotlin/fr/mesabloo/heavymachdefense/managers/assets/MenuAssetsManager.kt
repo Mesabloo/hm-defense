@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Disposable
 import ktx.assets.load
 
-class MenuAssetsManager: Disposable {
+class MenuAssetsManager : Disposable {
     companion object {
         const val BACKGROUND = "gfx/ui/slots/background.jpg"
 
@@ -25,9 +25,7 @@ class MenuAssetsManager: Disposable {
 
     fun get(path: String): TextureRegion = TextureRegion(assetManager.get<Texture>(path))
 
-    fun isFullyLoaded(): Boolean =
-        listOf(BACKGROUND, SLOT)
-            .fold(true) { acc, path -> acc && assetManager.isLoaded(path) }
+    fun isFullyLoaded(): Boolean = listOf(BACKGROUND, SLOT).all { assetManager.isLoaded(it) }
 
     override fun dispose() {
         assetManager.unload(BACKGROUND)

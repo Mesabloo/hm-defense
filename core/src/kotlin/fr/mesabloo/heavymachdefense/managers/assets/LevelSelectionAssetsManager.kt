@@ -55,7 +55,7 @@ class LevelSelectionAssetsManager : Disposable {
             )
 
     fun isFullyLoaded(): Boolean =
-        this.allBackgroundPaths().fold(true) { acc, path -> acc && assetManager.isLoaded(path) }
+        this.allBackgroundPaths().all { assetManager.isLoaded(it) }
                 && assetManager.isLoaded(SELECT_BUTTONS)
 
     override fun dispose() {
