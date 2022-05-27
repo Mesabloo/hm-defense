@@ -1,11 +1,13 @@
 package fr.mesabloo.heavymachdefense.screens
 
+import aurelienribon.tweenengine.TweenManager
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.PlayAnimation
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.ResetAnimationsForOthers
+import fr.mesabloo.heavymachdefense.listeners.stage_selection.ShowUpgradeMenu
 import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
@@ -25,6 +27,8 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
     private var playerLife: Long = 100L
     private var enemyLife: Long = 100L
+
+    private val menuTweenManager = TweenManager()
 
     override fun show() {
         super.show()
@@ -63,40 +67,46 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         val controlsGroup = Group()
 
         controlsGroup.addActor(Controls().also {
-            it.setPosition(0f, 0f)
+            it.setPosition(0f, 512f)
         })
         controlsGroup.addActor(StageNumber(level).also {
-            it.setPosition(142f - it.width / 2f, 79f)
+            it.setPosition(142f - it.width / 2f, 79f + 512f)
         })
         controlsGroup.addActor(Credits(save::credits).also {
-            it.setPosition(176f - it.width, 30f)
+            it.setPosition(176f - it.width, 30f + 512f)
         })
         controlsGroup.addActor(MenuButton().also {
-            it.setPosition(587f, 89f)
+            it.setPosition(587f, 89f + 512f)
         })
         controlsGroup.addActor(BaseUpgradeButton().also {
-            it.setPosition(587f, 22f)
+            it.setPosition(587f, 22f + 512f)
+            it.addListener(ShowUpgradeMenu(this.menuTweenManager, controlsGroup, scrollpane))
         })
         controlsGroup.addActor(Title(StageAssetsManager.UI.TitleKind.BUILD_MACH).also {
             this.title = it
 
-            it.setPosition(UI_WIDTH / 2f - it.width / 2f + 3f, 130f)
+            it.setPosition(UI_WIDTH / 2f - it.width / 2f + 3f, 130f + 512f)
         })
 
         controlsGroup.addActor(BuildMachMenuButton().also {
-            it.setPosition(UI_WIDTH / 2f - it.width / 2f - 90f, 47f)
+            it.setPosition(UI_WIDTH / 2f - it.width / 2f - 90f, 47f + 512f)
             it.addListener(PlayAnimation(it))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
 
             animationManager.setCurrentKeyframe(it.animationId, 7)
         })
         controlsGroup.addActor(SpecialAttackMenuButton().also {
-            it.setPosition(UI_WIDTH / 2f - it.width / 2f + 2f, 47f)
+            it.setPosition(UI_WIDTH / 2f - it.width / 2f + 2f, 47f + 512f)
             it.addListener(PlayAnimation(it))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
 
             animationManager.setCurrentKeyframe(it.animationId, 0)
         })
+        controlsGroup.addActor(UpgradeMenu().also {
+            it.setPosition(0f, -512f + 512f)
+        })
+
+        controlsGroup.setPosition(0f, -512f)
 
         this.background.addActor(controlsGroup)
 
@@ -105,6 +115,12 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         })
 
         this.terrain.setScrollFocus(true)
+    }
+
+    override fun render(delta: Float) {
+        this.menuTweenManager.update(delta)
+
+        super.render(delta)
     }
 
     override fun dispose() {

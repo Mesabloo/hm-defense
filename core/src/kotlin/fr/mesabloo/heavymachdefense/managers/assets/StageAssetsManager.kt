@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Disposable
+import fr.mesabloo.heavymachdefense.data.UpgradeKind
 import fr.mesabloo.heavymachdefense.data.getBackgroundForLevel
 import ktx.assets.load
 
@@ -53,6 +54,9 @@ class StageAssetsManager : Disposable {
         const val RADAR_BORDER = "gfx/ui/game/radar/border.png"
         const val PLAYER_HP_GAUGE = "gfx/ui/game/player-hp-gauge.png"
         const val ENEMY_HP_GAUGE = "gfx/ui/game/enemy-hp-gauge.png"
+        const val UPGRADE_MENU_BUTTONS = "gfx/ui/buttons/base-upgrades.atlas"
+        const val UPGRADE_MENU_LEFT = "gfx/ui/game/upgrades-left.png"
+        const val UPGRADE_MENU_RIGHT = "gfx/ui/game/upgrades-right.png"
 
         enum class ButtonKind(internal val str: String) {
             MENU("menu"),
@@ -74,6 +78,10 @@ class StageAssetsManager : Disposable {
 
         fun unsafeAnimationTile(path: String, tile: String): TextureRegion =
             assetManager.get<TextureAtlas>(path).findRegion(tile)
+
+        fun upgradeButton(kind: UpgradeKind, isSelected: Boolean, isDisabled: Boolean): TextureRegion =
+            assetManager.get<TextureAtlas>(UPGRADE_MENU_BUTTONS)
+                .findRegion("${kind.str}-${if (isSelected) "selected" else if (isDisabled) "disabled" else "normal"}")
     }
 
     private fun allAtlases() = listOf(
@@ -92,7 +100,8 @@ class StageAssetsManager : Disposable {
         UI.BUTTONS,
         UI.TITLE,
         UI.MENU_BUTTONS,
-        UI.RADAR_MARKS
+        UI.RADAR_MARKS,
+        UI.UPGRADE_MENU_BUTTONS
     )
 
     private fun allTextures() = this.stageLevel?.let {
@@ -109,7 +118,9 @@ class StageAssetsManager : Disposable {
             UI.RADAR_BORDER,
             UI.RADAR_BACKGROUND,
             UI.PLAYER_HP_GAUGE,
-            UI.ENEMY_HP_GAUGE
+            UI.ENEMY_HP_GAUGE,
+            UI.UPGRADE_MENU_LEFT,
+            UI.UPGRADE_MENU_RIGHT
         )
     } ?: listOf()
 

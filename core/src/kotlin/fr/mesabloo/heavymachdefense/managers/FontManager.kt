@@ -13,6 +13,10 @@ class FontManager : Disposable {
         const val STAGE: String = "stage"
         const val SET01B: String = "set_01b"
 
+        const val TREBUCHET_MS_BOLD_11_WHITE: String = "trebuchet_ms_bd_11_white"
+
+        const val TREBUCHET_MS_BOLD_16_WHITE: String = "trebuchet_ms_bd_16_white"
+
         const val TREBUCHET_MS_20_BLUE: String = "trebuchet_ms_20_blue"
 
         const val TREBUCHET_MS_26_BLUE: String = "trebuchet_ms_26_blue"
@@ -31,7 +35,9 @@ class FontManager : Disposable {
             TREBUCHET_MS_BOLD_28_BLUE,
             TREBUCHET_MS_BOLD_28_BLACK,
             TREBUCHET_MS_20_BLUE,
-            TREBUCHET_MS_26_BLUE
+            TREBUCHET_MS_26_BLUE,
+            TREBUCHET_MS_BOLD_11_WHITE,
+            TREBUCHET_MS_BOLD_16_WHITE
         )
             .forEach { fontName ->
                 this.bitmapFonts[fontName] = BitmapFont(Gdx.files.internal("fonts/${fontName}.fnt"))
