@@ -1,6 +1,5 @@
 package fr.mesabloo.heavymachdefense.ui.stage
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.MathUtils.ceil
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.Image
@@ -8,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
-import fr.mesabloo.heavymachdefense.ui.stage.Terrain
 import kotlin.math.floor
 
 
@@ -89,9 +87,6 @@ class Radar(private val pane: ScrollPane) : Group() {
     }
 
     private fun addBordersAroundViewport(x: Float, y: Float, maxHeight: Float) {
-        Gdx.app.debug(this.javaClass.simpleName, "Adding border around box (size ${this.width}×$maxHeight) at ($x, $y)")
-        Gdx.app.debug(this.javaClass.simpleName, "Adding point A at around ($x, ${y - maxHeight - 2f})")
-
         this.addActor(Border(BorderKind.TOP, true, maxHeight).also {
             it.setPosition(x, y - it.height / 2f)
         })

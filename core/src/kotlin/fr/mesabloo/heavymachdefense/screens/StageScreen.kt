@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
+import fr.mesabloo.heavymachdefense.listeners.stage_selection.ResetAnimationsForOthers
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.PlayAnimation
 import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
@@ -37,7 +38,7 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
             val yOffset = 180f
 
             it.setBounds(128f, yOffset, 512f, UI_HEIGHT - yOffset)
-            it.setSmoothScrolling(true)
+            //it.setSmoothScrolling(true)
             it.setScrollbarsVisible(false)
             it.setScrollingDisabled(true, false)
             it.setOverscroll(false, false)
@@ -82,12 +83,14 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         controlsGroup.addActor(BuildMachMenuButton().also {
             it.setPosition(UI_WIDTH / 2f - it.width / 2f - 90f, 47f)
             it.addListener(PlayAnimation(it))
+            it.addListener(ResetAnimationsForOthers(controlsGroup, it))
 
             animationManager.setCurrentKeyframe(it.animationId, 7)
         })
         controlsGroup.addActor(SpecialAttackMenuButton().also {
             it.setPosition(UI_WIDTH / 2f - it.width / 2f + 2f, 47f)
             it.addListener(PlayAnimation(it))
+            it.addListener(ResetAnimationsForOthers(controlsGroup, it))
 
             animationManager.setCurrentKeyframe(it.animationId, 0)
         })
