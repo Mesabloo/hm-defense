@@ -53,11 +53,11 @@ class AbstractUpgradeLevelButton(
     override fun act(delta: Float) {
         super.act(delta)
 
-        this.priceLabel.setText("$price${if (price <= 9999) " cr" else ""}")
+        this.priceLabel.setText("$price${if (price <= 999999) " cr" else ""}")
         this.levelLabel.setText("Lv. ${level.first}/${level.second}")
         this.infoLabel.setText(this.addition?.let { "${it.first} : ${it.second}(+${it.third})" } ?: "")
 
-        this.priceLabel.setPosition(230f - this.priceLabel.width, this.height / 2f - this.priceLabel.height / 2f)
+        this.priceLabel.setPosition(227f - this.priceLabel.width, this.height / 2f - this.priceLabel.height / 2f)
         this.levelLabel.setPosition(320f, this.height / 2f - this.levelLabel.height / 2f)
         this.infoLabel.setPosition(388f, this.height / 2f - this.infoLabel.height / 2f)
     }

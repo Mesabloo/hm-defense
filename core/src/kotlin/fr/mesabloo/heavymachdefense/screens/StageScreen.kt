@@ -45,7 +45,7 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
             val yOffset = 180f
 
             it.setBounds(128f, yOffset, 512f, UI_HEIGHT - yOffset)
-            //it.setSmoothScrolling(true)
+            it.setSmoothScrolling(true)
             it.setScrollbarsVisible(false)
             it.setScrollingDisabled(true, false)
             it.setOverscroll(false, false)
@@ -102,7 +102,7 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
             animationManager.setCurrentKeyframe(it.animationId, 0)
         })
-        controlsGroup.addActor(UpgradeMenu().also {
+        controlsGroup.addActor(UpgradeMenu(this.save, ShowUpgradeMenu(this.menuTweenManager, controlsGroup, scrollpane)).also {
             it.setPosition(0f, -512f + 512f)
         })
 

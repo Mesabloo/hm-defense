@@ -2,6 +2,7 @@ package fr.mesabloo.heavymachdefense.listeners.stage_selection
 
 import aurelienribon.tweenengine.Timeline
 import aurelienribon.tweenengine.Tween
+import aurelienribon.tweenengine.TweenCallback
 import aurelienribon.tweenengine.TweenManager
 import aurelienribon.tweenengine.equations.Circ
 import com.badlogic.gdx.Gdx
@@ -51,11 +52,15 @@ class ShowUpgradeMenu(
                     .ease(Circ.OUT)
             )
             .start(this.tweenManager)
+
+        // NOTE: ideally, scrolling does not change from the bottom, instead of from the top, but oh well
+        // scrollpanes are implemented with their origin on the top left instead of the bottom left, so I can't do anything about it
     }
 
     private fun close() {
         Gdx.app.debug(this.javaClass.simpleName, "Closing upgrade panel")
 
+        this.scrollPane.setSmoothScrolling(false)
         Timeline.createParallel()
             .push(
                 Tween.to(this.controlsPane, POSITION, OPEN_CLOSE_DURATION)
@@ -72,6 +77,8 @@ class ShowUpgradeMenu(
                     .target(this.scrollPane.x, this.scrollPane.y - 512f)
                     .ease(Circ.OUT)
             )
+            .setCallbackTriggers(TweenCallback.COMPLETE)
+            .setCallback { _, _ -> this.scrollPane.setSmoothScrolling(true) }
             .start(this.tweenManager)
     }
 }
