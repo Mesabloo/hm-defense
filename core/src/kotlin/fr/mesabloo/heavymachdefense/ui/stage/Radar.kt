@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
 import kotlin.math.floor
+import kotlin.math.min
 
 
 private enum class BorderKind {
@@ -77,13 +78,16 @@ class Radar(private val pane: ScrollPane) : Group() {
         val x = this.pane.scrollX * ratioX
         val y = this.height - (this.pane.scrollY * ratioY)
 
-        val maxHeight = this.pane.scrollHeight * ratioY
+        val maxHeight = min(this.pane.height, this.pane.scrollHeight) * ratioY
 
-        val nbBorders = this.children.filterIsInstance<Border>().count()
-        if (nbBorders == 0)
-            this.addBordersAroundViewport(x, y, maxHeight)
-        else
-            this.updateBordersAroundViewport(x, y, maxHeight)
+        // FIXME: this sucks, but I don't know how to do better for now
+
+        this.children
+            .filterIsInstance<Border>()
+            .forEach { it.remove() }
+
+        this.addBordersAroundViewport(x, y, maxHeight)
+
     }
 
     private fun addBordersAroundViewport(x: Float, y: Float, maxHeight: Float) {
