@@ -51,6 +51,8 @@ class StageAssetsManager : Disposable {
         const val RADAR_MARKS = "gfx/ui/game/radar/marks.atlas"
         const val RADAR_BACKGROUND = "gfx/ui/game/radar/background.png"
         const val RADAR_BORDER = "gfx/ui/game/radar/border.png"
+        const val PLAYER_HP_GAUGE = "gfx/ui/game/player-hp-gauge.png"
+        const val ENEMY_HP_GAUGE = "gfx/ui/game/enemy-hp-gauge.png"
 
         enum class ButtonKind(internal val str: String) {
             MENU("menu"),
@@ -105,7 +107,9 @@ class StageAssetsManager : Disposable {
             UI.CONTROLS,
             UI.HP_GAUGE,
             UI.RADAR_BORDER,
-            UI.RADAR_BACKGROUND
+            UI.RADAR_BACKGROUND,
+            UI.PLAYER_HP_GAUGE,
+            UI.ENEMY_HP_GAUGE
         )
     } ?: listOf()
 

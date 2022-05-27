@@ -4,8 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
-import fr.mesabloo.heavymachdefense.listeners.stage_selection.ResetAnimationsForOthers
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.PlayAnimation
+import fr.mesabloo.heavymachdefense.listeners.stage_selection.ResetAnimationsForOthers
 import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
@@ -22,6 +22,9 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
     AbstractScreen(game, isLoading) {
     private lateinit var title: Title
     private lateinit var terrain: Terrain
+
+    private var playerLife: Long = 100L
+    private var enemyLife: Long = 100L
 
     override fun show() {
         super.show()
@@ -47,7 +50,7 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
             //it.layout()
         })
 
-        this.background.addActor(HpGauge().also {
+        this.background.addActor(HpGauges(this::playerLife, this::enemyLife).also {
             it.setPosition(128f, UI_HEIGHT - it.height - 3f)
         })
         this.background.addActor(BuildSlot().also {
