@@ -1,8 +1,8 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.ui.stage.buttons
+package fr.mesabloo.heavymachdefense.ui.stage.buttons
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.ui.common.AnimatedImage
+import fr.mesabloo.heavymachdefense.ui.common.AnimatedImage
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 
 class BuildMachMenuButton : AnimatedImage(0.065f, 0, Array<TextureRegion>(8).also {
