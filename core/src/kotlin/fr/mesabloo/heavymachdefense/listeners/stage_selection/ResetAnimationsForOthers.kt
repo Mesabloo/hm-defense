@@ -10,7 +10,7 @@ class ResetAnimationsForOthers(private val inGroup: Group, private val than: Ani
     override fun touchDown(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int): Boolean =
         !event.isCancelled
 
-    override fun clicked(event: InputEvent?, x: Float, y: Float) {
+    override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
         this.inGroup.children
             .filter { it is AnimatedImage && it != than }
             .forEach {

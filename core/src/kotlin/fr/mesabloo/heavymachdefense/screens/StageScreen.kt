@@ -114,16 +114,16 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         controlsGroup.addActor(BuildMachMenuButton().also {
             it.setPosition(UI_WIDTH / 2f - it.width / 2f - 90f, 47f + 512f)
             it.addListener(RemoveClickIfUpgradeMenuShown(this::upgradeMenuShown))
-            it.addListener(PlayAnimation(it))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
+            it.addListener(PlayAnimation(it))
 
             animationManager.setCurrentKeyframe(it.animationId, 7)
         })
         controlsGroup.addActor(SpecialAttackMenuButton().also {
             it.setPosition(UI_WIDTH / 2f - it.width / 2f + 2f, 47f + 512f)
             it.addListener(RemoveClickIfUpgradeMenuShown(this::upgradeMenuShown))
-            it.addListener(PlayAnimation(it))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
+            it.addListener(PlayAnimation(it))
 
             animationManager.setCurrentKeyframe(it.animationId, 0)
         })
