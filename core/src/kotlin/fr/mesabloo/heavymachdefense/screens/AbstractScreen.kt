@@ -15,7 +15,7 @@ import fr.mesabloo.heavymachdefense.ifDebug
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.POSITION
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.SCALE
-import fr.mesabloo.heavymachdefense.ui.debug.FPSDebugger
+import fr.mesabloo.heavymachdefense.ui.debug.DebugInfo
 import fr.mesabloo.heavymachdefense.ui.loading.*
 import fr.mesabloo.heavymachdefense.world.UIWorld
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
@@ -28,17 +28,17 @@ abstract class AbstractScreen(val game: MainGame, isLoading: Boolean = false) : 
     val background = Group()
     private val foreground = Group()
 
-    private lateinit var fpsDebugger: FPSDebugger
+    private lateinit var debugInfo: DebugInfo
 
     init {
         this.ui.addActor(this.background)
         this.ui.addActor(this.foreground)
 
         ifDebug {
-            this.foreground.addActor(FPSDebugger().also {
-                this.fpsDebugger = it
+            this.foreground.addActor(DebugInfo().also {
+                this.debugInfo = it
 
-                it.setPosition(5f, 5f)
+                it.setPosition(0f, UI_HEIGHT - it.prefHeight)
                 it.touchable = Touchable.disabled
             })
         }
@@ -117,7 +117,7 @@ abstract class AbstractScreen(val game: MainGame, isLoading: Boolean = false) : 
         super.render(delta)
 
         ifDebug {
-            this.fpsDebugger.zIndex = 50000
+            this.debugInfo.zIndex = 5000000
         }
 
         this.ui.act(delta)

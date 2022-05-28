@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.utils.Disposable
 import fr.mesabloo.heavymachdefense.DEBUG
-import fr.mesabloo.heavymachdefense.managers.assets.assetManager
 import ktx.assets.load
 
 
@@ -13,7 +12,7 @@ class DebugAssetsManager : Disposable {
     companion object {
         const val BLACK_BG = "gfx/ui/debug/black.9.png"
 
-        const val FONT: String = "cone_16"
+        const val FONT: String = "cone_14"
     }
 
     lateinit var font: BitmapFont
