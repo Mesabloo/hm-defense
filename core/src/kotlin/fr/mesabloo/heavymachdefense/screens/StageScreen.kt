@@ -1,11 +1,14 @@
 package fr.mesabloo.heavymachdefense.screens
 
 import aurelienribon.tweenengine.TweenManager
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
+import com.badlogic.gdx.utils.Json
 import fr.mesabloo.heavymachdefense.MainGame
-import fr.mesabloo.heavymachdefense.data.GameSave
+import fr.mesabloo.heavymachdefense.data.*
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.PlayAnimation
+import fr.mesabloo.heavymachdefense.listeners.stage_selection.RemoveClickIfUpgradeMenuShown
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.ResetAnimationsForOthers
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.ShowUpgradeMenu
 import fr.mesabloo.heavymachdefense.managers.animationManager
@@ -19,9 +22,16 @@ import fr.mesabloo.heavymachdefense.ui.stage.buttons.SpecialAttackMenuButton
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import ktx.actors.setScrollFocus
+import ktx.json.fromJson
+import ktx.json.setSerializer
 
 class StageScreen(game: MainGame, private val level: Int, private val save: GameSave, isLoading: Boolean = false) :
     AbstractScreen(game, isLoading) {
+    private val json = Json()
+    private val upgrades: Upgrades
+
+    private var upgradeMenuShown: Boolean = false
+
     private lateinit var title: Title
     private lateinit var terrain: Terrain
 
@@ -29,6 +39,18 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
     private var enemyLife: Long = 100L
 
     private val menuTweenManager = TweenManager()
+
+    init {
+        this.json.setSerializer(BaseCannonUpgradeSerializer)
+        this.json.setSerializer(BaseDefenseUpgradeSerializer)
+        this.json.setSerializer(BuildTimeUpgradeSerializer)
+        this.json.setSerializer(CrResearchUpgradeSerializer)
+        this.json.setSerializer(CellResearchUpgradeSerializer)
+        this.json.setSerializer(CellStorageUpgradeSerializer)
+        this.json.setSerializer(UpgradesJsonSerializer)
+
+        this.upgrades = this.json.fromJson(Gdx.files.internal("data/upgrades.json"))
+    }
 
     override fun show() {
         super.show()
@@ -50,6 +72,7 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
             it.setScrollingDisabled(true, false)
             it.setOverscroll(false, false)
 
+            it.layout()
             it.scrollTo(0f, 0f, 512f, 1024f - yOffset)
             //it.layout()
         })
@@ -80,7 +103,7 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         })
         controlsGroup.addActor(BaseUpgradeButton().also {
             it.setPosition(587f, 22f + 512f)
-            it.addListener(ShowUpgradeMenu(this.menuTweenManager, controlsGroup, scrollpane))
+            it.addListener(ShowUpgradeMenu(this.menuTweenManager, controlsGroup, scrollpane, this::upgradeMenuShown))
         })
         controlsGroup.addActor(Title(StageAssetsManager.UI.TitleKind.BUILD_MACH).also {
             this.title = it
@@ -90,6 +113,7 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
         controlsGroup.addActor(BuildMachMenuButton().also {
             it.setPosition(UI_WIDTH / 2f - it.width / 2f - 90f, 47f + 512f)
+            it.addListener(RemoveClickIfUpgradeMenuShown(this::upgradeMenuShown))
             it.addListener(PlayAnimation(it))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
 
@@ -97,12 +121,13 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         })
         controlsGroup.addActor(SpecialAttackMenuButton().also {
             it.setPosition(UI_WIDTH / 2f - it.width / 2f + 2f, 47f + 512f)
+            it.addListener(RemoveClickIfUpgradeMenuShown(this::upgradeMenuShown))
             it.addListener(PlayAnimation(it))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
 
             animationManager.setCurrentKeyframe(it.animationId, 0)
         })
-        controlsGroup.addActor(UpgradeMenu(this.save, ShowUpgradeMenu(this.menuTweenManager, controlsGroup, scrollpane)).also {
+        controlsGroup.addActor(UpgradeMenu(this.save, this.upgrades, ShowUpgradeMenu(this.menuTweenManager, controlsGroup, scrollpane, this::upgradeMenuShown)).also {
             it.setPosition(0f, -512f + 512f)
         })
 

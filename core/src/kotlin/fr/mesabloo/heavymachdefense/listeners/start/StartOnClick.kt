@@ -2,6 +2,7 @@ package fr.mesabloo.heavymachdefense.listeners.start
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.managers.assets.assetManager
 import fr.mesabloo.heavymachdefense.managers.assets.buttonAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.menuAssetsManager
@@ -10,6 +11,8 @@ import fr.mesabloo.heavymachdefense.screens.SavesSelectionScreen
 import fr.mesabloo.heavymachdefense.screens.StartScreen
 
 class StartOnClick(private val screen: StartScreen) : ClickListener() {
+    private fun savesSelectionScreen(game: MainGame) = SavesSelectionScreen(game, true)
+
     override fun clicked(event: InputEvent?, x: Float, y: Float) {
         this.screen.tapToStart.clearActions()
         this.screen.backgroundImage.clearListeners()
@@ -27,7 +30,7 @@ class StartOnClick(private val screen: StartScreen) : ClickListener() {
                     assetManager.update()
                 menuAssetsManager.isFullyLoaded() && buttonAssetsManager.isFullyLoaded()
             }) {
-                (this.changeScreen(lazy { SavesSelectionScreen(this, true) }) as AbstractScreen?)
+                (this.changeScreen(savesSelectionScreen(this)) as AbstractScreen?)
                     ?.addLoadingOverlayEnd()
 
                 this.getScreen<StartScreen>().dispose()

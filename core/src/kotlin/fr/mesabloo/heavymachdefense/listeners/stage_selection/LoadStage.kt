@@ -3,14 +3,22 @@ package fr.mesabloo.heavymachdefense.listeners.stage_selection
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
-import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
-import fr.mesabloo.heavymachdefense.screens.StageScreen
+import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.managers.assets.assetManager
 import fr.mesabloo.heavymachdefense.managers.assets.buttonAssetsManager
+import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
 import fr.mesabloo.heavymachdefense.screens.AbstractScreen
+import fr.mesabloo.heavymachdefense.screens.StageScreen
 import fr.mesabloo.heavymachdefense.screens.StageSelectionScreen
 
 class LoadStage(private val screen: StageSelectionScreen) : ClickListener() {
+    private fun stageScreen(game: MainGame, index: Int) = StageScreen(
+        game,
+        index + 1,
+        this.screen.save,
+        true
+    )
+
     override fun clicked(event: InputEvent?, x: Float, y: Float) {
         val index = this.screen.scrollPane.selected
 
@@ -27,14 +35,7 @@ class LoadStage(private val screen: StageSelectionScreen) : ClickListener() {
             this@LoadStage.screen.background
                 .children.forEach { it.remove() }
 
-            (this.changeScreen(lazy {
-                StageScreen(
-                    this,
-                    index + 1,
-                    this@LoadStage.screen.save,
-                    true
-                )
-            }) as AbstractScreen?)
+            (this.changeScreen(stageScreen(this, index)) as AbstractScreen?)
                 ?.addLoadingOverlayEnd()
 
             this.getScreen<StageSelectionScreen>().dispose()

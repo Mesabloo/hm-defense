@@ -29,6 +29,7 @@ class AbstractUpgradeLevelButton(
 ) : ImageButton(ImageButtonStyle().also {
     it.up = TextureRegionDrawable(StageAssetsManager.UI.upgradeButton(kind, false, false))
     it.down = TextureRegionDrawable(StageAssetsManager.UI.upgradeButton(kind, true, false))
+    it.checked = TextureRegionDrawable(StageAssetsManager.UI.upgradeButton(kind, true, false))
     it.disabled = TextureRegionDrawable(StageAssetsManager.UI.upgradeButton(kind, false, true))
 }) {
     private val priceLabel = Label("", Label.LabelStyle().also {
@@ -59,6 +60,6 @@ class AbstractUpgradeLevelButton(
 
         this.priceLabel.setPosition(227f - this.priceLabel.width, this.height / 2f - this.priceLabel.height / 2f)
         this.levelLabel.setPosition(320f, this.height / 2f - this.levelLabel.height / 2f)
-        this.infoLabel.setPosition(388f, this.height / 2f - this.infoLabel.height / 2f)
+        this.infoLabel.setPosition(378f, this.height / 2f - this.infoLabel.height / 2f)
     }
 }

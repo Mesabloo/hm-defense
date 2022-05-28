@@ -17,26 +17,26 @@ import java.util.*
  */
 class ColoredLogger : ApplicationLogger {
     override fun log(name: String, msg: String) {
-        System.err.println("\u001B[32m[${Date()} - $name -  LOG \u001B[0m] $msg")
+        System.err.println("\u001B[32m[${Date()} - $name -  LOG ]\u001B[0m $msg")
     }
 
     override fun log(name: String, msg: String, throwable: Throwable) {
-        System.err.println("\u001B[32m[${Date()} - $name -  LOG \u001B[0m] $msg\n$throwable")
+        System.err.println("\u001B[32m[${Date()} - $name -  LOG ]\u001B[0m $msg\n$throwable")
     }
 
     override fun error(name: String, msg: String) {
-        System.err.println("\u001B[31m[${Date()} - $name - ERROR\u001B[0m] $msg")
+        System.err.println("\u001B[31m[${Date()} - $name - ERROR]\u001B[0m $msg")
     }
 
     override fun error(name: String, msg: String, throwable: Throwable) {
-        System.err.println("\u001B[31m[${Date()} - $name - ERROR\u001B[0m] $msg\n$throwable")
+        System.err.println("\u001B[31m[${Date()} - $name - ERROR]\u001B[0m $msg\n$throwable")
     }
 
     override fun debug(name: String, msg: String) {
-        System.err.println("\u001B[36m[${Date()} - $name - DEBUG\u001B[0m] $msg")
+        System.err.println("\u001B[36m[${Date()} - $name - DEBUG]\u001B[0m $msg")
     }
 
     override fun debug(name: String, msg: String, throwable: Throwable) {
-        System.err.println("\u001B[36m[${Date()} - $name - DEBUG\u001B[0m] $msg\n$throwable")
+        System.err.println("\u001B[36m[${Date()} - $name - DEBUG]\u001B[0m $msg\n$throwable")
     }
 }

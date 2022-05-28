@@ -7,6 +7,9 @@ import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.ui.common.AnimatedImage
 
 class ResetAnimationsForOthers(private val inGroup: Group, private val than: AnimatedImage) : ClickListener() {
+    override fun touchDown(event: InputEvent, x: Float, y: Float, pointer: Int, button: Int): Boolean =
+        !event.isCancelled
+
     override fun clicked(event: InputEvent?, x: Float, y: Float) {
         this.inGroup.children
             .filter { it is AnimatedImage && it != than }

@@ -1,13 +1,18 @@
 package fr.mesabloo.heavymachdefense.ui.stage
 
 import com.badlogic.gdx.scenes.scene2d.Group
+import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.data.UpgradeKind
+import fr.mesabloo.heavymachdefense.data.Upgrades
 import fr.mesabloo.heavymachdefense.ui.stage.upgrade_menu.*
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 
-class UpgradeMenu(private val save: GameSave, closeListener: ClickListener) : Group() {
+class UpgradeMenu(private val save: GameSave, private val upgrades: Upgrades, closeListener: ClickListener) : Group() {
+    private val buttonGroup = ButtonGroup<AbstractUpgradeLevelButton>()
+    var upgradeButton: UpgradeButton
+
     init {
         this.width = UI_WIDTH
 
@@ -23,51 +28,126 @@ class UpgradeMenu(private val save: GameSave, closeListener: ClickListener) : Gr
             it.addListener(closeListener)
         })
         this.addActor(UpgradeButton().also {
+            upgradeButton = it
+
             it.setPosition(256f, 6f)
             it.isDisabled = true
         })
 
-        this.addActor(
+        // TODO: read stats
+
+        val baseCannonMaxLevel = upgrades.base_cannon.size.toLong()
+        val baseDefenseMaxLevel = upgrades.base_defense.size.toLong()
+        val buildTimeMaxLevel = upgrades.build_time.size.toLong()
+        val crResearchMaxLevel = upgrades.cr_research.size.toLong()
+        val cellResearchMaxLevel = upgrades.cell_research.size.toLong()
+        val cellStorageMaxLevel = upgrades.cell_storage.size.toLong()
+
+        val baseCannonLevel =
+            (save.mainUpgrades[UpgradeKind.BASE_CANNON]?.toLong()?.coerceIn(1..baseCannonMaxLevel) ?: 1) - 1
+        val baseDefenseLevel =
+            (save.mainUpgrades[UpgradeKind.BASE_DEFENSE]?.toLong()?.coerceIn(1..baseDefenseMaxLevel) ?: 1) - 1
+        val buildTimeLevel =
+            (save.mainUpgrades[UpgradeKind.BUILD_TIME]?.toLong()?.coerceIn(1..buildTimeMaxLevel) ?: 1) - 1
+        val crResearchLevel =
+            (save.mainUpgrades[UpgradeKind.CR_RESEARCH]?.toLong()?.coerceIn(1..crResearchMaxLevel) ?: 1) - 1
+        val cellResearchLevel =
+            (save.mainUpgrades[UpgradeKind.CELL_RESEARCH]?.toLong()?.coerceIn(1..cellResearchMaxLevel) ?: 1) - 1
+        val cellStorageLevel =
+            (save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.toLong()?.coerceIn(1..cellStorageMaxLevel) ?: 1) - 1
+
+        val currentAttack = upgrades.base_cannon[baseCannonLevel.toInt()].attack
+        val nextAttack =
+            upgrades.base_cannon[(baseCannonLevel + 1).coerceIn(0 until baseDefenseMaxLevel).toInt()].attack
+
+        val currentDefense = upgrades.base_defense[baseDefenseLevel.toInt()].defense
+        val nextDefense =
+            upgrades.base_defense[(baseDefenseLevel + 1).coerceIn(0 until baseDefenseMaxLevel).toInt()].defense
+
+        val currentSize = upgrades.cell_storage[cellStorageLevel.toInt()].storage
+        val nextSize =
+            upgrades.cell_storage[(cellStorageLevel + 1).coerceIn(0 until cellStorageMaxLevel).toInt()].storage
+
+        ////////////////////////////////////////
+
+        this.buttonGroup.setMinCheckCount(0)
+        this.buttonGroup.setMaxCheckCount(1)
+        this.buttonGroup.setUncheckLast(true)
+
+        this.buttonGroup.add(
             AbstractUpgradeLevelButton(
                 UpgradeKind.BASE_CANNON,
-                200,
-                Pair(1, 7),
-                Triple("ATK.", 46, 14)
+                upgrades.base_cannon[baseCannonLevel.toInt()].cost,
+                Pair(baseCannonLevel + 1, baseCannonMaxLevel),
+                Triple("ATK.", currentAttack, nextAttack - currentAttack)
             ).also {
                 it.setPosition(256f, 422f)
 
                 it.isDisabled = it.price > this.save.credits
             })
-        this.addActor(AbstractUpgradeLevelButton(UpgradeKind.BASE_DEFENSE, 200, Pair(1, 7)).also {
-            it.setPosition(256f, 358f)
+        this.buttonGroup.add(
+            AbstractUpgradeLevelButton(
+                UpgradeKind.BASE_DEFENSE,
+                upgrades.base_defense[baseDefenseLevel.toInt()].cost,
+                Pair(baseDefenseLevel + 1, baseDefenseMaxLevel),
+                Triple("DEF.", currentDefense, nextDefense - currentDefense)
+            ).also {
+                it.setPosition(256f, 358f)
 
-            it.isDisabled = it.price > this.save.credits
-        })
-        this.addActor(AbstractUpgradeLevelButton(UpgradeKind.BUILD_TIME, 5000, Pair(2, 10)).also {
-            it.setPosition(128f, 284f)
+                it.isDisabled = it.price > this.save.credits
+            })
+        this.buttonGroup.add(
+            AbstractUpgradeLevelButton(
+                UpgradeKind.BUILD_TIME,
+                upgrades.build_time[buildTimeLevel.toInt()].cost,
+                Pair(buildTimeLevel + 1, buildTimeMaxLevel)
+            ).also {
+                it.setPosition(128f, 284f)
 
-            it.isDisabled = it.price > this.save.credits
-        })
-        this.addActor(AbstractUpgradeLevelButton(UpgradeKind.CR_RESEARCH, 75000, Pair(8, 10)).also {
-            it.setPosition(128f, 220f)
+                it.isDisabled = it.price > this.save.credits
+            })
+        this.buttonGroup.add(
+            AbstractUpgradeLevelButton(
+                UpgradeKind.CR_RESEARCH,
+                upgrades.cr_research[crResearchLevel.toInt()].cost,
+                Pair(crResearchLevel + 1, crResearchMaxLevel)
+            ).also {
+                it.setPosition(128f, 220f)
 
-            it.isDisabled = it.price > this.save.credits
-        })
-        this.addActor(AbstractUpgradeLevelButton(UpgradeKind.CELL_RESEARCH, 999999, Pair(1, 10)).also {
-            it.setPosition(128f, 156f)
+                it.isDisabled = it.price > this.save.credits
+            })
+        this.buttonGroup.add(
+            AbstractUpgradeLevelButton(
+                UpgradeKind.CELL_RESEARCH,
+                upgrades.cell_research[cellResearchLevel.toInt()].cost,
+                Pair(cellResearchLevel + 1, cellResearchMaxLevel)
+            ).also {
+                it.setPosition(128f, 156f)
 
-            it.isDisabled = it.price > this.save.credits
-        })
-        this.addActor(
+                it.isDisabled = it.price > this.save.credits
+            })
+        this.buttonGroup.add(
             AbstractUpgradeLevelButton(
                 UpgradeKind.CELL_STORAGE,
-                12300,
-                Pair(4, 10),
-                Triple("Size", 2900, 500)
+                upgrades.cell_storage[cellStorageLevel.toInt()].cost,
+                Pair(cellStorageLevel + 1, cellStorageMaxLevel),
+                Triple("Size", currentSize, nextSize - currentSize)
             ).also {
                 it.setPosition(128f, 92f)
 
                 it.isDisabled = it.price > this.save.credits
             })
+
+        this.buttonGroup.buttons.forEach(this::addActor)
+    }
+
+    override fun act(delta: Float) {
+        super.act(delta)
+
+        if (this.parent.y < -1f) {
+            this.buttonGroup.uncheckAll()
+        }
+
+        this.upgradeButton.isDisabled = this.buttonGroup.allChecked.size == 0
     }
 }

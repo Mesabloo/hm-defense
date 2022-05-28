@@ -12,18 +12,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.POSITION
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.SIZE
+import kotlin.reflect.KMutableProperty0
 
 class ShowUpgradeMenu(
     private val tweenManager: TweenManager,
     private val controlsPane: Group,
-    private val scrollPane: ScrollPane
+    private val scrollPane: ScrollPane,
+    private val upgradeMenuShown: KMutableProperty0<Boolean>
 ) : ClickListener() {
     private companion object {
         const val OPEN_CLOSE_DURATION = 0.5f
     }
 
     override fun clicked(event: InputEvent?, x: Float, y: Float) {
-        if (this.controlsPane.y < -1f) {
+        if ((this.controlsPane.y < -1f).also { this.upgradeMenuShown.set(it) }) {
             // menu is closed, open it
             this.open()
         } else {

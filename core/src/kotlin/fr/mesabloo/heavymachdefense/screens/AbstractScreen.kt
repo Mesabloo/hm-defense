@@ -9,7 +9,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Group
+import com.badlogic.gdx.scenes.scene2d.Touchable
+import fr.mesabloo.heavymachdefense.DEBUG
 import fr.mesabloo.heavymachdefense.MainGame
+import fr.mesabloo.heavymachdefense.ui.debug.FPSDebugger
+import fr.mesabloo.heavymachdefense.ifDebug
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.POSITION
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.SCALE
@@ -25,9 +29,20 @@ abstract class AbstractScreen(val game: MainGame, isLoading: Boolean = false) : 
     val background = Group()
     private val foreground = Group()
 
+    private lateinit var fpsDebugger: FPSDebugger
+
     init {
         this.ui.addActor(this.background)
         this.ui.addActor(this.foreground)
+
+        if (DEBUG) {
+            this.foreground.addActor(FPSDebugger().also {
+                this.fpsDebugger = it
+
+                it.setPosition(5f, 5f)
+                it.touchable = Touchable.disabled
+            })
+        }
     }
 
     private var loadingAnimationDone: Boolean by Delegates.observable(false) { _, _, new ->
@@ -99,6 +114,10 @@ abstract class AbstractScreen(val game: MainGame, isLoading: Boolean = false) : 
 
     override fun render(delta: Float) {
         super.render(delta)
+
+        ifDebug {
+            this.fpsDebugger.zIndex = 50000
+        }
 
         this.ui.act(delta)
         this.tweenManager.update(delta)

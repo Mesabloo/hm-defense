@@ -122,6 +122,8 @@ pkgs.mkShell {
 
     glib
     glib.dev
+
+    visualvm
   ];
 
   LD_LIBRARY_PATH = "${pkgs.xorg.libXxf86vm}/lib:${pkgs.openal}/lib";

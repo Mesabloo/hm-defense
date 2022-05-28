@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.utils.Json
+import com.badlogic.gdx.utils.JsonWriter
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.data.GameSaveJsonSerializer
@@ -35,6 +36,7 @@ class SavesSelectionScreen(game: MainGame, isLoading: Boolean = false) : Abstrac
     private val json = Json()
 
     init {
+        this.json.setOutputType(JsonWriter.OutputType.json)
         this.json.setSerializer(GameSaveJsonSerializer)
 
         val numberOfSaves: Int = this.prefs["count"] ?: 0

@@ -3,6 +3,7 @@ package fr.mesabloo.heavymachdefense.listeners.saves
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.managers.assets.assetManager
 import fr.mesabloo.heavymachdefense.managers.assets.buttonAssetsManager
@@ -17,6 +18,12 @@ class SelectOrLoadSave(
     private val actor: Actor,
     private val save: GameSave
 ) : ClickListener() {
+    private fun stageSelectionScreen(game: MainGame) = StageSelectionScreen(
+        game,
+        this.save,
+        true
+    )
+
     override fun clicked(event: InputEvent?, x: Float, y: Float) {
         if (this.index == this.screen.focusedIndex) {
             this.actor.removeListener(this)
@@ -31,13 +38,7 @@ class SelectOrLoadSave(
                     assetManager.update()
                 levelSelectionAssetsManager.isFullyLoaded() && buttonAssetsManager.isFullyLoaded()
             }) {
-                (this.changeScreen(lazy {
-                    StageSelectionScreen(
-                        this,
-                        this@SelectOrLoadSave.save,
-                        true
-                    )
-                }) as AbstractScreen?)
+                (this.changeScreen(stageSelectionScreen(this)) as AbstractScreen?)
                     ?.addLoadingOverlayEnd()
 
                 this.getScreen<SavesSelectionScreen>().dispose()

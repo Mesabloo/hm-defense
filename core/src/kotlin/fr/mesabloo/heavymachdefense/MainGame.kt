@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.physics.box2d.Box2D
+import fr.mesabloo.heavymachdefense.managers.assets.debugAssetsManager
 import fr.mesabloo.heavymachdefense.log.ColoredLogger
 import fr.mesabloo.heavymachdefense.managers.assets.assetManager
 import fr.mesabloo.heavymachdefense.managers.assets.loadingAssetsManager
@@ -24,6 +25,8 @@ class MainGame : KtxGame<AbstractScreen>() {
 
     var justStarted: Boolean = true
 
+    private val startingScreen by lazy { StartScreen(this) }
+
     override fun create() {
         // Put a custom application logger with colors
         Gdx.app.applicationLogger = ColoredLogger()
@@ -40,6 +43,10 @@ class MainGame : KtxGame<AbstractScreen>() {
         loadingAssetsManager.preload()
         fontManager.init()
 
+        ifDebug {
+            debugAssetsManager.preload()
+        }
+
         super.create()
     }
 
@@ -47,20 +54,20 @@ class MainGame : KtxGame<AbstractScreen>() {
         Gdx.gl.glClearColor(1f, 1f, 1f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        if (!assetManager.isFinished)
-            assetManager.update()
+        assetManager.update()
 
-        if (startAssetsManager.isFullyLoaded() && loadingAssetsManager.isFullyLoaded() && justStarted) {
-            (changeScreen(lazy { StartScreen(this) }) as AbstractScreen?)?.removeLoadingOverlayEnd()
+        if (this.justStarted && debugAssetsManager.isFullyLoaded() && startAssetsManager.isFullyLoaded() && loadingAssetsManager.isFullyLoaded()) {
+            this.justStarted = false
+            (changeScreen(this.startingScreen) as AbstractScreen?)?.removeLoadingOverlayEnd()
         }
 
         super.render()
     }
 
-    inline fun <reified T : AbstractScreen> changeScreen(newScreen: Lazy<T>): T? =
+    inline fun <reified T : AbstractScreen> changeScreen(newScreen: T): T? =
         if (this.`access$currentScreen` !is T) {
             if (!this.containsScreen<T>()) {
-                this.addScreen(newScreen.value)
+                this.addScreen(newScreen)
             }
             this.setScreen<T>()
 
@@ -68,8 +75,9 @@ class MainGame : KtxGame<AbstractScreen>() {
         } else null
 
     override fun resize(width: Int, height: Int) {
-        if (DEBUG)
+        ifDebug {
             Gdx.app.debug(this.javaClass.simpleName, "Resizing window to ${width}x${height}")
+        }
 
         super.resize(width, height)
     }
@@ -77,8 +85,9 @@ class MainGame : KtxGame<AbstractScreen>() {
     override fun dispose() {
         super.dispose()
 
-        if (DEBUG)
+        ifDebug {
             Gdx.app.debug(this.javaClass.simpleName, "Quitting application")
+        }
 
         assetManager.dispose()
 

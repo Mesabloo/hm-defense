@@ -29,7 +29,14 @@ data class GameSave(
         Pair(TurretKind.ION, 1),
         Pair(TurretKind.LASER, 1)
     ),
-    var mainUpgrades: HashMap<String, Int> = hashMapOf()
+    var mainUpgrades: HashMap<UpgradeKind, Int> = hashMapOf(
+        Pair(UpgradeKind.BASE_CANNON, 1),
+        Pair(UpgradeKind.BASE_DEFENSE, 1),
+        Pair(UpgradeKind.BUILD_TIME, 1),
+        Pair(UpgradeKind.CR_RESEARCH, 1),
+        Pair(UpgradeKind.CELL_RESEARCH, 1),
+        Pair(UpgradeKind.CELL_STORAGE, 1)
+    )
 ) {
     companion object {
         @Transient
@@ -51,7 +58,7 @@ object GameSaveJsonSerializer : Json.Serializer<GameSave> {
 
             json.readValue<HashMap<MachineKind, Int>?>(data, "machineUpgrades")?.let { save.machineUpgrades = it }
             json.readValue<HashMap<TurretKind, Int>?>(data, "turretUpgrades")?.let { save.turretUpgrades = it }
-            json.readValue<HashMap<String, Int>?>(data, "mainUpgrades")?.let { save.mainUpgrades = it }
+            json.readValue<HashMap<UpgradeKind, Int>?>(data, "mainUpgrades")?.let { save.mainUpgrades = it }
         } catch (ex: GdxRuntimeException) {
             return null
         }
