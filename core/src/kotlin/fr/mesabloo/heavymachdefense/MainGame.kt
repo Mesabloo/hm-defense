@@ -5,9 +5,9 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.physics.box2d.Box2D
-import fr.mesabloo.heavymachdefense.managers.assets.debugAssetsManager
 import fr.mesabloo.heavymachdefense.log.ColoredLogger
 import fr.mesabloo.heavymachdefense.managers.assets.assetManager
+import fr.mesabloo.heavymachdefense.managers.assets.debugAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.loadingAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.startAssetsManager
 import fr.mesabloo.heavymachdefense.managers.fontManager
@@ -75,9 +75,7 @@ class MainGame : KtxGame<AbstractScreen>() {
         } else null
 
     override fun resize(width: Int, height: Int) {
-        ifDebug {
-            Gdx.app.debug(this.javaClass.simpleName, "Resizing window to ${width}x${height}")
-        }
+        Gdx.app.debug(this.javaClass.simpleName, "Resizing window to ${width}x${height}")
 
         super.resize(width, height)
     }
@@ -85,9 +83,7 @@ class MainGame : KtxGame<AbstractScreen>() {
     override fun dispose() {
         super.dispose()
 
-        ifDebug {
-            Gdx.app.debug(this.javaClass.simpleName, "Quitting application")
-        }
+        Gdx.app.debug(this.javaClass.simpleName, "Quitting application")
 
         assetManager.dispose()
 

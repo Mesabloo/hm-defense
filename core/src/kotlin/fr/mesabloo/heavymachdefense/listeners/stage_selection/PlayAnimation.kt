@@ -14,7 +14,5 @@ class PlayAnimation(private val image: AnimatedImage) : ClickListener() {
 
         animationManager.setCurrentKeyframe(id, 0)
         animationManager.resume(id)
-
-        event.handle()
     }
 }

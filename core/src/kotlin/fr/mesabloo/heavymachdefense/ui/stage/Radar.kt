@@ -61,6 +61,8 @@ private class Border(val border: BorderKind, isHorizontal: Boolean, maxHeight: F
 class Radar(private val pane: ScrollPane) : Group() {
     private val terrain = pane.getChild(0) as Terrain
 
+    private var lastKnownHeight = 0f
+
     init {
         this.width = 64f
         this.height = 256f
@@ -80,14 +82,19 @@ class Radar(private val pane: ScrollPane) : Group() {
 
         val maxHeight = min(this.pane.height, this.pane.scrollHeight) * ratioY
 
-        // FIXME: this sucks, but I don't know how to do better for now
+        // NOTE: maybe we could completely avoid allocating?
 
-        this.children
-            .filterIsInstance<Border>()
-            .forEach { it.remove() }
+        if (this.lastKnownHeight != maxHeight) {
+            this.children
+                .filterIsInstance<Border>()
+                .forEach { it.remove() }
 
-        this.addBordersAroundViewport(x, y, maxHeight)
+            this.addBordersAroundViewport(x, y, maxHeight)
 
+            this.lastKnownHeight = maxHeight
+        } else {
+            this.updateBordersAroundViewport(x, y, maxHeight)
+        }
     }
 
     private fun addBordersAroundViewport(x: Float, y: Float, maxHeight: Float) {

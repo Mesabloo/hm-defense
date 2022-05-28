@@ -8,9 +8,7 @@ import fr.mesabloo.heavymachdefense.managers.FontManager
 import fr.mesabloo.heavymachdefense.managers.fontManager
 import java.text.SimpleDateFormat
 
-private val formatter = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-
-class Date(date: java.util.Date) : Label(formatter.format(date), Skin().also {
+class Date(date: java.util.Date) : Label(SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(date), Skin().also {
     val style = LabelStyle(fontManager.bitmapFonts[FontManager.SET01B]!!, null)
 
     it.add("default", style)

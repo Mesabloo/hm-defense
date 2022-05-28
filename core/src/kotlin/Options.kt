@@ -10,4 +10,4 @@ const val DEBUG: Boolean = !BuildConfig.RELEASE
 /**
  * Execute an action only when the constant [DEBUG] is `true`.
  */
-inline fun ifDebug(crossinline action: () -> Unit) = if (DEBUG) action() else Unit
+inline fun ifDebug(action: () -> Unit) = if (DEBUG) action() else Unit

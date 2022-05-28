@@ -3,6 +3,7 @@ package fr.mesabloo.heavymachdefense.listeners.stage_selection
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import com.badlogic.gdx.utils.Timer
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.managers.assets.assetManager
 import fr.mesabloo.heavymachdefense.managers.assets.buttonAssetsManager
@@ -31,8 +32,11 @@ class BackToSaves(private val screen: StageSelectionScreen, private val actor: A
             (this.changeScreen(savesSelectionScreen(this)) as AbstractScreen?)
                 ?.addLoadingOverlayEnd()
 
-            this.getScreen<StageSelectionScreen>().dispose()
-            this.removeScreen<StageSelectionScreen>()
+            Timer.schedule(object: Timer.Task() {
+                override fun run() {
+                    this@addLoadingOverlay.removeScreen<StageSelectionScreen>()?.dispose()
+                }
+            }, 0.050f)
         }
     }
 }

@@ -84,6 +84,7 @@ class SavesSelectionScreen(game: MainGame, isLoading: Boolean = false) : Abstrac
     override fun dispose() {
         super.dispose()
 
+
         menuAssetsManager.dispose()
     }
 

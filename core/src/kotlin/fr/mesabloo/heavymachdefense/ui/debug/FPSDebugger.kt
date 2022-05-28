@@ -17,16 +17,10 @@ class FPSDebugger : Label("0 FPS", LabelStyle().also {
         super.act(delta)
 
         val javaMemoryUsedInMB = Gdx.app.javaHeap / (1024 * 1024)
-        val nativeMemoryUsedInMB = Gdx.app.nativeHeap / (1024 * 1024)
 
-        this.setText("${Gdx.graphics.framesPerSecond} FPS\n$javaMemoryUsedInMB/$nativeMemoryUsedInMB MB used")
+        this.setText("${Gdx.graphics.framesPerSecond} FPS\n$javaMemoryUsedInMB MB used")
 
         this.width = this.glyphLayout.width + 14
         this.height = this.glyphLayout.height + 14
-
-//        this.style.background.also {
-//            it.minWidth = this.glyphLayout.width + 14
-//            it.minHeight = this.glyphLayout.height + 30
-//        }
     }
 }

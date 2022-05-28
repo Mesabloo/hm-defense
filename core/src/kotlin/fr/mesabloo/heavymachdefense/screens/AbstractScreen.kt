@@ -10,13 +10,12 @@ import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.Touchable
-import fr.mesabloo.heavymachdefense.DEBUG
 import fr.mesabloo.heavymachdefense.MainGame
-import fr.mesabloo.heavymachdefense.ui.debug.FPSDebugger
 import fr.mesabloo.heavymachdefense.ifDebug
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.POSITION
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.SCALE
+import fr.mesabloo.heavymachdefense.ui.debug.FPSDebugger
 import fr.mesabloo.heavymachdefense.ui.loading.*
 import fr.mesabloo.heavymachdefense.world.UIWorld
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
@@ -35,7 +34,7 @@ abstract class AbstractScreen(val game: MainGame, isLoading: Boolean = false) : 
         this.ui.addActor(this.background)
         this.ui.addActor(this.foreground)
 
-        if (DEBUG) {
+        ifDebug {
             this.foreground.addActor(FPSDebugger().also {
                 this.fpsDebugger = it
 
@@ -104,6 +103,8 @@ abstract class AbstractScreen(val game: MainGame, isLoading: Boolean = false) : 
         Gdx.app.debug(this.javaClass.simpleName, "Disposing screen")
 
         super.dispose()
+
+        this.ui.dispose()
     }
 
     override fun resize(width: Int, height: Int) {

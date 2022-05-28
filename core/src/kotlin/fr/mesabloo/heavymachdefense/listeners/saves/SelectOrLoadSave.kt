@@ -3,6 +3,7 @@ package fr.mesabloo.heavymachdefense.listeners.saves
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import com.badlogic.gdx.utils.Timer
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.managers.assets.assetManager
@@ -41,8 +42,11 @@ class SelectOrLoadSave(
                 (this.changeScreen(stageSelectionScreen(this)) as AbstractScreen?)
                     ?.addLoadingOverlayEnd()
 
-                this.getScreen<SavesSelectionScreen>().dispose()
-                this.removeScreen<SavesSelectionScreen>()
+                Timer.schedule(object: Timer.Task() {
+                    override fun run() {
+                        this@addLoadingOverlay.removeScreen<SavesSelectionScreen>()?.dispose()
+                    }
+                }, 0.050f)
             }
         } else {
             this.screen.changeFocused(this.index)
