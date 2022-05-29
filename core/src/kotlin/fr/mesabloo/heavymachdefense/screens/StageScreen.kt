@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Json
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.*
-import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.ui.stage.CellCounter
+import fr.mesabloo.heavymachdefense.ui.stage.CellCounter
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.PlayAnimation
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.RemoveClickIfUpgradeMenuShown
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.ResetAnimationsForOthers

@@ -1,4 +1,4 @@
-package fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.ui.stage
+package fr.mesabloo.heavymachdefense.ui.stage
 
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.Touchable
