@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Timer
+import fr.mesabloo.heavymachdefense.timers.cellMiningTimer
 import fr.mesabloo.heavymachdefense.managers.FontManager
 import fr.mesabloo.heavymachdefense.managers.fontManager
 import kotlin.reflect.KMutableProperty0
@@ -49,7 +50,7 @@ class CellCounter(private val maxCells: KProperty0<Long>, private val currentCel
 
     override fun act(delta: Float) {
         if (!this.addCellsTask.isScheduled) {
-            Timer.schedule(this.addCellsTask, 0f, MINING_SPEED)
+            cellMiningTimer.scheduleTask(this.addCellsTask, 0f, MINING_SPEED)
         }
 
         this.current.setText(this.currentCells.get().toString())

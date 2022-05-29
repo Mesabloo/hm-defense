@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Json
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.*
-import fr.mesabloo.heavymachdefense.ui.stage.CellCounter
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.PlayAnimation
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.RemoveClickIfUpgradeMenuShown
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.ResetAnimationsForOthers
@@ -15,6 +14,7 @@ import fr.mesabloo.heavymachdefense.listeners.stage_selection.ShowUpgradeMenu
 import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
+import fr.mesabloo.heavymachdefense.timers.cellMiningTimer
 import fr.mesabloo.heavymachdefense.ui.stage.*
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.BaseUpgradeButton
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.BuildMachMenuButton
@@ -161,10 +161,24 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         super.render(delta)
     }
 
+    override fun pause() {
+        super.pause()
+
+        cellMiningTimer.stop()
+    }
+
+    override fun resume() {
+        super.resume()
+
+        cellMiningTimer.start()
+    }
+
     override fun dispose() {
         super.dispose()
 
         animationManager.dispose()
         stageAssetsManager.dispose()
+
+        cellMiningTimer.clear()
     }
 }
