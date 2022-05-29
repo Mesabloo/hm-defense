@@ -13,7 +13,6 @@ import fr.mesabloo.heavymachdefense.managers.assets.DebugAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.debugAssetsManager
 import java.lang.management.ManagementFactory
 import javax.management.Attribute
-import javax.management.AttributeList
 import javax.management.ObjectName
 import kotlin.math.max
 
@@ -54,7 +53,7 @@ class DebugInfo : Table() {
 
     override fun act(delta: Float) {
         val appFPS = Gdx.graphics.framesPerSecond
-        val appMemory = Gdx.app.javaHeap / (1024 * 1024)
+        val appMemory = getMemoryInfoInMB()
         val cpuUsage = getProcessCpuLoad()
 
         if (this.timeSinceLastUpdate > UPDATE_DELAY) {
@@ -86,18 +85,26 @@ class DebugInfo : Table() {
         // prevent drawing debug
     }
 
+    ///////////////////////////////////////////////////////////////////
+
+    private val mbeanServer = ManagementFactory.getPlatformMBeanServer()
+    private val osObjectName = ObjectName.getInstance(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME)
+
     @Throws(Exception::class)
     fun getProcessCpuLoad(): Double {
-        val mbs = ManagementFactory.getPlatformMBeanServer()
-        val name = ObjectName.getInstance("java.lang:type=OperatingSystem")
-        val list: AttributeList = mbs.getAttributes(name, arrayOf("ProcessCpuLoad"))
-        if (list.isEmpty()) return Double.NaN
-        val att: Attribute = list[0] as Attribute
-        val value = att.value as Double
+        val cpuLoadAttrList = this.mbeanServer.getAttributes(this.osObjectName, arrayOf("ProcessCpuLoad"))
 
-        // usually takes a couple of seconds before we get real values
-        return if (value == -1.0) Double.NaN else (value * 1000).toInt() / 10.0
-        // returns a percentage value with 1 decimal point precision
+        return if (cpuLoadAttrList.isEmpty()) Double.NaN
+        else {
+            val value = (cpuLoadAttrList[0] as Attribute).value as Double
+
+            if (value == -1.0) Double.NaN
+            else (value * 1000).toInt() / 10.0
+            // returns a percentage value with 1 decimal point precision
+        }
     }
 
+    private val memoryMXBean = ManagementFactory.getMemoryMXBean()
+
+    private fun getMemoryInfoInMB() = memoryMXBean.heapMemoryUsage.used / (1024 * 1024)
 }
