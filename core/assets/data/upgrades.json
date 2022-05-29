@@ -1,0 +1,230 @@
+{
+  "BASE_CANNON": [
+    {
+      "cost": 600,
+      "attack": 0
+    },
+    {
+      "cost": 1200,
+      "attack": 0
+    },
+    {
+      "cost": 2400,
+      "attack": 0
+    },
+    {
+      "cost": 4800,
+      "attack": 0
+    },
+    {
+      "cost": 9600,
+      "attack": 0
+    },
+    {
+      "cost": 19200,
+      "attack": 0
+    },
+    {
+      "cost": 0,
+      "attack": 0
+    }
+  ],
+  "BASE_DEFENSE": [
+    {
+      "cost": 600,
+      "defense": 10000
+    },
+    {
+      "cost": 1200,
+      "defense": 15000
+    },
+    {
+      "cost": 2400,
+      "defense": 20000
+    },
+    {
+      "cost": 4800,
+      "defense": 30000
+    },
+    {
+      "cost": 9600,
+      "defense": 50000
+    },
+    {
+      "cost": 19200,
+      "defense": 70000
+    },
+    {
+      "cost": 0,
+      "defense": 100000
+    }
+  ],
+  "BUILD_TIME": [
+    {
+      "cost": 700,
+      "multiplier": 1
+    },
+    {
+      "cost": 1400,
+      "multiplier": 0.96
+    },
+    {
+      "cost": 2800,
+      "multiplier": 0.92
+    },
+    {
+      "cost": 5600,
+      "multiplier": 0.88
+    },
+    {
+      "cost": 11200,
+      "multiplier": 0.84
+    },
+    {
+      "cost": 22400,
+      "multiplier": 0.80
+    },
+    {
+      "cost": 44800,
+      "multiplier": 0.76
+    },
+    {
+      "cost": 89600,
+      "multiplier": 0.72
+    },
+    {
+      "cost": 179200,
+      "multiplier": 0.68
+    },
+    {
+      "cost": 0,
+      "multiplier": 0.64
+    }
+  ],
+  "CR_RESEARCH": [
+    {
+      "cost": 500,
+      "multiplier": 1.0
+    },
+    {
+      "cost": 1000,
+      "multiplier": 1.2
+    },
+    {
+      "cost": 2000,
+      "multiplier": 1.4
+    },
+    {
+      "cost": 4000,
+      "multiplier": 1.6
+    },
+    {
+      "cost": 8000,
+      "multiplier": 1.8
+    },
+    {
+      "cost": 16000,
+      "multiplier": 2.0
+    },
+    {
+      "cost": 32000,
+      "multiplier": 2.2
+    },
+    {
+      "cost": 64000,
+      "multiplier": 2.4
+    },
+    {
+      "cost": 128000,
+      "multiplier": 2.7
+    },
+    {
+      "cost": 0,
+      "multiplier": 3.0
+    }
+  ],
+  "CELL_RESEARCH": [
+    {
+      "cost": 800,
+      "multiplier": 1.0
+    },
+    {
+      "cost": 1600,
+      "multiplier": 1.1
+    },
+    {
+      "cost": 3200,
+      "multiplier": 1.2
+    },
+    {
+      "cost": 6400,
+      "multiplier": 1.3
+    },
+    {
+      "cost": 12800,
+      "multiplier": 1.4
+    },
+    {
+      "cost": 25600,
+      "multiplier": 1.5
+    },
+    {
+      "cost": 51200,
+      "multiplier": 1.6
+    },
+    {
+      "cost": 102400,
+      "multiplier": 1.8
+    },
+    {
+      "cost": 204800,
+      "multiplier": 2.0
+    },
+    {
+      "cost": 0,
+      "multiplier": 2.2
+    }
+  ],
+  "CELL_STORAGE": [
+    {
+      "cost": 700,
+      "storage": 500
+    },
+    {
+      "cost": 1400,
+      "storage": 700
+    },
+    {
+      "cost": 2800,
+      "storage": 1000
+    },
+    {
+      "cost": 5600,
+      "storage": 1400
+    },
+    {
+      "cost": 11200,
+      "storage": 1800
+    },
+    {
+      "cost": 22400,
+      "storage": 2300
+    },
+    {
+      "cost": 44800,
+      "storage": 2900
+    },
+    {
+      "cost": 89600,
+      "storage": 3400
+    },
+    {
+      "cost": 179200,
+      "storage": 4000
+    },
+    {
+      "cost": 0,
+      "storage": 4700
+    }
+  ]
+}
