@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Json
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.*
+import fr.mesabloo.heavymachdefense.fr.mesabloo.heavymachdefense.ui.stage.CellCounter
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.PlayAnimation
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.RemoveClickIfUpgradeMenuShown
 import fr.mesabloo.heavymachdefense.listeners.stage_selection.ResetAnimationsForOthers
@@ -40,6 +41,9 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
     private val menuTweenManager = TweenManager()
 
+    private var maxCells: Long
+    private var currentCells: Long
+
     init {
         this.json.setSerializer(BaseCannonUpgradeSerializer)
         this.json.setSerializer(BaseDefenseUpgradeSerializer)
@@ -50,6 +54,9 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         this.json.setSerializer(UpgradesJsonSerializer)
 
         this.upgrades = this.json.fromJson(Gdx.files.internal("data/upgrades.json"))
+
+        this.maxCells = this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1) ?: 0].storage
+        this.currentCells = this.maxCells * 2 / 5
     }
 
     override fun show() {
@@ -85,6 +92,9 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         })
         this.background.addActor(MachSlot().also {
             it.setPosition(UI_WIDTH - it.width, 57f)
+        })
+        this.background.addActor(CellCounter(this::maxCells, this::currentCells).also {
+            it.setPosition(652f, 995f)
         })
 
         val controlsGroup = Group()
@@ -144,6 +154,9 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
     override fun render(delta: Float) {
         this.menuTweenManager.update(delta)
+
+        // update cell storage capacity
+        this.maxCells = this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1) ?: 0].storage
 
         super.render(delta)
     }
