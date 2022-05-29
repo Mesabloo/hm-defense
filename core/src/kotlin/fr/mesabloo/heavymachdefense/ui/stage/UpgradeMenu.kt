@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.data.UpgradeKind
 import fr.mesabloo.heavymachdefense.data.Upgrades
+import fr.mesabloo.heavymachdefense.listeners.stage_selection.UpgradeSelectedItem
 import fr.mesabloo.heavymachdefense.ui.stage.upgrade_menu.*
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 
@@ -32,9 +33,9 @@ class UpgradeMenu(private val save: GameSave, private val upgrades: Upgrades, cl
 
             it.setPosition(256f, 6f)
             it.isDisabled = true
-        })
 
-        // TODO: read stats
+            it.addListener(UpgradeSelectedItem(this.buttonGroup, this.save, this.upgrades))
+        })
 
         val baseCannonMaxLevel = upgrades.base_cannon.size.toLong()
         val baseDefenseMaxLevel = upgrades.base_defense.size.toLong()
@@ -82,8 +83,6 @@ class UpgradeMenu(private val save: GameSave, private val upgrades: Upgrades, cl
                 Triple("ATK.", currentAttack, nextAttack - currentAttack)
             ).also {
                 it.setPosition(256f, 422f)
-
-                it.isDisabled = it.price > this.save.credits
             })
         this.buttonGroup.add(
             AbstractUpgradeLevelButton(
@@ -93,8 +92,6 @@ class UpgradeMenu(private val save: GameSave, private val upgrades: Upgrades, cl
                 Triple("DEF.", currentDefense, nextDefense - currentDefense)
             ).also {
                 it.setPosition(256f, 358f)
-
-                it.isDisabled = it.price > this.save.credits
             })
         this.buttonGroup.add(
             AbstractUpgradeLevelButton(
@@ -103,8 +100,6 @@ class UpgradeMenu(private val save: GameSave, private val upgrades: Upgrades, cl
                 Pair(buildTimeLevel + 1, buildTimeMaxLevel)
             ).also {
                 it.setPosition(128f, 284f)
-
-                it.isDisabled = it.price > this.save.credits
             })
         this.buttonGroup.add(
             AbstractUpgradeLevelButton(
@@ -113,8 +108,6 @@ class UpgradeMenu(private val save: GameSave, private val upgrades: Upgrades, cl
                 Pair(crResearchLevel + 1, crResearchMaxLevel)
             ).also {
                 it.setPosition(128f, 220f)
-
-                it.isDisabled = it.price > this.save.credits
             })
         this.buttonGroup.add(
             AbstractUpgradeLevelButton(
@@ -123,8 +116,6 @@ class UpgradeMenu(private val save: GameSave, private val upgrades: Upgrades, cl
                 Pair(cellResearchLevel + 1, cellResearchMaxLevel)
             ).also {
                 it.setPosition(128f, 156f)
-
-                it.isDisabled = it.price > this.save.credits
             })
         this.buttonGroup.add(
             AbstractUpgradeLevelButton(
@@ -134,8 +125,6 @@ class UpgradeMenu(private val save: GameSave, private val upgrades: Upgrades, cl
                 Triple("Size", currentSize, nextSize - currentSize)
             ).also {
                 it.setPosition(128f, 92f)
-
-                it.isDisabled = it.price > this.save.credits
             })
 
         this.buttonGroup.buttons.forEach(this::addActor)
@@ -147,6 +136,13 @@ class UpgradeMenu(private val save: GameSave, private val upgrades: Upgrades, cl
         if (this.parent.y < -1f) {
             this.buttonGroup.uncheckAll()
         }
+
+        this.buttonGroup.buttons
+            .forEach {
+                it.isDisabled = it.price > this.save.credits
+                if (it.isDisabled)
+                    it.isChecked = false
+            }
 
         this.upgradeButton.isDisabled = this.buttonGroup.allChecked.size == 0
     }

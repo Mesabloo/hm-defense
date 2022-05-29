@@ -22,7 +22,7 @@ class UpgradeButton : ImageButton(ImageButtonStyle().also {
 })
 
 class AbstractUpgradeLevelButton(
-    kind: UpgradeKind,
+    val kind: UpgradeKind,
     var price: Long,
     var level: Pair<Long, Long>, // current / max
     var addition: Triple<String, Long, Long>? = null
