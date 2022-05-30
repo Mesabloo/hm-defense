@@ -1,9 +1,13 @@
 package fr.mesabloo.heavymachdefense.data
 
-enum class UpgradeKind(val str: String) {
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+enum class UpgradeKind(@Transient val str: String) {
     UPGRADE("upgrade"),
     CLOSE("close"),
-    BASE_CANNON("base-cannon"),
+    @SerialName("BASE_CANNON") BASE_CANNON("base-cannon"),
     BASE_DEFENSE("base-defense"),
     BUILD_TIME("build-time"),
     CELL_STORAGE("cell-storage"),

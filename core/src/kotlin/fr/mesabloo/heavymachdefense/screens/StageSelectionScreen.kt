@@ -20,6 +20,7 @@ import ktx.actors.setScrollFocus
 class StageSelectionScreen(
     game: MainGame,
     val save: GameSave,
+    val saveIndex: Int,
     isLoading: Boolean = false
 ) : AbstractScreen(game, isLoading) {
     lateinit var scrollPane: StageList

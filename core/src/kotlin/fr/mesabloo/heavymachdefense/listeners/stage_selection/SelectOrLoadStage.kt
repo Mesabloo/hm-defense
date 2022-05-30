@@ -14,10 +14,11 @@ import fr.mesabloo.heavymachdefense.screens.StageScreen
 import fr.mesabloo.heavymachdefense.screens.StageSelectionScreen
 
 class SelectOrLoadStage(private val screen: StageSelectionScreen, private val index: Int) : ClickListener() {
-    private fun stageScreen(game: MainGame, index: Int) =  StageScreen(
+    private fun stageScreen(game: MainGame, index: Int) = StageScreen(
         game,
         index + 1,
         this.screen.save,
+        this.screen.saveIndex,
         true
     )
 
@@ -44,7 +45,7 @@ class SelectOrLoadStage(private val screen: StageSelectionScreen, private val in
                 (this.changeScreen(stageScreen(this, index)) as AbstractScreen?)
                     ?.addLoadingOverlayEnd()
 
-                Timer.schedule(object: Timer.Task() {
+                Timer.schedule(object : Timer.Task() {
                     override fun run() {
                         this@addLoadingOverlay.removeScreen<StageSelectionScreen>()?.dispose()
                         buttonAssetsManager.dispose()

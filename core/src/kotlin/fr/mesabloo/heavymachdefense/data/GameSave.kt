@@ -1,13 +1,19 @@
 package fr.mesabloo.heavymachdefense.data
 
-import com.badlogic.gdx.utils.GdxRuntimeException
-import com.badlogic.gdx.utils.Json
-import com.badlogic.gdx.utils.JsonValue
-import ktx.json.readValue
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import java.util.*
 
+@Serializable
 data class GameSave(
+    @Serializable(with = DateTimestampSerializer::class)
     var creationDate: Date = Date(),
+    @Serializable(with = DateTimestampSerializer::class)
     var lastAccessedDate: Date = Date(),
     var lastStageCompleted: Int = 0,
     var credits: Long = 0L,
@@ -44,38 +50,47 @@ data class GameSave(
     }
 }
 
-object GameSaveJsonSerializer : Json.Serializer<GameSave> {
-    override fun read(json: Json, data: JsonValue, type: Class<*>): GameSave? {
-        val save = GameSave()
+object DateTimestampSerializer : KSerializer<Date> {
+    override val descriptor: SerialDescriptor
+        get() = PrimitiveSerialDescriptor("Date", PrimitiveKind.LONG)
 
-        try {
-            save.creationDate = json.readValue<Long?>(data, "creationDate")?.let { Date(it) } ?: Date()
-            save.lastAccessedDate = json.readValue<Long?>(data, "lastAccessedDate")?.let { Date(it) } ?: Date()
-            save.lastStageCompleted = json.readValue(data, "lastStageCompleted") ?: 0
-            save.credits = json.readValue(data, "credits") ?: 0
-            save.name = json.readValue(data, "name") ?: ""
-            // TODO: if name empty -> default one (e.g. "Username")
+    override fun deserialize(decoder: Decoder): Date = Date(decoder.decodeLong())
 
-            json.readValue<HashMap<MachineKind, Int>?>(data, "machineUpgrades")?.let { save.machineUpgrades = it }
-            json.readValue<HashMap<TurretKind, Int>?>(data, "turretUpgrades")?.let { save.turretUpgrades = it }
-            json.readValue<HashMap<UpgradeKind, Int>?>(data, "mainUpgrades")?.let { save.mainUpgrades = it }
-        } catch (ex: GdxRuntimeException) {
-            return null
-        }
-
-        return save
-    }
-
-    override fun write(json: Json, `object`: GameSave, knownType: Class<*>) {
-        json.writeObjectStart()
-        json.writeValue("creationDate", `object`.creationDate.time)
-        json.writeValue("lastAccessedDate", `object`.lastAccessedDate.time)
-        json.writeValue("lastStageCompleted", `object`.lastStageCompleted)
-        json.writeValue("credits", `object`.credits)
-        json.writeValue("name", `object`.name)
-        json.writeValue("machineUpgrades", `object`.machineUpgrades)
-        json.writeValue("turretUpgrades", `object`.turretUpgrades)
-        json.writeValue("mainUpgrades", `object`.mainUpgrades)
-        json.writeObjectEnd()
-    }
+    override fun serialize(encoder: Encoder, value: Date) = encoder.encodeLong(value.time)
 }
+
+//object GameSaveJsonSerializer : Json.Serializer<GameSave> {
+//    override fun read(json: Json, data: JsonValue, type: Class<*>): GameSave? {
+//        val save = GameSave()
+//
+//        try {
+//            save.creationDate = json.readValue<Long?>(data, "creationDate")?.let { Date(it) } ?: Date()
+//            save.lastAccessedDate = json.readValue<Long?>(data, "lastAccessedDate")?.let { Date(it) } ?: Date()
+//            save.lastStageCompleted = json.readValue(data, "lastStageCompleted") ?: 0
+//            save.credits = json.readValue(data, "credits") ?: 0
+//            save.name = json.readValue(data, "name") ?: ""
+//            // TODO: if name empty -> default one (e.g. "Username")
+//
+//            json.readValue<HashMap<MachineKind, Int>?>(data, "machineUpgrades")?.also { save.machineUpgrades = it }
+//            json.readValue<HashMap<TurretKind, Int>?>(data, "turretUpgrades")?.also { save.turretUpgrades = it }
+//            json.readValue<HashMap<UpgradeKind, Int>?>(data, "mainUpgrades")?.also { save.mainUpgrades = it }
+//        } catch (ex: GdxRuntimeException) {
+//            return null
+//        }
+//
+//        return save
+//    }
+//
+//    override fun write(json: Json, `object`: GameSave, knownType: Class<*>) {
+//        json.writeObjectStart()
+//        json.writeValue("creationDate", `object`.creationDate.time)
+//        json.writeValue("lastAccessedDate", `object`.lastAccessedDate.time)
+//        json.writeValue("lastStageCompleted", `object`.lastStageCompleted)
+//        json.writeValue("credits", `object`.credits)
+//        json.writeValue("name", `object`.name)
+//        json.writeValue("machineUpgrades", `object`.machineUpgrades)
+//        json.writeValue("turretUpgrades", `object`.turretUpgrades)
+//        json.writeValue("mainUpgrades", `object`.mainUpgrades)
+//        json.writeObjectEnd()
+//    }
+//}

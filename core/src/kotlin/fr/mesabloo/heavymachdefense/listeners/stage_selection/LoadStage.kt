@@ -17,6 +17,7 @@ class LoadStage(private val screen: StageSelectionScreen) : ClickListener() {
         game,
         index + 1,
         this.screen.save,
+        this.screen.saveIndex,
         true
     )
 

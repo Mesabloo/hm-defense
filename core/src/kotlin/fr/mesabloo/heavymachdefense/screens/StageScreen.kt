@@ -4,9 +4,10 @@ import aurelienribon.tweenengine.TweenManager
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
-import com.badlogic.gdx.utils.Json
 import fr.mesabloo.heavymachdefense.MainGame
-import fr.mesabloo.heavymachdefense.data.*
+import fr.mesabloo.heavymachdefense.data.GameSave
+import fr.mesabloo.heavymachdefense.data.UpgradeKind
+import fr.mesabloo.heavymachdefense.data.Upgrades
 import fr.mesabloo.heavymachdefense.listeners.stage.*
 import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
@@ -20,18 +21,16 @@ import fr.mesabloo.heavymachdefense.ui.stage.buttons.SpecialAttackMenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.dialog.SystemMenu
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import ktx.actors.setScrollFocus
-import ktx.json.fromJson
-import ktx.json.setSerializer
 import kotlin.math.pow
 
-class StageScreen(game: MainGame, private val level: Int, private val save: GameSave, isLoading: Boolean = false) :
+class StageScreen(game: MainGame, private val level: Int, val save: GameSave, val saveIndex: Int, isLoading: Boolean = false) :
     AbstractScreen(game, isLoading) {
     private companion object {
         const val TEMPORARY_CELL_UPGRADE_RATIO = 0.6f
     }
-
-    private val json = Json()
     private val upgrades: Upgrades
 
     private var upgradeMenuShown: Boolean = false
@@ -49,26 +48,26 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
     private var temporaryCellUpgradesCount: Long = 0
     private var temporaryCellUpgradeCost: Long
 
+    private var cellResearchMultiplier: Float
+    private var crResearchMultiplier: Float
+    private var buildTimeMultiplier: Float
+
     private lateinit var systemMenu: SystemMenu
 
     private var backgroundMusicVolume: Float = 1.0f
     private var effectsVolume: Float = 1.0f
 
     init {
-        this.json.setSerializer(BaseCannonUpgradeSerializer)
-        this.json.setSerializer(BaseDefenseUpgradeSerializer)
-        this.json.setSerializer(BuildTimeUpgradeSerializer)
-        this.json.setSerializer(CrResearchUpgradeSerializer)
-        this.json.setSerializer(CellResearchUpgradeSerializer)
-        this.json.setSerializer(CellStorageUpgradeSerializer)
-        this.json.setSerializer(UpgradesJsonSerializer)
-
-        this.upgrades = this.json.fromJson(Gdx.files.internal("data/upgrades.json"))
+        this.upgrades = Json.decodeFromString(Gdx.files.internal("data/upgrades.json").readString())
 
         this.maxCells = this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1)
             ?: 0].storage * 2f.pow(this.temporaryCellUpgradesCount.toFloat()).toLong()
         this.temporaryCellUpgradeCost = (this.maxCells * TEMPORARY_CELL_UPGRADE_RATIO).toLong()
         this.currentCells = this.maxCells * 2 / 5
+
+        this.cellResearchMultiplier = this.upgrades.cell_research[this.save.mainUpgrades[UpgradeKind.CELL_RESEARCH]?.minus(1) ?: 0].multiplier
+        this.crResearchMultiplier = this.upgrades.cr_research[this.save.mainUpgrades[UpgradeKind.CR_RESEARCH]?.minus(1) ?: 0].multiplier
+        this.buildTimeMultiplier = this.upgrades.build_time[this.save.mainUpgrades[UpgradeKind.BUILD_TIME]?.minus(1) ?: 0].multiplier
     }
 
     override fun show() {
@@ -77,7 +76,7 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         if (this.isLoading)
             return
 
-        this.systemMenu = SystemMenu(this::backgroundMusicVolume, this::effectsVolume)
+        this.systemMenu = SystemMenu(this::backgroundMusicVolume, this::effectsVolume, this)
 
         lateinit var scrollpane: ScrollPane
         this.background.addActor(ScrollPane(Terrain().also {
@@ -184,6 +183,10 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
             this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1)
                 ?: 0].storage * 2f.pow(this.temporaryCellUpgradesCount.toFloat()).toLong()
         this.temporaryCellUpgradeCost = (this.maxCells * TEMPORARY_CELL_UPGRADE_RATIO).toLong()
+
+        this.cellResearchMultiplier = this.upgrades.cell_research[this.save.mainUpgrades[UpgradeKind.CELL_RESEARCH]?.minus(1) ?: 0].multiplier
+        this.crResearchMultiplier = this.upgrades.cr_research[this.save.mainUpgrades[UpgradeKind.CR_RESEARCH]?.minus(1) ?: 0].multiplier
+        this.buildTimeMultiplier = this.upgrades.build_time[this.save.mainUpgrades[UpgradeKind.BUILD_TIME]?.minus(1) ?: 0].multiplier
 
         super.render(delta)
     }

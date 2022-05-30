@@ -3,11 +3,8 @@ package fr.mesabloo.heavymachdefense.screens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.scenes.scene2d.Group
-import com.badlogic.gdx.utils.Json
-import com.badlogic.gdx.utils.JsonWriter
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
-import fr.mesabloo.heavymachdefense.data.GameSaveJsonSerializer
 import fr.mesabloo.heavymachdefense.listeners.saves.BackToStart
 import fr.mesabloo.heavymachdefense.listeners.saves.DeleteSave
 import fr.mesabloo.heavymachdefense.listeners.saves.NewSave
@@ -19,8 +16,9 @@ import fr.mesabloo.heavymachdefense.ui.common.NewButton
 import fr.mesabloo.heavymachdefense.ui.saves.*
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
-import ktx.json.fromJson
-import ktx.json.setSerializer
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import ktx.preferences.flush
 import ktx.preferences.get
 import ktx.preferences.set
@@ -33,12 +31,8 @@ class SavesSelectionScreen(game: MainGame, isLoading: Boolean = false) : Abstrac
         get() = saves.size
 
     private var prefs: Preferences = Gdx.app.getPreferences(GameSave.PREFERENCES_PATH)
-    private val json = Json()
 
     init {
-        this.json.setOutputType(JsonWriter.OutputType.json)
-        this.json.setSerializer(GameSaveJsonSerializer)
-
         val numberOfSaves: Int = this.prefs["count"] ?: 0
 
         Gdx.app.debug(this.javaClass.simpleName, "Found $numberOfSaves saves in preferences")
@@ -46,7 +40,7 @@ class SavesSelectionScreen(game: MainGame, isLoading: Boolean = false) : Abstrac
         for (i in 0 until numberOfSaves) {
             this.saves.add(
                 i,
-                this.prefs.get<String>("$i")?.let { this.json.fromJson(it) } ?: GameSave()
+                this.prefs.get<String>("$i")?.let { Json.decodeFromString(it) } ?: GameSave()
             )
         }
         this.saves.sortBy { it.creationDate }
@@ -108,7 +102,7 @@ class SavesSelectionScreen(game: MainGame, isLoading: Boolean = false) : Abstrac
         this.focusedIndex = lastIndex
 
         this.prefs.flush {
-            this["$lastIndex"] = this@SavesSelectionScreen.json.toJson(save)
+            this["$lastIndex"] = Json.encodeToString(save)
             this["count"] = lastIndex + 1
         }
 

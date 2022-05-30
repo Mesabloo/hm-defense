@@ -14,6 +14,7 @@ buildscript {
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.6.0"
     id 'com.github.gmazzo.buildconfig' version "3.0.3"
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.0'
 }
 
 allprojects {
@@ -67,6 +68,7 @@ project(":desktop") {
 
 project(":core") {
     apply plugin: "java-library"
+    apply plugin: "org.jetbrains.kotlin.plugin.serialization"
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -78,7 +80,6 @@ project(":core") {
         api "io.github.libktx:ktx-assets:$ktxVersion"
         api "io.github.libktx:ktx-box2d:$ktxVersion"
         api "io.github.libktx:ktx-graphics:$ktxVersion"
-        api "io.github.libktx:ktx-json:$ktxVersion"
         api "io.github.libktx:ktx-log:$ktxVersion"
         api "io.github.libktx:ktx-math:$ktxVersion"
         api "io.github.libktx:ktx-preferences:$ktxVersion"
@@ -89,5 +90,8 @@ project(":core") {
 
         // Native dialog boxes
         api "de.tomgrill.gdxdialogs:gdx-dialogs-core:$nativeDialogVersion"
+
+        // JSON (de)serialization
+        implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2'
     }
 }

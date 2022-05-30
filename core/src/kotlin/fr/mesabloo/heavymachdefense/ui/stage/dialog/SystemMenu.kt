@@ -8,12 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import fr.mesabloo.heavymachdefense.listeners.stage.SaveAndExitStage
 import fr.mesabloo.heavymachdefense.listeners.stage.SetBackgroundMusicVolume
 import fr.mesabloo.heavymachdefense.listeners.stage.SetEffectsVolume
 import fr.mesabloo.heavymachdefense.managers.FontManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.fontManager
+import fr.mesabloo.heavymachdefense.screens.StageScreen
 import fr.mesabloo.heavymachdefense.timers.cellMiningTimer
 import fr.mesabloo.heavymachdefense.ui.common.CloseButton
 import ktx.graphics.color
@@ -21,7 +23,8 @@ import kotlin.reflect.KMutableProperty0
 
 class SystemMenu(
     private val backgroundMusicVolume: KMutableProperty0<Float>,
-    private val effectsVolume: KMutableProperty0<Float>
+    private val effectsVolume: KMutableProperty0<Float>,
+    private val screen: StageScreen
 ) : Dialog("        ", WindowStyle().also {
     it.background = null
     it.titleFont = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_BOLD_18]
@@ -73,7 +76,9 @@ class SystemMenu(
                     }
                 })
             }).row()
-            table.add(MenuButton(ButtonKind.SAVE)).row()
+            table.add(MenuButton(ButtonKind.SAVE).also {
+                it.addListener(SaveAndExitStage(this.screen, this))
+            }).row()
             table.add(MenuButton(ButtonKind.HELP)).row()
             table.add(MenuButton(ButtonKind.LEADER_BOARD)).padBottom(70f).row()
             table.add(Table().also {

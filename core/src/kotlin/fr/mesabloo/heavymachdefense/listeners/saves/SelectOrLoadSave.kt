@@ -19,9 +19,10 @@ class SelectOrLoadSave(
     private val actor: Actor,
     private val save: GameSave
 ) : ClickListener() {
-    private fun stageSelectionScreen(game: MainGame) = StageSelectionScreen(
+    private fun stageSelectionScreen(game: MainGame, saveIndex: Int) = StageSelectionScreen(
         game,
         this.save,
+        saveIndex,
         true
     )
 
@@ -39,7 +40,7 @@ class SelectOrLoadSave(
                     assetManager.update()
                 levelSelectionAssetsManager.isFullyLoaded() && buttonAssetsManager.isFullyLoaded()
             }) {
-                (this.changeScreen(stageSelectionScreen(this)) as AbstractScreen?)
+                (this.changeScreen(stageSelectionScreen(this, this@SelectOrLoadSave.index)) as AbstractScreen?)
                     ?.addLoadingOverlayEnd()
 
                 Timer.schedule(object: Timer.Task() {
