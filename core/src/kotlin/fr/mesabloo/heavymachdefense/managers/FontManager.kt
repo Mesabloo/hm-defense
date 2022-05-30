@@ -3,7 +3,6 @@ package fr.mesabloo.heavymachdefense.managers
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.utils.Disposable
-import ktx.graphics.color
 
 class FontManager : Disposable {
     companion object {
@@ -18,6 +17,8 @@ class FontManager : Disposable {
         const val TREBUCHET_MS_BOLD_12_WHITE: String = "trebuchet_ms_bd_12_white"
 
         const val TREBUCHET_MS_BOLD_16_WHITE: String = "trebuchet_ms_bd_16_white"
+
+        const val TREBUCHET_MS_BOLD_18: String = "trebuchet_ms_bd_18"
 
         const val TREBUCHET_MS_20_BLUE: String = "trebuchet_ms_20_blue"
 
@@ -40,17 +41,13 @@ class FontManager : Disposable {
             TREBUCHET_MS_26_BLUE,
             TREBUCHET_MS_BOLD_11_WHITE,
             TREBUCHET_MS_BOLD_16_WHITE,
-            TREBUCHET_MS_BOLD_12_WHITE
+            TREBUCHET_MS_BOLD_12_WHITE,
+            TREBUCHET_MS_BOLD_18
         )
             .forEach { fontName ->
                 this.bitmapFonts[fontName] = BitmapFont(Gdx.files.internal("fonts/${fontName}.fnt"))
                 this.bitmapFonts[fontName]!!.setUseIntegerPositions(false)
             }
-
-        this.bitmapFonts[TREBUCHET_MS_20_BLUE]!!.color = color(0.478f, 1.000f, 0.933f)
-        this.bitmapFonts[TREBUCHET_MS_26_BLUE]!!.color = color(0.478f, 1.000f, 0.933f)
-        this.bitmapFonts[TREBUCHET_MS_BOLD_28_BLUE]!!.color = color(0.478f, 1.000f, 0.933f)
-        this.bitmapFonts[TREBUCHET_MS_BOLD_28_BLACK]!!.color = color(0.000f, 0.000f, 0.000f)
     }
 
     override fun dispose() {

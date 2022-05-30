@@ -85,6 +85,15 @@ class StageAssetsManager : Disposable {
                 .findRegion("${kind.str}-${if (isSelected) "selected" else if (isDisabled) "disabled" else "normal"}")
     }
 
+    object Dialog {
+        fun unsafeTexture(buttonAtlas: String, regionName: String): TextureRegion =
+            assetManager.get<TextureAtlas>(buttonAtlas).findRegion(regionName)
+
+        const val SYSTEM_MENU_BACKGROUND = "gfx/ui/dialog/sys-menu/background.png"
+        const val SYSTEM_MENU_BUTTONS = "gfx/ui/buttons/sys-menu.atlas"
+        // TODO: add sliders
+    }
+
     private fun allAtlases() = listOf(
         MACHINE_BODIES,
         MACHINE_WEAPONS,
@@ -102,7 +111,8 @@ class StageAssetsManager : Disposable {
         UI.TITLE,
         UI.MENU_BUTTONS,
         UI.RADAR_MARKS,
-        UI.UPGRADE_MENU_BUTTONS
+        UI.UPGRADE_MENU_BUTTONS,
+        Dialog.SYSTEM_MENU_BUTTONS
     )
 
     private fun allTextures() = this.stageLevel?.let {
@@ -122,7 +132,8 @@ class StageAssetsManager : Disposable {
             UI.ENEMY_HP_GAUGE,
             UI.UPGRADE_MENU_LEFT,
             UI.UPGRADE_MENU_RIGHT,
-            UI.UPGRADE_CELL
+            UI.UPGRADE_CELL,
+            Dialog.SYSTEM_MENU_BACKGROUND,
         )
     } ?: listOf()
 

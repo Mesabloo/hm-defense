@@ -1,0 +1,20 @@
+
+sys-menu.png
+size: 512, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+normal
+  rotate: false
+  xy: 5, 5
+  size: 402, 36
+  orig: 402, 36
+  offset: 0, 0
+  index: -1
+selected
+  rotate: false
+  xy: 5, 46
+  size: 402, 36
+  orig: 402, 36
+  offset: 0, 0
+  index: -1

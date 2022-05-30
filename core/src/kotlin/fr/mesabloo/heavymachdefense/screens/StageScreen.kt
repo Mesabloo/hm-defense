@@ -7,10 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Json
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.*
-import fr.mesabloo.heavymachdefense.listeners.stage.PlayAnimation
-import fr.mesabloo.heavymachdefense.listeners.stage.RemoveClickIfUpgradeMenuShown
-import fr.mesabloo.heavymachdefense.listeners.stage.ResetAnimationsForOthers
-import fr.mesabloo.heavymachdefense.listeners.stage.ShowUpgradeMenu
+import fr.mesabloo.heavymachdefense.listeners.stage.*
 import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
@@ -20,6 +17,7 @@ import fr.mesabloo.heavymachdefense.ui.stage.buttons.BaseUpgradeButton
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.BuildMachMenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.MenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.SpecialAttackMenuButton
+import fr.mesabloo.heavymachdefense.ui.stage.dialog.SystemMenu
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import ktx.actors.setScrollFocus
@@ -51,6 +49,8 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
     private var temporaryCellUpgradesCount: Long = 0
     private var temporaryCellUpgradeCost: Long
 
+    private lateinit var systemMenu: SystemMenu
+
     init {
         this.json.setSerializer(BaseCannonUpgradeSerializer)
         this.json.setSerializer(BaseDefenseUpgradeSerializer)
@@ -73,6 +73,8 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
         if (this.isLoading)
             return
+
+        this.systemMenu = SystemMenu()
 
         lateinit var scrollpane: ScrollPane
         this.background.addActor(ScrollPane(Terrain().also {
@@ -122,6 +124,8 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         })
         controlsGroup.addActor(MenuButton().also {
             it.setPosition(587f, 89f + 512f)
+
+            it.addListener(ShowSystemMenu(this.systemMenu, this.ui))
         })
         controlsGroup.addActor(BaseUpgradeButton().also {
             it.setPosition(587f, 22f + 512f)
