@@ -1,5 +1,6 @@
 package fr.mesabloo.heavymachdefense.listeners.saves
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
@@ -12,6 +13,11 @@ import fr.mesabloo.heavymachdefense.managers.assets.levelSelectionAssetsManager
 import fr.mesabloo.heavymachdefense.screens.AbstractScreen
 import fr.mesabloo.heavymachdefense.screens.SavesSelectionScreen
 import fr.mesabloo.heavymachdefense.screens.StageSelectionScreen
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import ktx.preferences.flush
+import ktx.preferences.set
+import java.util.*
 
 class SelectOrLoadSave(
     private val screen: SavesSelectionScreen,
@@ -28,6 +34,12 @@ class SelectOrLoadSave(
 
     override fun clicked(event: InputEvent?, x: Float, y: Float) {
         if (this.index == this.screen.focusedIndex) {
+            val prefs = Gdx.app.getPreferences(GameSave.PREFERENCES_PATH)
+            this.save.lastAccessedDate = Date()
+            prefs.flush {
+                this[this@SelectOrLoadSave.index.toString()] = Json.encodeToString(this@SelectOrLoadSave.save)
+            }
+
             this.actor.removeListener(this)
 
             levelSelectionAssetsManager.preload()
