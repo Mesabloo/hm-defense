@@ -8,6 +8,7 @@ import de.tomgrill.gdxdialogs.core.listener.TextPromptListener
 import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.screens.SavesSelectionScreen
 import fr.mesabloo.heavymachdefense.ui.dialogs
+import java.util.*
 
 class NewSave(private val screen: SavesSelectionScreen) : ClickListener() {
     private val inputListener = object : TextPromptListener {
@@ -15,7 +16,7 @@ class NewSave(private val screen: SavesSelectionScreen) : ClickListener() {
             // TODO: create new save if possible (if there are slots remaining)
             //       however this is called on the rendering thread...
 
-            val save = GameSave()
+            val save = GameSave(creationDate = Date(), lastAccessedDate = Date())
             save.name = text
 
             screen.addSave(save)

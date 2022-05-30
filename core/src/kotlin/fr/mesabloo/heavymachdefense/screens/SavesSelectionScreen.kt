@@ -22,6 +22,7 @@ import kotlinx.serialization.json.Json
 import ktx.preferences.flush
 import ktx.preferences.get
 import ktx.preferences.set
+import java.util.Date
 import kotlin.properties.Delegates
 
 class SavesSelectionScreen(game: MainGame, isLoading: Boolean = false) : AbstractScreen(game, isLoading) {
@@ -40,7 +41,10 @@ class SavesSelectionScreen(game: MainGame, isLoading: Boolean = false) : Abstrac
         for (i in 0 until numberOfSaves) {
             this.saves.add(
                 i,
-                this.prefs.get<String>("$i")?.let { Json.decodeFromString(it) } ?: GameSave()
+                this.prefs.get<String>("$i")?.let { Json.decodeFromString(it) } ?: GameSave(
+                    creationDate = Date(),
+                    lastAccessedDate = Date()
+                )
             )
         }
         this.saves.sortBy { it.creationDate }

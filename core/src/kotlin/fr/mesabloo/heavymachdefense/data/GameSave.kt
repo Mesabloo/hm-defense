@@ -12,9 +12,9 @@ import java.util.*
 @Serializable
 data class GameSave(
     @Serializable(with = DateTimestampSerializer::class)
-    var creationDate: Date = Date(),
+    var creationDate: Date,
     @Serializable(with = DateTimestampSerializer::class)
-    var lastAccessedDate: Date = Date(),
+    var lastAccessedDate: Date,
     var lastStageCompleted: Int = 0,
     var credits: Long = 0L,
     var name: String = "<<placeholder>>",
