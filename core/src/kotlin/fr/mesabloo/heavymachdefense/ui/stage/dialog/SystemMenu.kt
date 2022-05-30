@@ -109,7 +109,7 @@ class SystemMenu(
     }
 
     override fun show(stage: Stage): Dialog {
-        cellMiningTimer.stop()
+        cellMiningTimer.pause()
 
         val dialog = super.show(stage, null)
         dialog.width = 512f
@@ -119,7 +119,7 @@ class SystemMenu(
     }
 
     override fun hide() {
-        cellMiningTimer.start()
+        cellMiningTimer.resume()
 
         super.hide(null)
     }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import fr.mesabloo.heavymachdefense.timers.cellMiningTimer
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.POSITION
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.SIZE
 import kotlin.reflect.KMutableProperty0
@@ -37,6 +38,8 @@ class ShowUpgradeMenu(
     private fun open() {
         Gdx.app.debug(this.javaClass.simpleName, "Opening upgrade panel")
 
+        cellMiningTimer.pause()
+
         Timeline.createParallel()
             .push(
                 Tween.to(this.controlsPane, POSITION, OPEN_CLOSE_DURATION)
@@ -61,6 +64,8 @@ class ShowUpgradeMenu(
 
     private fun close() {
         Gdx.app.debug(this.javaClass.simpleName, "Closing upgrade panel")
+
+        cellMiningTimer.resume()
 
         this.scrollPane.setSmoothScrolling(false)
         Timeline.createParallel()
