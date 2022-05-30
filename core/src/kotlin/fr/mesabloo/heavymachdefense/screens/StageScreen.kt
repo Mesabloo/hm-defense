@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Json
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.*
-import fr.mesabloo.heavymachdefense.listeners.stage_selection.PlayAnimation
-import fr.mesabloo.heavymachdefense.listeners.stage_selection.RemoveClickIfUpgradeMenuShown
-import fr.mesabloo.heavymachdefense.listeners.stage_selection.ResetAnimationsForOthers
-import fr.mesabloo.heavymachdefense.listeners.stage_selection.ShowUpgradeMenu
+import fr.mesabloo.heavymachdefense.listeners.stage.PlayAnimation
+import fr.mesabloo.heavymachdefense.listeners.stage.RemoveClickIfUpgradeMenuShown
+import fr.mesabloo.heavymachdefense.listeners.stage.ResetAnimationsForOthers
+import fr.mesabloo.heavymachdefense.listeners.stage.ShowUpgradeMenu
 import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
@@ -25,9 +25,14 @@ import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import ktx.actors.setScrollFocus
 import ktx.json.fromJson
 import ktx.json.setSerializer
+import kotlin.math.pow
 
 class StageScreen(game: MainGame, private val level: Int, private val save: GameSave, isLoading: Boolean = false) :
     AbstractScreen(game, isLoading) {
+    private companion object {
+        const val TEMPORARY_CELL_UPGRADE_RATIO = 0.6f
+    }
+
     private val json = Json()
     private val upgrades: Upgrades
 
@@ -43,6 +48,8 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
     private var maxCells: Long
     private var currentCells: Long
+    private var temporaryCellUpgradesCount: Long = 0
+    private var temporaryCellUpgradeCost: Long
 
     init {
         this.json.setSerializer(BaseCannonUpgradeSerializer)
@@ -55,7 +62,9 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
         this.upgrades = this.json.fromJson(Gdx.files.internal("data/upgrades.json"))
 
-        this.maxCells = this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1) ?: 0].storage
+        this.maxCells = this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1)
+            ?: 0].storage * 2f.pow(this.temporaryCellUpgradesCount.toFloat()).toLong()
+        this.temporaryCellUpgradeCost = (this.maxCells * TEMPORARY_CELL_UPGRADE_RATIO).toLong()
         this.currentCells = this.maxCells * 2 / 5
     }
 
@@ -95,6 +104,9 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         })
         this.background.addActor(CellCounter(this::maxCells, this::currentCells).also {
             it.setPosition(652f, 995f)
+        })
+        this.background.addActor(CellTemporaryUpgrade(this::currentCells, this::temporaryCellUpgradeCost, this::temporaryCellUpgradesCount).also {
+            it.setPosition(630f, 972f)
         })
 
         val controlsGroup = Group()
@@ -137,9 +149,14 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
             animationManager.setCurrentKeyframe(it.animationId, 0)
         })
-        controlsGroup.addActor(UpgradeMenu(this.save, this.upgrades, ShowUpgradeMenu(this.menuTweenManager, controlsGroup, scrollpane, this::upgradeMenuShown)).also {
-            it.setPosition(0f, -512f + 512f)
-        })
+        controlsGroup.addActor(
+            UpgradeMenu(
+                this.save,
+                this.upgrades,
+                ShowUpgradeMenu(this.menuTweenManager, controlsGroup, scrollpane, this::upgradeMenuShown)
+            ).also {
+                it.setPosition(0f, -512f + 512f)
+            })
 
         controlsGroup.setPosition(0f, -512f)
 
@@ -156,7 +173,10 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         this.menuTweenManager.update(delta)
 
         // update cell storage capacity
-        this.maxCells = this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1) ?: 0].storage
+        this.maxCells =
+            this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1)
+                ?: 0].storage * 2f.pow(this.temporaryCellUpgradesCount.toFloat()).toLong()
+        this.temporaryCellUpgradeCost = (this.maxCells * TEMPORARY_CELL_UPGRADE_RATIO).toLong()
 
         super.render(delta)
     }

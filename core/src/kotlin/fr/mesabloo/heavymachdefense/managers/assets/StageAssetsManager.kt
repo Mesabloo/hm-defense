@@ -57,6 +57,7 @@ class StageAssetsManager : Disposable {
         const val UPGRADE_MENU_BUTTONS = "gfx/ui/buttons/base-upgrades.atlas"
         const val UPGRADE_MENU_LEFT = "gfx/ui/game/upgrades-left.png"
         const val UPGRADE_MENU_RIGHT = "gfx/ui/game/upgrades-right.png"
+        const val UPGRADE_CELL = "gfx/ui/game/upgrade-cell.png"
 
         enum class ButtonKind(internal val str: String) {
             MENU("menu"),
@@ -120,7 +121,8 @@ class StageAssetsManager : Disposable {
             UI.PLAYER_HP_GAUGE,
             UI.ENEMY_HP_GAUGE,
             UI.UPGRADE_MENU_LEFT,
-            UI.UPGRADE_MENU_RIGHT
+            UI.UPGRADE_MENU_RIGHT,
+            UI.UPGRADE_CELL
         )
     } ?: listOf()
 

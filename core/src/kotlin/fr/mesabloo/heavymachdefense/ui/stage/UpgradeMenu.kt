@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.data.UpgradeKind
 import fr.mesabloo.heavymachdefense.data.Upgrades
-import fr.mesabloo.heavymachdefense.listeners.stage_selection.UpgradeSelectedItem
+import fr.mesabloo.heavymachdefense.listeners.stage.UpgradeSelectedItem
 import fr.mesabloo.heavymachdefense.ui.stage.upgrade_menu.*
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 
