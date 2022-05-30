@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog
-import com.badlogic.gdx.scenes.scene2d.ui.Image
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import fr.mesabloo.heavymachdefense.listeners.stage.SetBackgroundMusicVolume
+import fr.mesabloo.heavymachdefense.listeners.stage.SetEffectsVolume
 import fr.mesabloo.heavymachdefense.managers.FontManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
@@ -17,8 +17,12 @@ import fr.mesabloo.heavymachdefense.managers.fontManager
 import fr.mesabloo.heavymachdefense.timers.cellMiningTimer
 import fr.mesabloo.heavymachdefense.ui.common.CloseButton
 import ktx.graphics.color
+import kotlin.reflect.KMutableProperty0
 
-class SystemMenu : Dialog("        ", WindowStyle().also {
+class SystemMenu(
+    private val backgroundMusicVolume: KMutableProperty0<Float>,
+    private val effectsVolume: KMutableProperty0<Float>
+) : Dialog("        ", WindowStyle().also {
     it.background = null
     it.titleFont = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_BOLD_18]
 }) {
@@ -71,7 +75,18 @@ class SystemMenu : Dialog("        ", WindowStyle().also {
             }).row()
             table.add(MenuButton(ButtonKind.SAVE)).row()
             table.add(MenuButton(ButtonKind.HELP)).row()
-            table.add(MenuButton(ButtonKind.LEADER_BOARD)).row()
+            table.add(MenuButton(ButtonKind.LEADER_BOARD)).padBottom(70f).row()
+            table.add(Table().also {
+                it.add(Image(stageAssetsManager.get(StageAssetsManager.Dialog.VOLUME_OPTIONS))).left()
+                it.add(Table().also {
+                    it.add(VolumeSlider().also {
+                        it.addListener(SetBackgroundMusicVolume(this.backgroundMusicVolume))
+                    }).center().row()
+                    it.add(VolumeSlider().also {
+                        it.addListener(SetEffectsVolume(this.effectsVolume))
+                    }).center().row()
+                }).fillX().expandX()
+            }).row()
         }
     }
 
@@ -138,3 +153,12 @@ private class MenuButton(kind: ButtonKind) : TextButton(when (kind) {
     it.font = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_BOLD_18]
     it.fontColor = color(0.478f, 1.000f, 0.933f)
 })
+
+private class VolumeSlider : Slider(0.0f, 1.0f, 0.05f, false, SliderStyle().also {
+    it.background = TextureRegionDrawable(stageAssetsManager.get(StageAssetsManager.Dialog.SLIDER_RULE))
+    it.knob = TextureRegionDrawable(stageAssetsManager.get(StageAssetsManager.Dialog.SLIDER_THUMB))
+}) {
+    init {
+        this.value = this.maxValue
+    }
+}

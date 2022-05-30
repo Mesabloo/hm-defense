@@ -51,6 +51,9 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
 
     private lateinit var systemMenu: SystemMenu
 
+    private var backgroundMusicVolume: Float = 1.0f
+    private var effectsVolume: Float = 1.0f
+
     init {
         this.json.setSerializer(BaseCannonUpgradeSerializer)
         this.json.setSerializer(BaseDefenseUpgradeSerializer)
@@ -74,7 +77,7 @@ class StageScreen(game: MainGame, private val level: Int, private val save: Game
         if (this.isLoading)
             return
 
-        this.systemMenu = SystemMenu()
+        this.systemMenu = SystemMenu(this::backgroundMusicVolume, this::effectsVolume)
 
         lateinit var scrollpane: ScrollPane
         this.background.addActor(ScrollPane(Terrain().also {

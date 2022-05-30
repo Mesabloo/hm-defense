@@ -91,7 +91,9 @@ class StageAssetsManager : Disposable {
 
         const val SYSTEM_MENU_BACKGROUND = "gfx/ui/dialog/sys-menu/background.png"
         const val SYSTEM_MENU_BUTTONS = "gfx/ui/buttons/sys-menu.atlas"
-        // TODO: add sliders
+        const val SLIDER_RULE = "gfx/ui/dialog/sys-menu/slider-rule.png"
+        const val SLIDER_THUMB = "gfx/ui/dialog/sys-menu/slider-thumb.png"
+        const val VOLUME_OPTIONS = "gfx/ui/dialog/sys-menu/volume-options.png"
     }
 
     private fun allAtlases() = listOf(
@@ -134,6 +136,9 @@ class StageAssetsManager : Disposable {
             UI.UPGRADE_MENU_RIGHT,
             UI.UPGRADE_CELL,
             Dialog.SYSTEM_MENU_BACKGROUND,
+            Dialog.VOLUME_OPTIONS,
+            Dialog.SLIDER_THUMB,
+            Dialog.SLIDER_RULE
         )
     } ?: listOf()
 
