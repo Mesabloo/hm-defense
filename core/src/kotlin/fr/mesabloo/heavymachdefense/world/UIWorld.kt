@@ -12,7 +12,7 @@ const val UI_HEIGHT = 1024f // the game screen is actually twice as high, but we
 class UIWorld : Stage(FitViewport(UI_WIDTH, UI_HEIGHT)) {
     private val camera: OrthographicCamera = OrthographicCamera(UI_WIDTH, UI_HEIGHT)
 
-    val batch = Batcher()
+    private val batch = Batcher()
 
     init {
         this.viewport.camera = this.camera

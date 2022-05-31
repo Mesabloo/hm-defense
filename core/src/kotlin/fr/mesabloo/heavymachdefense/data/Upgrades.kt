@@ -14,7 +14,15 @@ data class Upgrades(
 )
 
 @Serializable
-data class BaseCannonUpgrade(val cost: Long, val attack: Long)
+data class BaseCannonUpgrade(
+    val cost: Long,
+    val attack: Long,
+    val reload: Float,
+    @SerialName("shell_count") val shellCount: Long,
+    @SerialName("shot_delay") val shotDelay: Float,
+    @SerialName("bullet_speed") val bulletSpeed: Float,
+    val spread: Float
+)
 
 @Serializable
 data class BaseDefenseUpgrade(val cost: Long, val defense: Long)

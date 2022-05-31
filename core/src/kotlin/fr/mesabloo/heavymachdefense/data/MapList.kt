@@ -1,7 +1,12 @@
 package fr.mesabloo.heavymachdefense.data
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.utils.JsonReader
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+
+@Serializable
+private data class MapInfo(val level: Int, val background: Int)
 
 private lateinit var maps: MutableList<Int>
 
@@ -11,13 +16,9 @@ fun getBackgroundForLevel(level: Int): Int {
     if (!::maps.isInitialized) {
         maps = mutableListOf()
 
-        val value = JsonReader().parse(Gdx.files.internal("data/map-list.json"))
-        @Suppress("NAME_SHADOWING")
-        for (value in value) {
-            val level = value.getInt("level")
-            val background = value.getInt("background")
-
-            maps.add(level - 1, background)
+        val list: List<MapInfo> = Json.decodeFromString(Gdx.files.internal("data/map-list.json").readString())
+        for (map in list) {
+            maps.add(map.level - 1, map.background)
         }
     }
 
