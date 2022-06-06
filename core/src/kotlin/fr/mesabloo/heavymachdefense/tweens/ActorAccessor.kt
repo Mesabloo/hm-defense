@@ -11,6 +11,7 @@ class ActorAccessor : TweenAccessor<Actor> {
         const val SCALE = 2
         const val OPACITY = 3
         const val SIZE = 4
+        const val ROTATION = 5
     }
 
     override fun getValues(target: Actor, tweenType: Int, returnValues: FloatArray): Int =
@@ -38,6 +39,11 @@ class ActorAccessor : TweenAccessor<Actor> {
 
                 2
             }
+            ROTATION -> {
+                returnValues[0] = target.rotation
+
+                1
+            }
             else -> -1
         }
 
@@ -47,6 +53,7 @@ class ActorAccessor : TweenAccessor<Actor> {
             SCALE -> target.setScale(newValues[0], newValues[1])
             OPACITY -> target.alpha = newValues[0]
             SIZE -> target.setSize(newValues[0], newValues[1])
+            ROTATION -> target.rotation = newValues[0]
             else -> {}
         }
 }
