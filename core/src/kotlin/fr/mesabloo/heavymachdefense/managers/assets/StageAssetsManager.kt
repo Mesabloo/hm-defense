@@ -59,6 +59,11 @@ class StageAssetsManager : Disposable {
         const val UPGRADE_MENU_RIGHT = "gfx/ui/game/upgrades-right.png"
         const val UPGRADE_CELL = "gfx/ui/game/upgrade-cell.png"
 
+        const val BUILD_SLOT_FOREGROUND = "gfx/ui/game/build-slot/foreground.png"
+        const val BUILD_SLOT_BACKGROUND = "gfx/ui/game/build-slot/background.png"
+        const val BUILD_SLOT_INDICATOR_BLUE = "gfx/ui/game/build-slot/indicator-blue.png"
+        const val BUILD_SLOT_INDICATOR_RED = "gfx/ui/game/build-slot/indicator-red.png"
+
         enum class ButtonKind(internal val str: String) {
             MENU("menu"),
             BASE_UPGRADE("base-upgrade")
@@ -138,7 +143,11 @@ class StageAssetsManager : Disposable {
             Dialog.SYSTEM_MENU_BACKGROUND,
             Dialog.VOLUME_OPTIONS,
             Dialog.SLIDER_THUMB,
-            Dialog.SLIDER_RULE
+            Dialog.SLIDER_RULE,
+            UI.BUILD_SLOT_FOREGROUND,
+            UI.BUILD_SLOT_BACKGROUND,
+            UI.BUILD_SLOT_INDICATOR_BLUE,
+            UI.BUILD_SLOT_INDICATOR_RED
         )
     } ?: listOf()
 

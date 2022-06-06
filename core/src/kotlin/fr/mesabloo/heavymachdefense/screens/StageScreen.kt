@@ -5,9 +5,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import fr.mesabloo.heavymachdefense.MainGame
-import fr.mesabloo.heavymachdefense.data.GameSave
-import fr.mesabloo.heavymachdefense.data.UpgradeKind
-import fr.mesabloo.heavymachdefense.data.Upgrades
+import fr.mesabloo.heavymachdefense.data.*
 import fr.mesabloo.heavymachdefense.entities.createBases
 import fr.mesabloo.heavymachdefense.entities.createTerrainBody
 import fr.mesabloo.heavymachdefense.listeners.stage.*
@@ -22,6 +20,8 @@ import fr.mesabloo.heavymachdefense.ui.stage.buttons.MenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.SpecialAttackMenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.dialog.SystemMenu
 import fr.mesabloo.heavymachdefense.ui.stage.game.AllyBase
+import fr.mesabloo.heavymachdefense.ui.stage.slots.MachineBuildSlot
+import fr.mesabloo.heavymachdefense.ui.stage.slots.TurretBuildSlot
 import fr.mesabloo.heavymachdefense.world.GameWorld
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
@@ -131,6 +131,19 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
         this.background.addActor(CellTemporaryUpgrade(this::currentCells, this::temporaryCellUpgradeCost, this::temporaryCellUpgradesCount).also {
             it.setPosition(630f, 972f)
         })
+
+        var currentY = 890f
+        for (slot in this.save.buildSlots) {
+            this.background.addActor(when (slot) {
+                is MachineSlot -> MachineBuildSlot(slot)
+                is TurretSlot -> TurretBuildSlot(slot)
+                else -> TODO()
+            }.also {
+                it.setPosition(680f, currentY)
+            })
+
+            currentY -= 64f
+        }
 
         val controlsGroup = Group()
 
