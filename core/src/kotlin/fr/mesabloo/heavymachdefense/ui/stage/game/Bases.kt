@@ -34,7 +34,7 @@ class AllyBase(var defLevel: Int, var atkLevel: Int) : Group() {
         })
 
         val radarModel = Json.decodeFromString<RadarModel>(
-            Gdx.files.internal("data/models/bases/$oDefLevel/radar.json").readString()
+            Gdx.files.internal("data/models/bases/$oAtkLevel/radar.json").readString()
         )
         val weaponModel = Json.decodeFromString<WeaponModel>(
             Gdx.files.internal("data/models/bases/$oAtkLevel/weapon.json").readString()
@@ -42,11 +42,11 @@ class AllyBase(var defLevel: Int, var atkLevel: Int) : Group() {
         val baseModel =
             Json.decodeFromString<BaseModel>(Gdx.files.internal("data/models/bases/$oDefLevel/base.json").readString())
 
-        this.addActor(Image(stageAssetsManager.unsafeRegion(StageAssetsManager.ALLY_BASE, "radar-$oDefLevel")).also {
+        this.addActor(Image(stageAssetsManager.unsafeRegion(StageAssetsManager.ALLY_BASE, "radar-$oAtkLevel")).also {
             this.radar = it
 
             it.setOrigin(radarModel.originX, radarModel.originY)
-            it.setPosition(radarModel.x - radarModel.originX, radarModel.y - radarModel.originY)
+            it.setPosition(baseModel.radar.x - radarModel.originX, baseModel.radar.y - radarModel.originY)
         })
         this.addActor(Image(stageAssetsManager.unsafeRegion(StageAssetsManager.ALLY_BASE, "weapon-$oAtkLevel")).also {
             this.weapon1 = it

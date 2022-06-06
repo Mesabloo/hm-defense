@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 data class WeaponModel(val originX: Float, val originY: Float)
 
 @Serializable
-data class WeaponPositionModel(val x: Float, val y: Float)
+data class PositionModel(val x: Float, val y: Float)
 
 @Serializable
-data class RadarModel(val originX: Float, val originY: Float, val x: Float, val y: Float)
+data class RadarModel(val originX: Float, val originY: Float)
 
 @Serializable
-data class BaseModel(val weapons: List<WeaponPositionModel>)
+data class BaseModel(val weapons: List<PositionModel>, val radar: PositionModel)
