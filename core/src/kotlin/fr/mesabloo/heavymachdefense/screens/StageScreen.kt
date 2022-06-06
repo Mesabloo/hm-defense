@@ -21,6 +21,7 @@ import fr.mesabloo.heavymachdefense.ui.stage.buttons.BuildMachMenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.MenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.SpecialAttackMenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.dialog.SystemMenu
+import fr.mesabloo.heavymachdefense.ui.stage.game.AllyBase
 import fr.mesabloo.heavymachdefense.world.GameWorld
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
@@ -28,6 +29,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import ktx.actors.setScrollFocus
 import kotlin.math.pow
+import kotlin.properties.Delegates
 
 class StageScreen(game: MainGame, private val level: Int, val save: GameSave, val saveIndex: Int, isLoading: Boolean = false) :
     AbstractScreen(game, isLoading) {
@@ -35,6 +37,7 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
         const val TEMPORARY_CELL_UPGRADE_RATIO = 0.6f
     }
 
+    private lateinit var allyBase: AllyBase
     private lateinit var gameWorld: GameWorld
 
     private val upgrades: Upgrades = Json.decodeFromString(Gdx.files.internal("data/upgrades.json").readString())
@@ -57,6 +60,17 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
     private var cellResearchMultiplier: Float
     private var crResearchMultiplier: Float
     private var buildTimeMultiplier: Float
+
+    private var baseDefenseLevel by Delegates.observable(1) { _, old, new ->
+        if (!this.isLoading && old != new) {
+            this.allyBase.defLevel = new
+        }
+    }
+    private var baseAttackLevel by Delegates.observable(1) { _, old, new ->
+        if (!this.isLoading && old != new) {
+            this.allyBase.atkLevel = new
+        }
+    }
 
     private lateinit var systemMenu: SystemMenu
 
@@ -178,7 +192,8 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
         this.gameWorld = GameWorld(this.terrain)
 
         createTerrainBody(this.gameWorld)
-        createBases(this.gameWorld, this.upgrades, this::save)
+        val (allyBase, _) = createBases(this.gameWorld, this.upgrades, this::save)
+        this.allyBase = allyBase
 
         this.background.addActor(Radar(scrollpane).also {
             it.setPosition(22f, 698f)
@@ -197,6 +212,9 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
         this.cellResearchMultiplier = this.upgrades.cell_research[this.save.mainUpgrades[UpgradeKind.CELL_RESEARCH]?.minus(1) ?: 0].multiplier
         this.crResearchMultiplier = this.upgrades.cr_research[this.save.mainUpgrades[UpgradeKind.CR_RESEARCH]?.minus(1) ?: 0].multiplier
         this.buildTimeMultiplier = this.upgrades.build_time[this.save.mainUpgrades[UpgradeKind.BUILD_TIME]?.minus(1) ?: 0].multiplier
+
+        this.baseDefenseLevel = this.save.mainUpgrades[UpgradeKind.BASE_DEFENSE] ?: 1
+        this.baseAttackLevel = this.save.mainUpgrades[UpgradeKind.BASE_CANNON] ?: 1
 
         super.render(delta)
 
