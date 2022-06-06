@@ -19,7 +19,7 @@ fun createBases(world: GameWorld, upgrades: Upgrades, save: KProperty0<GameSave>
             density = 10000000f
             isSensor = true
         }
-        userData = AllyBase(save.get().mainUpgrades[UpgradeKind.BASE_DEFENSE]?.minus(1) ?: 0)
+        userData = AllyBase(save.get().mainUpgrades[UpgradeKind.BASE_DEFENSE] ?: 1, save.get().mainUpgrades[UpgradeKind.BASE_CANNON] ?: 1)
 
         position.set(512f / 2f / PPM, (128f / 2f + 16f) / PPM)
     }
