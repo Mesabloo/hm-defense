@@ -1,37 +1,31 @@
 package fr.mesabloo.heavymachdefense.world
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.*
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Disposable
-import com.badlogic.gdx.utils.viewport.ExtendViewport
 import fr.mesabloo.heavymachdefense.BG_BORDER
+import fr.mesabloo.heavymachdefense.PPM
+import fr.mesabloo.heavymachdefense.ifDebug
+import fr.mesabloo.heavymachdefense.ui.stage.Terrain
+import ktx.actors.contains
 import ktx.box2d.createWorld
 
-const val WORLD_WIDTH = 512f
-const val WORLD_HEIGHT = 1024f // the game screen is actually twice as high, but we only show half of it
-
-class GameWorld : Disposable {
+class GameWorld(private val terrain: Terrain) : Disposable {
     val world: World = createWorld()
 
-    val camera: OrthographicCamera = OrthographicCamera(WORLD_WIDTH, WORLD_HEIGHT) //OrthographicCamera(WORLD_WIDTH, WORLD_HEIGHT)
-    private val viewport: ExtendViewport = ExtendViewport(WORLD_WIDTH, WORLD_HEIGHT, this.camera)
+    private val debugRenderer = Box2DDebugRenderer()
 
-    val batch = SpriteBatch()
+    private val bodies = Array<Body>(50)
 
     init {
-        this.camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0f)
-        this.camera.update()
-
-        this.world.setContactListener(object: ContactListener {
+        this.world.setContactListener(object : ContactListener {
             override fun beginContact(p0: Contact) {
                 val bodyA = p0.fixtureA
                 val bodyB = p0.fixtureB
 
-                Gdx.app.debug(this.javaClass.simpleName, "Contact detected")
-
-                if (bodyA.userData == BG_BORDER || bodyB.userData == BG_BORDER) {
+                if ((bodyA.userData == BG_BORDER && !bodyB.isSensor) || (bodyB.userData == BG_BORDER && !bodyA.isSensor)) {
                     Gdx.app.debug(this.javaClass.simpleName, "Contact with border detected")
                 }
             }
@@ -50,15 +44,26 @@ class GameWorld : Disposable {
         })
     }
 
-    fun resize(width: Int, height: Int) {
-        this.viewport.update(width, height, false)
-    }
-
     fun render(deltaTime: Float) {
-        this.camera.update()
-        this.batch.projectionMatrix = this.camera.combined
-
         this.world.step(1 / 60f, 6, 2)
+
+        bodies.clear()
+        this.world.getBodies(bodies)
+
+        bodies.forEach { body ->
+            val pos = body.position
+            (body.userData as? Actor)?.also {
+                it.setPosition(pos.x * PPM - it.width / 2f, pos.y * PPM - it.height / 2f)
+
+                if (!this.terrain.contains(it)) {
+                    this.terrain.addActor(it)
+                }
+            }
+        }
+
+        ifDebug {
+            this.debugRenderer.render(this.world, this.terrain.stage.camera.combined.cpy().translate(128f, 180f, 0f))
+        }
     }
 
     override fun dispose() {

@@ -42,6 +42,9 @@ data class GameSave(
         Pair(UpgradeKind.CR_RESEARCH, 1),
         Pair(UpgradeKind.CELL_RESEARCH, 1),
         Pair(UpgradeKind.CELL_STORAGE, 1)
+    ),
+    var buildSlots: MutableList<Slot> = mutableListOf(
+        MachineSlot(MachineKind.RIFLE)
     )
 ) {
     companion object {
@@ -58,39 +61,3 @@ object DateTimestampSerializer : KSerializer<Date> {
 
     override fun serialize(encoder: Encoder, value: Date) = encoder.encodeLong(value.time)
 }
-
-//object GameSaveJsonSerializer : Json.Serializer<GameSave> {
-//    override fun read(json: Json, data: JsonValue, type: Class<*>): GameSave? {
-//        val save = GameSave()
-//
-//        try {
-//            save.creationDate = json.readValue<Long?>(data, "creationDate")?.let { Date(it) } ?: Date()
-//            save.lastAccessedDate = json.readValue<Long?>(data, "lastAccessedDate")?.let { Date(it) } ?: Date()
-//            save.lastStageCompleted = json.readValue(data, "lastStageCompleted") ?: 0
-//            save.credits = json.readValue(data, "credits") ?: 0
-//            save.name = json.readValue(data, "name") ?: ""
-//            // TODO: if name empty -> default one (e.g. "Username")
-//
-//            json.readValue<HashMap<MachineKind, Int>?>(data, "machineUpgrades")?.also { save.machineUpgrades = it }
-//            json.readValue<HashMap<TurretKind, Int>?>(data, "turretUpgrades")?.also { save.turretUpgrades = it }
-//            json.readValue<HashMap<UpgradeKind, Int>?>(data, "mainUpgrades")?.also { save.mainUpgrades = it }
-//        } catch (ex: GdxRuntimeException) {
-//            return null
-//        }
-//
-//        return save
-//    }
-//
-//    override fun write(json: Json, `object`: GameSave, knownType: Class<*>) {
-//        json.writeObjectStart()
-//        json.writeValue("creationDate", `object`.creationDate.time)
-//        json.writeValue("lastAccessedDate", `object`.lastAccessedDate.time)
-//        json.writeValue("lastStageCompleted", `object`.lastStageCompleted)
-//        json.writeValue("credits", `object`.credits)
-//        json.writeValue("name", `object`.name)
-//        json.writeValue("machineUpgrades", `object`.machineUpgrades)
-//        json.writeValue("turretUpgrades", `object`.turretUpgrades)
-//        json.writeValue("mainUpgrades", `object`.mainUpgrades)
-//        json.writeObjectEnd()
-//    }
-//}

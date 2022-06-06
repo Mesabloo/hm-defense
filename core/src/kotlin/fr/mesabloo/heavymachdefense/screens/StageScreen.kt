@@ -8,6 +8,8 @@ import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.GameSave
 import fr.mesabloo.heavymachdefense.data.UpgradeKind
 import fr.mesabloo.heavymachdefense.data.Upgrades
+import fr.mesabloo.heavymachdefense.entities.createBases
+import fr.mesabloo.heavymachdefense.entities.createTerrainBody
 import fr.mesabloo.heavymachdefense.listeners.stage.*
 import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
@@ -19,6 +21,7 @@ import fr.mesabloo.heavymachdefense.ui.stage.buttons.BuildMachMenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.MenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.buttons.SpecialAttackMenuButton
 import fr.mesabloo.heavymachdefense.ui.stage.dialog.SystemMenu
+import fr.mesabloo.heavymachdefense.world.GameWorld
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import kotlinx.serialization.decodeFromString
@@ -31,7 +34,10 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
     private companion object {
         const val TEMPORARY_CELL_UPGRADE_RATIO = 0.6f
     }
-    private val upgrades: Upgrades
+
+    private lateinit var gameWorld: GameWorld
+
+    private val upgrades: Upgrades = Json.decodeFromString(Gdx.files.internal("data/upgrades.json").readString())
 
     private var upgradeMenuShown: Boolean = false
 
@@ -58,7 +64,6 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
     private var effectsVolume: Float = 1.0f
 
     init {
-        this.upgrades = Json.decodeFromString(Gdx.files.internal("data/upgrades.json").readString())
 
         this.maxCells = this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1)
             ?: 0].storage * 2f.pow(this.temporaryCellUpgradesCount.toFloat()).toLong()
@@ -168,11 +173,16 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
 
         this.background.addActor(controlsGroup)
 
+        this.terrain.setScrollFocus(true)
+
+        this.gameWorld = GameWorld(this.terrain)
+
+        createTerrainBody(this.gameWorld)
+        createBases(this.gameWorld, this.upgrades, this::save)
+
         this.background.addActor(Radar(scrollpane).also {
             it.setPosition(22f, 698f)
         })
-
-        this.terrain.setScrollFocus(true)
     }
 
     override fun render(delta: Float) {
@@ -189,6 +199,9 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
         this.buildTimeMultiplier = this.upgrades.build_time[this.save.mainUpgrades[UpgradeKind.BUILD_TIME]?.minus(1) ?: 0].multiplier
 
         super.render(delta)
+
+        if (!this.isLoading)
+            this.gameWorld.render(delta)
     }
 
     override fun pause() {
@@ -205,6 +218,8 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
 
     override fun dispose() {
         super.dispose()
+
+        this.gameWorld.dispose()
 
         animationManager.dispose()
         stageAssetsManager.dispose()

@@ -156,6 +156,9 @@ class StageAssetsManager : Disposable {
 
     fun get(path: String): TextureRegion = TextureRegion(assetManager.get<Texture>(path))
 
+    fun unsafeRegion(path: String, regionName: String): TextureRegion =
+        assetManager.get<TextureAtlas>(path).findRegion(regionName)
+
     override fun dispose() {
         if (this.stageLevel != null) {
             val (bg1, bg2) = backgrounds(this.stageLevel!!)
