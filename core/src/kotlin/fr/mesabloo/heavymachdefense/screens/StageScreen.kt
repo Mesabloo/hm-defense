@@ -159,7 +159,7 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
         controlsGroup.addActor(MenuButton().also {
             it.setPosition(587f, 89f + 512f)
 
-            it.addListener(ShowSystemMenu(this.systemMenu, this.ui))
+            it.addListener(ShowSystemMenu(this.systemMenu, this.ui, this::upgradeMenuShown))
         })
         controlsGroup.addActor(BaseUpgradeButton().also {
             it.setPosition(587f, 22f + 512f)
