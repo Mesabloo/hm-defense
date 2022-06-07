@@ -1,5 +1,10 @@
 package fr.mesabloo.heavymachdefense.entities
 
+import fr.mesabloo.heavymachdefense.data.MachineKind
+import fr.mesabloo.heavymachdefense.ui.stage.Machine
+
+fun buildMachineTemplate(kind: MachineKind, level: Int) = Machine(kind, level)
+
 //import com.badlogic.ashley.core.Engine
 //import com.badlogic.ashley.core.Entity
 //import com.badlogic.gdx.physics.box2d.World

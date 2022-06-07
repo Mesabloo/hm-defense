@@ -31,7 +31,13 @@ import ktx.actors.setScrollFocus
 import kotlin.math.pow
 import kotlin.properties.Delegates
 
-class StageScreen(game: MainGame, private val level: Int, val save: GameSave, val saveIndex: Int, isLoading: Boolean = false) :
+class StageScreen(
+    game: MainGame,
+    private val level: Int,
+    val save: GameSave,
+    val saveIndex: Int,
+    isLoading: Boolean = false
+) :
     AbstractScreen(game, isLoading) {
     private companion object {
         const val TEMPORARY_CELL_UPGRADE_RATIO = 0.6f
@@ -41,6 +47,9 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
     private lateinit var gameWorld: GameWorld
 
     private val upgrades: Upgrades = Json.decodeFromString(Gdx.files.internal("data/upgrades.json").readString())
+    private val builds: Builds = Json {
+        allowStructuredMapKeys = true // this is because we store 'Pair's as 'HashMap' keys
+    }.decodeFromString(Gdx.files.internal("data/build-info.json").readString())
 
     private var upgradeMenuShown: Boolean = false
 
@@ -84,9 +93,12 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
         this.temporaryCellUpgradeCost = (this.maxCells * TEMPORARY_CELL_UPGRADE_RATIO).toLong()
         this.currentCells = this.maxCells * 2 / 5
 
-        this.cellResearchMultiplier = this.upgrades.cell_research[this.save.mainUpgrades[UpgradeKind.CELL_RESEARCH]?.minus(1) ?: 0].multiplier
-        this.crResearchMultiplier = this.upgrades.cr_research[this.save.mainUpgrades[UpgradeKind.CR_RESEARCH]?.minus(1) ?: 0].multiplier
-        this.buildTimeMultiplier = this.upgrades.build_time[this.save.mainUpgrades[UpgradeKind.BUILD_TIME]?.minus(1) ?: 0].multiplier
+        this.cellResearchMultiplier =
+            this.upgrades.cell_research[this.save.mainUpgrades[UpgradeKind.CELL_RESEARCH]?.minus(1) ?: 0].multiplier
+        this.crResearchMultiplier =
+            this.upgrades.cr_research[this.save.mainUpgrades[UpgradeKind.CR_RESEARCH]?.minus(1) ?: 0].multiplier
+        this.buildTimeMultiplier =
+            this.upgrades.build_time[this.save.mainUpgrades[UpgradeKind.BUILD_TIME]?.minus(1) ?: 0].multiplier
     }
 
     override fun show() {
@@ -128,18 +140,25 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
         this.background.addActor(CellCounter(this::maxCells, this::currentCells).also {
             it.setPosition(652f, 995f)
         })
-        this.background.addActor(CellTemporaryUpgrade(this::currentCells, this::temporaryCellUpgradeCost, this::temporaryCellUpgradesCount).also {
-            it.setPosition(630f, 972f)
-        })
+        this.background.addActor(
+            CellTemporaryUpgrade(
+                this::currentCells,
+                this::temporaryCellUpgradeCost,
+                this::temporaryCellUpgradesCount
+            ).also {
+                it.setPosition(630f, 972f)
+            })
 
         var currentY = 890f
         for (slot in this.save.buildSlots) {
             this.background.addActor(when (slot) {
-                is MachineSlot -> MachineBuildSlot(slot)
-                is TurretSlot -> TurretBuildSlot(slot)
+                is MachineSlot -> MachineBuildSlot(slot, this.save, this.builds, this::currentCells)
+                is TurretSlot -> TurretBuildSlot(slot, this.save, this.builds, this::currentCells)
                 else -> TODO()
             }.also {
                 it.setPosition(680f, currentY)
+
+                it.addListener(BuildMachineIfPossible(it, this::currentCells))
             })
 
             currentY -= 64f
@@ -222,9 +241,12 @@ class StageScreen(game: MainGame, private val level: Int, val save: GameSave, va
                 ?: 0].storage * 2f.pow(this.temporaryCellUpgradesCount.toFloat()).toLong()
         this.temporaryCellUpgradeCost = (this.maxCells * TEMPORARY_CELL_UPGRADE_RATIO).toLong()
 
-        this.cellResearchMultiplier = this.upgrades.cell_research[this.save.mainUpgrades[UpgradeKind.CELL_RESEARCH]?.minus(1) ?: 0].multiplier
-        this.crResearchMultiplier = this.upgrades.cr_research[this.save.mainUpgrades[UpgradeKind.CR_RESEARCH]?.minus(1) ?: 0].multiplier
-        this.buildTimeMultiplier = this.upgrades.build_time[this.save.mainUpgrades[UpgradeKind.BUILD_TIME]?.minus(1) ?: 0].multiplier
+        this.cellResearchMultiplier =
+            this.upgrades.cell_research[this.save.mainUpgrades[UpgradeKind.CELL_RESEARCH]?.minus(1) ?: 0].multiplier
+        this.crResearchMultiplier =
+            this.upgrades.cr_research[this.save.mainUpgrades[UpgradeKind.CR_RESEARCH]?.minus(1) ?: 0].multiplier
+        this.buildTimeMultiplier =
+            this.upgrades.build_time[this.save.mainUpgrades[UpgradeKind.BUILD_TIME]?.minus(1) ?: 0].multiplier
 
         this.baseDefenseLevel = this.save.mainUpgrades[UpgradeKind.BASE_DEFENSE] ?: 1
         this.baseAttackLevel = this.save.mainUpgrades[UpgradeKind.BASE_CANNON] ?: 1

@@ -47,34 +47,34 @@ import ktx.math.vec2
  * `data/models/machines` internal folder.
  *
  * @param name The machine name, obtained from the
- * [fr.mesabloo.heavymachdefense.components.machine.MachineKind.machineName] property
+ * [fr.mesabloo.heavymachdefense.data.MachineKind.machineName] property
  * @param level Which level (between the lowest and the highest, most likely to be 0 to 10) to construct the machine for
  */
 class MachineModel(name: String, level: Int) {
     /**
      * The position of the main body on the X and Y axes, in pixels.
      */
-    private val bodySize: Pair<Float, Float>
+    val bodySize: Pair<Float, Float>
 
     /**
      * The size of the left weapon on the X and Y axes, in pixels.
      */
-    private val leftWeaponSize: Pair<Float, Float>
+    val leftWeaponSize: Pair<Float, Float>
 
     /**
      * The offset from the center of the main body, in pixels.
      */
-    private val leftWeaponOffset: Pair<Float, Float>
+    val leftWeaponOffset: Pair<Float, Float>
 
     /**
      * The size of the left weapon on the X and Y axes, in pixels.
      */
-    private val rightWeaponSize: Pair<Float, Float>
+    val rightWeaponSize: Pair<Float, Float>
 
     /**
      * The offset from the center of the main body, in pixels.
      */
-    private val rightWeaponOffset: Pair<Float, Float>
+    val rightWeaponOffset: Pair<Float, Float>
 
     // TODO: feet
 

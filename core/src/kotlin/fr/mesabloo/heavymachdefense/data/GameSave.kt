@@ -19,29 +19,30 @@ data class GameSave(
     var credits: Long = 0L,
     var name: String = "<<placeholder>>",
     var machineUpgrades: HashMap<MachineKind, Int> = hashMapOf(
-        Pair(MachineKind.RIFLE, 1),
-        Pair(MachineKind.MISSILE, 1),
-        Pair(MachineKind.HMG, 1),
-        Pair(MachineKind.SHOTGUN, 1),
-        Pair(MachineKind.PLASMA, 1),
-        Pair(MachineKind.ION, 1),
-        Pair(MachineKind.HEAVY_MISSILE, 1)
+        MachineKind.RIFLE to 1,
+        MachineKind.MISSILE to 1,
+        MachineKind.HMG to 1,
+        MachineKind.SHOTGUN to 1,
+        MachineKind.PLASMA to 1,
+        MachineKind.ION to 1,
+        MachineKind.HEAVY_MISSILE to 1,
+        MachineKind.TANKER to 1
     ),
     var turretUpgrades: HashMap<TurretKind, Int> = hashMapOf(
-        Pair(TurretKind.RIFLE, 1),
-        Pair(TurretKind.MISSILE, 1),
-        Pair(TurretKind.VULCAN, 1),
-        Pair(TurretKind.PLASMA, 1),
-        Pair(TurretKind.ION, 1),
-        Pair(TurretKind.LASER, 1)
+        TurretKind.RIFLE to 1,
+        TurretKind.MISSILE to 1,
+        TurretKind.VULCAN to 1,
+        TurretKind.PLASMA to 1,
+        TurretKind.ION to 1,
+        TurretKind.LASER to 1
     ),
     var mainUpgrades: HashMap<UpgradeKind, Int> = hashMapOf(
-        Pair(UpgradeKind.BASE_CANNON, 1),
-        Pair(UpgradeKind.BASE_DEFENSE, 1),
-        Pair(UpgradeKind.BUILD_TIME, 1),
-        Pair(UpgradeKind.CR_RESEARCH, 1),
-        Pair(UpgradeKind.CELL_RESEARCH, 1),
-        Pair(UpgradeKind.CELL_STORAGE, 1)
+        UpgradeKind.BASE_CANNON to 1,
+        UpgradeKind.BASE_DEFENSE to 1,
+        UpgradeKind.BUILD_TIME to 1,
+        UpgradeKind.CR_RESEARCH to 1,
+        UpgradeKind.CELL_RESEARCH to 1,
+        UpgradeKind.CELL_STORAGE to 1
     ),
     var buildSlots: MutableList<Slot> = mutableListOf(
         MachineSlot(MachineKind.RIFLE)

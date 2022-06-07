@@ -14,5 +14,6 @@ enum class MachineKind(val machineName: String) : Serializable {
     ION("ion"),
     HMG("hmg"),
     PLASMA("plasma"),
-    SHOTGUN("shotgun");
+    SHOTGUN("shotgun"),
+    TANKER("tanker");
 }
