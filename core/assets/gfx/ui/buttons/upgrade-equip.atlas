@@ -1,0 +1,34 @@
+
+upgrade-equip.png
+size: 128, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+machine-normal
+  rotate: false
+  xy: 0, 192
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+machine-selected
+  rotate: false
+  xy: 0, 64
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+special-normal
+  rotate: false
+  xy: 0, 0
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+special-selected
+  rotate: false
+  xy: 0, 128
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1

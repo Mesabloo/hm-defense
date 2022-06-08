@@ -14,10 +14,7 @@ import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
 import fr.mesabloo.heavymachdefense.timers.cellMiningTimer
 import fr.mesabloo.heavymachdefense.ui.stage.*
-import fr.mesabloo.heavymachdefense.ui.stage.buttons.BaseUpgradeButton
-import fr.mesabloo.heavymachdefense.ui.stage.buttons.BuildMachMenuButton
-import fr.mesabloo.heavymachdefense.ui.stage.buttons.MenuButton
-import fr.mesabloo.heavymachdefense.ui.stage.buttons.SpecialAttackMenuButton
+import fr.mesabloo.heavymachdefense.ui.stage.buttons.*
 import fr.mesabloo.heavymachdefense.ui.stage.dialog.SystemMenu
 import fr.mesabloo.heavymachdefense.ui.stage.game.AllyBase
 import fr.mesabloo.heavymachdefense.ui.stage.slots.MachineBuildSlot
@@ -86,8 +83,18 @@ class StageScreen(
     private var backgroundMusicVolume: Float = 1.0f
     private var effectsVolume: Float = 1.0f
 
-    init {
+    private lateinit var upgradeEquipButton: UpgradeEquipment
 
+    private var currentMenuKind by Delegates.observable(StageAssetsManager.UI.TitleKind.BUILD_MACH) { _, old, new ->
+        Gdx.app.debug(this.javaClass.simpleName, "Observer called")
+
+        if (old != new) {
+            this.upgradeEquipButton.kind = new
+            this.title.kind = new
+        }
+    }
+
+    init {
         this.maxCells = this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1)
             ?: 0].storage * 2f.pow(this.temporaryCellUpgradesCount.toFloat()).toLong()
         this.temporaryCellUpgradeCost = (this.maxCells * TEMPORARY_CELL_UPGRADE_RATIO).toLong()
@@ -164,6 +171,12 @@ class StageScreen(
             currentY -= 64f
         }
 
+        this.background.addActor(UpgradeEquipment(this.currentMenuKind).also {
+            this.upgradeEquipButton = it
+
+            it.setPosition(650f, 180f)
+        })
+
         val controlsGroup = Group()
 
         controlsGroup.addActor(Controls().also {
@@ -184,7 +197,7 @@ class StageScreen(
             it.setPosition(587f, 22f + 512f)
             it.addListener(ShowUpgradeMenu(this.menuTweenManager, controlsGroup, scrollpane, this::upgradeMenuShown))
         })
-        controlsGroup.addActor(Title(StageAssetsManager.UI.TitleKind.BUILD_MACH).also {
+        controlsGroup.addActor(Title(this.currentMenuKind).also {
             this.title = it
 
             it.setPosition(UI_WIDTH / 2f - it.width / 2f + 3f, 130f + 512f)
@@ -195,6 +208,7 @@ class StageScreen(
             it.addListener(RemoveClickIfUpgradeMenuShown(this::upgradeMenuShown))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
             it.addListener(PlayAnimation(it))
+            it.addListener(ShowBuildSideMenu(this::currentMenuKind))
 
             animationManager.setCurrentKeyframe(it.animationId, 7)
         })
@@ -203,6 +217,7 @@ class StageScreen(
             it.addListener(RemoveClickIfUpgradeMenuShown(this::upgradeMenuShown))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
             it.addListener(PlayAnimation(it))
+            it.addListener(ShowSpecialSideMenu(this::currentMenuKind))
 
             animationManager.setCurrentKeyframe(it.animationId, 0)
         })

@@ -65,6 +65,8 @@ class StageAssetsManager : Disposable {
         const val BUILD_SLOT_INDICATOR_RED = "gfx/ui/game/build-slot/indicator-red.png"
         const val BUILD_SLOT_COVER = "gfx/ui/game/build-slot/cover.png"
 
+        const val UPGRADE_EQUIPMENT = "gfx/ui/buttons/upgrade-equip.atlas"
+
         enum class ButtonKind(internal val str: String) {
             MENU("menu"),
             BASE_UPGRADE("base-upgrade")
@@ -120,7 +122,8 @@ class StageAssetsManager : Disposable {
         UI.MENU_BUTTONS,
         UI.RADAR_MARKS,
         UI.UPGRADE_MENU_BUTTONS,
-        Dialog.SYSTEM_MENU_BUTTONS
+        Dialog.SYSTEM_MENU_BUTTONS,
+        UI.UPGRADE_EQUIPMENT
     )
 
     private fun allTextures() = this.stageLevel?.let {
