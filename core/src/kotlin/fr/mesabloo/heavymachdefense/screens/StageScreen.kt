@@ -40,6 +40,7 @@ class StageScreen(
         const val TEMPORARY_CELL_UPGRADE_RATIO = 0.6f
     }
 
+    private lateinit var buildQueue: BuildQueue
     private lateinit var allyBase: AllyBase
     private lateinit var gameWorld: GameWorld
 
@@ -156,16 +157,24 @@ class StageScreen(
                 it.setPosition(630f, 972f)
             })
 
+        this.background.addActor(BuildQueue(this::upgradeMenuShown).also {
+            this.buildQueue = it
+
+            it.height = 508f
+            it.width = 64f
+            it.setPosition(22f, 692f - it.height)
+        })
+
         var currentY = 890f
         for (slot in this.save.buildSlots) {
             this.background.addActor(when (slot) {
-                is MachineSlot -> MachineBuildSlot(slot, this.save, this.builds, this::currentCells)
-                is TurretSlot -> TurretBuildSlot(slot, this.save, this.builds, this::currentCells)
+                is MachineSlot -> MachineBuildSlot(slot, this.save, this.builds, this::currentCells, this.buildQueue)
+                is TurretSlot -> TurretBuildSlot(slot, this.save, this.builds, this::currentCells, this.buildQueue)
                 else -> TODO()
             }.also {
                 it.setPosition(680f, currentY)
 
-                it.addListener(BuildMachineIfPossible(it, this::currentCells))
+                it.addListener(BuildMachineIfPossible(it, this::currentCells, this.buildQueue, this.builds))
             })
 
             currentY -= 64f

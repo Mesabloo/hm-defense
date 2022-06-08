@@ -1,12 +1,21 @@
 package fr.mesabloo.heavymachdefense.listeners.stage
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import fr.mesabloo.heavymachdefense.data.Builds
+import fr.mesabloo.heavymachdefense.ui.stage.BuildMachineItem
+import fr.mesabloo.heavymachdefense.ui.stage.BuildQueue
 import fr.mesabloo.heavymachdefense.ui.stage.slots.BuildSlot
+import fr.mesabloo.heavymachdefense.ui.stage.slots.MachineBuildSlot
+import fr.mesabloo.heavymachdefense.ui.stage.slots.TurretBuildSlot
 import kotlin.reflect.KMutableProperty0
 
-class BuildMachineIfPossible(private val slot: BuildSlot, private val cells: KMutableProperty0<Long>) :
+class BuildMachineIfPossible(
+    private val slot: BuildSlot,
+    private val cells: KMutableProperty0<Long>,
+    private val buildQueue: BuildQueue,
+    private val builds: Builds
+) :
     ClickListener() {
     override fun clicked(event: InputEvent?, x: Float, y: Float) {
         if (!this.slot.isDisabled) {
@@ -14,7 +23,11 @@ class BuildMachineIfPossible(private val slot: BuildSlot, private val cells: KMu
 
             this.cells.set(currentCells - this.slot.cellCost)
 
-            Gdx.app.debug(this.javaClass.simpleName, "TODO: add machine to build queue")
+            this.buildQueue.build(when (this.slot) {
+                is MachineBuildSlot -> BuildMachineItem(this.slot.kind, this.slot.level, this.builds)
+                is TurretBuildSlot -> TODO()
+                else -> TODO()
+            })
         }
     }
 }

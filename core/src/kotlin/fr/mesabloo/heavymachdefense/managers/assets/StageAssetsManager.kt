@@ -67,6 +67,9 @@ class StageAssetsManager : Disposable {
 
         const val UPGRADE_EQUIPMENT = "gfx/ui/buttons/upgrade-equip.atlas"
 
+        const val BUILD_QUEUE_ITEM_BACKGROUND = "gfx/ui/game/build-queue/background.png"
+        const val BUILD_QUEUE_GAUGE = "gfx/ui/game/build-queue/gauge.png"
+
         enum class ButtonKind(internal val str: String) {
             MENU("menu"),
             BASE_UPGRADE("base-upgrade")
@@ -152,7 +155,9 @@ class StageAssetsManager : Disposable {
             UI.BUILD_SLOT_BACKGROUND,
             UI.BUILD_SLOT_INDICATOR_BLUE,
             UI.BUILD_SLOT_INDICATOR_RED,
-            UI.BUILD_SLOT_COVER
+            UI.BUILD_SLOT_COVER,
+            UI.BUILD_QUEUE_ITEM_BACKGROUND,
+            UI.BUILD_QUEUE_GAUGE
         )
     } ?: listOf()
 
