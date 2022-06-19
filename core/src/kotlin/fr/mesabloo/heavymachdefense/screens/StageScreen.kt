@@ -3,6 +3,7 @@ package fr.mesabloo.heavymachdefense.screens
 import aurelienribon.tweenengine.TweenManager
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Group
+import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.*
@@ -24,6 +25,7 @@ import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
 import fr.mesabloo.heavymachdefense.world.UI_WIDTH
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import ktx.actors.alpha
 import ktx.actors.setScrollFocus
 import kotlin.math.pow
 import kotlin.properties.Delegates
@@ -38,6 +40,8 @@ class StageScreen(
     AbstractScreen(game, isLoading) {
     private companion object {
         const val TEMPORARY_CELL_UPGRADE_RATIO = 0.6f
+        const val SLOT_MENU_WIDTH = 128f
+        const val SLOT_MENU_HEIGHT = 710f
     }
 
     private lateinit var buildQueue: BuildQueue
@@ -92,6 +96,9 @@ class StageScreen(
             this.title.kind = new
         }
     }
+
+    private lateinit var machineSlots: Group
+    private lateinit var specialSlots: Group
 
     init {
         this.maxCells = this.upgrades.cell_storage[this.save.mainUpgrades[UpgradeKind.CELL_STORAGE]?.minus(1)
@@ -163,20 +170,39 @@ class StageScreen(
             it.setPosition(22f, 692f - it.height)
         })
 
-        var currentY = 890f
-        for (slot in this.save.buildSlots) {
-            this.background.addActor(when (slot) {
-                is MachineSlot -> MachineBuildSlot(slot, this.save, this.builds, this::currentCells, this.buildQueue)
-                is TurretSlot -> TurretBuildSlot(slot, this.save, this.builds, this::currentCells, this.buildQueue)
-                else -> TODO()
-            }.also {
-                it.setPosition(680f, currentY)
+        this.background.addActor(Group().also {
+            this.machineSlots = it
 
-                it.addListener(BuildMachineIfPossible(it, this::currentCells, this.buildQueue, this.builds, this::upgradeMenuShown))
-            })
+            var currentY = SLOT_MENU_HEIGHT - 76f
+            for (slot in this.save.buildSlots) {
+                it.addActor(when (slot) {
+                    is MachineSlot -> MachineBuildSlot(slot, this.save, this.builds, this::currentCells, this.buildQueue)
+                    is TurretSlot -> TurretBuildSlot(slot, this.save, this.builds, this::currentCells, this.buildQueue)
+                    else -> TODO()
+                }.also {
+                    it.setPosition(40f, currentY)
 
-            currentY -= 64f
-        }
+                    it.addListener(BuildMachineIfPossible(it, this::currentCells, this.buildQueue, this.builds, this::upgradeMenuShown))
+                })
+
+                currentY -= 76f
+            }
+
+            it.setPosition(640f, 966f - SLOT_MENU_HEIGHT)
+            it.setSize(SLOT_MENU_WIDTH, SLOT_MENU_HEIGHT)
+
+            it.alpha = 1f
+            it.touchable = Touchable.enabled
+        })
+        this.background.addActor(Group().also {
+            this.specialSlots = it
+
+            it.setPosition(640f, 966f - SLOT_MENU_HEIGHT)
+            it.setSize(SLOT_MENU_WIDTH, SLOT_MENU_HEIGHT)
+
+            it.alpha = 0f
+            it.touchable = Touchable.disabled
+        })
 
         this.background.addActor(UpgradeEquipment(this.currentMenuKind).also {
             this.upgradeEquipButton = it
@@ -215,7 +241,7 @@ class StageScreen(
             it.addListener(RemoveClickIfUpgradeMenuShown(this::upgradeMenuShown))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
             it.addListener(PlayAnimation(it))
-            it.addListener(ShowBuildSideMenu(this::currentMenuKind))
+            it.addListener(ShowBuildSideMenu(this::currentMenuKind, this.machineSlots, this.specialSlots))
 
             animationManager.setCurrentKeyframe(it.animationId, 7)
         })
@@ -224,7 +250,7 @@ class StageScreen(
             it.addListener(RemoveClickIfUpgradeMenuShown(this::upgradeMenuShown))
             it.addListener(ResetAnimationsForOthers(controlsGroup, it))
             it.addListener(PlayAnimation(it))
-            it.addListener(ShowSpecialSideMenu(this::currentMenuKind))
+            it.addListener(ShowSpecialSideMenu(this::currentMenuKind, this.machineSlots, this.specialSlots))
 
             animationManager.setCurrentKeyframe(it.animationId, 0)
         })
