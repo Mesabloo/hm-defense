@@ -1,5 +1,6 @@
 package fr.mesabloo.heavymachdefense.data
 
+import fr.mesabloo.heavymachdefense.data.SpecialKind
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -44,8 +45,29 @@ data class GameSave(
         UpgradeKind.CELL_RESEARCH to 1,
         UpgradeKind.CELL_STORAGE to 1
     ),
+    var specialUpgrades: HashMap<SpecialKind, Int> = hashMapOf(
+        SpecialKind.AIRSTRIKE_BOMB to 1,
+        SpecialKind.AIRSTRIKE_MISSILE to 1,
+        SpecialKind.AIRSTRIKE_NUKE to 1,
+        SpecialKind.AIRSTRIKE_EMP to 1,
+        SpecialKind.CROSSFIRE_MISSILE to 1
+    ),
     var buildSlots: MutableList<Slot> = mutableListOf(
         MachineSlot(MachineKind.RIFLE)
+    ),
+    var specialSlots: MutableList<Slot> = mutableListOf(
+        SpecialSlot(SpecialKind.AIRSTRIKE_BOMB),
+        SpecialSlot(SpecialKind.AIRSTRIKE_MISSILE),
+        SpecialSlot(SpecialKind.AIRSTRIKE_NUKE),
+        SpecialSlot(SpecialKind.AIRSTRIKE_EMP),
+        SpecialSlot(SpecialKind.CROSSFIRE_MISSILE)
+    ),
+    var specialCount: HashMap<SpecialKind, Int> = hashMapOf(
+        SpecialKind.AIRSTRIKE_BOMB to 0,
+        SpecialKind.AIRSTRIKE_MISSILE to 0,
+        SpecialKind.AIRSTRIKE_NUKE to 0,
+        SpecialKind.AIRSTRIKE_EMP to 0,
+        SpecialKind.CROSSFIRE_MISSILE to 0
     )
 ) {
     companion object {

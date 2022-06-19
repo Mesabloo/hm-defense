@@ -15,6 +15,7 @@ import fr.mesabloo.heavymachdefense.managers.FontManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.fontManager
+import fr.mesabloo.heavymachdefense.timers.cellMiningTimer
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.POSITION
 import kotlin.reflect.KMutableProperty0
@@ -113,7 +114,7 @@ class BuildQueue(
     }
 
     override fun act(delta: Float) {
-        if (!this.upgradeMenuShown.get()) {
+        if (!cellMiningTimer.isPaused && !cellMiningTimer.isStopped) {
             this.tweenManager.update(delta)
 
             var index = 0

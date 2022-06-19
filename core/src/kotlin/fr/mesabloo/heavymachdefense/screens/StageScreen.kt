@@ -9,6 +9,7 @@ import fr.mesabloo.heavymachdefense.MainGame
 import fr.mesabloo.heavymachdefense.data.*
 import fr.mesabloo.heavymachdefense.entities.createBases
 import fr.mesabloo.heavymachdefense.entities.createTerrainBody
+import fr.mesabloo.heavymachdefense.data.Specials
 import fr.mesabloo.heavymachdefense.listeners.stage.*
 import fr.mesabloo.heavymachdefense.managers.animationManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
@@ -19,6 +20,7 @@ import fr.mesabloo.heavymachdefense.ui.stage.buttons.*
 import fr.mesabloo.heavymachdefense.ui.stage.dialog.SystemMenu
 import fr.mesabloo.heavymachdefense.ui.stage.game.AllyBase
 import fr.mesabloo.heavymachdefense.ui.stage.slots.MachineBuildSlot
+import fr.mesabloo.heavymachdefense.ui.stage.slots.SpecialBuildSlot
 import fr.mesabloo.heavymachdefense.ui.stage.slots.TurretBuildSlot
 import fr.mesabloo.heavymachdefense.world.GameWorld
 import fr.mesabloo.heavymachdefense.world.UI_HEIGHT
@@ -52,6 +54,7 @@ class StageScreen(
     private val builds: Builds = Json {
         allowStructuredMapKeys = true // this is because we store 'Pair's as 'HashMap' keys
     }.decodeFromString(Gdx.files.internal("data/build-info.json").readString())
+    private val specials: Specials = Json.decodeFromString(Gdx.files.internal("data/special-info.json").readString())
 
     private var upgradeMenuShown: Boolean = false
 
@@ -176,16 +179,36 @@ class StageScreen(
             var currentY = SLOT_MENU_HEIGHT - 76f
             for (slot in this.save.buildSlots) {
                 it.addActor(when (slot) {
-                    is MachineSlot -> MachineBuildSlot(slot, this.save, this.builds, this::currentCells, this.buildQueue)
-                    is TurretSlot -> TurretBuildSlot(slot, this.save, this.builds, this::currentCells, this.buildQueue)
+                    is MachineSlot -> MachineBuildSlot(
+                        slot,
+                        this.save,
+                        this.builds,
+                        this::currentCells,
+                        this.buildQueue
+                    )
+                    is TurretSlot -> TurretBuildSlot(
+                        slot,
+                        this.save,
+                        this.builds,
+                        this::currentCells,
+                        this.buildQueue
+                    )
                     else -> TODO()
                 }.also {
                     it.setPosition(40f, currentY)
 
-                    it.addListener(BuildMachineIfPossible(it, this::currentCells, this.buildQueue, this.builds, this::upgradeMenuShown))
+                    it.addListener(
+                        BuildMachineIfPossible(
+                            it,
+                            this::currentCells,
+                            this.buildQueue,
+                            this.builds,
+                            this::upgradeMenuShown
+                        )
+                    )
                 })
 
-                currentY -= 76f
+                currentY -= 102f
             }
 
             it.setPosition(640f, 966f - SLOT_MENU_HEIGHT)
@@ -196,6 +219,19 @@ class StageScreen(
         })
         this.background.addActor(Group().also {
             this.specialSlots = it
+
+            var currentY = SLOT_MENU_HEIGHT - 76f
+            for (slot in this.save.specialSlots) {
+                it.addActor(when (slot) {
+                    is SpecialSlot -> SpecialBuildSlot(slot, this.save, this.specials)
+                    else -> TODO()
+                }.also {
+                    it.setPosition(40f, currentY)
+
+                })
+
+                currentY -= 102f
+            }
 
             it.setPosition(640f, 966f - SLOT_MENU_HEIGHT)
             it.setSize(SLOT_MENU_WIDTH, SLOT_MENU_HEIGHT)

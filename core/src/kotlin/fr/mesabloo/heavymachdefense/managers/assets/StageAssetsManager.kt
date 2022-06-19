@@ -70,6 +70,8 @@ class StageAssetsManager : Disposable {
         const val BUILD_QUEUE_ITEM_BACKGROUND = "gfx/ui/game/build-queue/background.png"
         const val BUILD_QUEUE_GAUGE = "gfx/ui/game/build-queue/gauge.png"
 
+        const val SPECIAL_ICONS = "gfx/ui/game/build-slot/icons-special.atlas"
+
         enum class ButtonKind(internal val str: String) {
             MENU("menu"),
             BASE_UPGRADE("base-upgrade")
@@ -126,7 +128,8 @@ class StageAssetsManager : Disposable {
         UI.RADAR_MARKS,
         UI.UPGRADE_MENU_BUTTONS,
         Dialog.SYSTEM_MENU_BUTTONS,
-        UI.UPGRADE_EQUIPMENT
+        UI.UPGRADE_EQUIPMENT,
+        UI.SPECIAL_ICONS
     )
 
     private fun allTextures() = this.stageLevel?.let {

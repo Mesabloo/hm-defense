@@ -29,7 +29,8 @@ abstract class BuildSlot(
         protected set
 
     protected var building: Int = 0
-    private val buildIndicators = List(this.max) { Image(stageAssetsManager.get(StageAssetsManager.UI.BUILD_SLOT_INDICATOR_BLUE)) }
+    private val buildIndicators =
+        List(this.max) { Image(stageAssetsManager.get(StageAssetsManager.UI.BUILD_SLOT_INDICATOR_BLUE)) }
 
     init {
         this.addActor(Image(stageAssetsManager.get(StageAssetsManager.UI.BUILD_SLOT_BACKGROUND)).also {
@@ -64,11 +65,15 @@ abstract class BuildSlot(
         for (index in 0 until max) {
             val image = this.buildIndicators[index]
 
-            image.drawable = TextureRegionDrawable(stageAssetsManager.get(if (index < building) {
-                StageAssetsManager.UI.BUILD_SLOT_INDICATOR_RED
-            } else {
-                StageAssetsManager.UI.BUILD_SLOT_INDICATOR_BLUE
-            }))
+            image.drawable = TextureRegionDrawable(
+                stageAssetsManager.get(
+                    if (index < building) {
+                        StageAssetsManager.UI.BUILD_SLOT_INDICATOR_RED
+                    } else {
+                        StageAssetsManager.UI.BUILD_SLOT_INDICATOR_BLUE
+                    }
+                )
+            )
         }
 
         super.act(delta)
@@ -151,5 +156,100 @@ class TurretBuildSlot(
     BuildSlot(cellCounter, queue, 1) {
     override fun updateBuildingNumber() {
         TODO("Not yet implemented")
+    }
+}
+
+class SpecialBuildSlot(
+    private val slot: SpecialSlot,
+    private val save: GameSave,
+    private val specials: Specials
+) : Group() {
+    private val counter: Label
+
+    var isDisabled: Boolean = false
+
+    private val cover = Image(stageAssetsManager.get(StageAssetsManager.UI.BUILD_SLOT_COVER))
+
+    private val cell: Actor
+
+    init {
+        val maxLevel = when (this.slot.kind) {
+            SpecialKind.AIRSTRIKE_BOMB -> this.specials.airstrikeBomb
+            SpecialKind.AIRSTRIKE_MISSILE -> this.specials.airstrikeMissile
+            SpecialKind.AIRSTRIKE_NUKE -> this.specials.airstrikeNuke
+            SpecialKind.AIRSTRIKE_EMP -> this.specials.airstrikeEMP
+            SpecialKind.CROSSFIRE_MISSILE -> this.specials.crossfireMissile
+        }.size
+        val level = this.save.specialUpgrades[this.slot.kind]?.coerceIn(1..maxLevel) ?: 1
+
+        this.addActor(Image(stageAssetsManager.get(StageAssetsManager.UI.BUILD_SLOT_BACKGROUND)).also {
+            this.width = it.width
+            this.height = it.height
+
+            it.setPosition(0f, 0f)
+        })
+
+        this.addActor(Image(stageAssetsManager.get(StageAssetsManager.UI.BUILD_SLOT_FOREGROUND)).also {
+            it.setPosition(-51f, -50f)
+
+            it.touchable = Touchable.enabled
+        })
+
+        this.addActor(
+            Image(
+                stageAssetsManager.unsafeRegion(
+                    StageAssetsManager.UI.SPECIAL_ICONS,
+                    "${this.slot.kind.iconTilePrefix}$level"
+                )
+            ).also {
+                it.setPosition(0f, 0f)
+
+                it.touchable = Touchable.enabled
+            })
+
+        this.addActor(Label("${this.save.specialCount[this.slot.kind]}", Label.LabelStyle().also {
+            it.font = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_BOLD_11_WHITE]
+            it.fontColor = Color.WHITE
+        }).also {
+            this.counter = it
+
+            it.setPosition(33f - it.prefWidth / 2f, -17f)
+        })
+
+        this.addActor(this.cover)
+        this.cover.setPosition(-51f, -50f)
+
+        this.addActor(Label("$level/$maxLevel", Label.LabelStyle().also {
+            it.font = fontManager.bitmapFonts[FontManager.TREBUCHET_MS_BOLD_12_WHITE]
+            it.fontColor = Color.WHITE
+        }).also {
+            this.cell = it
+        })
+
+        this.updateSlot()
+    }
+
+    private fun updateSlot() {
+        val maxLevel = when (this.slot.kind) {
+            SpecialKind.AIRSTRIKE_BOMB -> this.specials.airstrikeBomb
+            SpecialKind.AIRSTRIKE_MISSILE -> this.specials.airstrikeMissile
+            SpecialKind.AIRSTRIKE_NUKE -> this.specials.airstrikeNuke
+            SpecialKind.AIRSTRIKE_EMP -> this.specials.airstrikeEMP
+            SpecialKind.CROSSFIRE_MISSILE -> this.specials.crossfireMissile
+        }.size
+        val level = this.save.specialUpgrades[this.slot.kind]?.coerceIn(1..maxLevel) ?: 1
+
+        (this.cell as Label).setText("$level/$maxLevel")
+        this.cell.setPosition(-28f - this.cell.width / 2f, 51f)
+        this.cell.touchable = Touchable.disabled
+    }
+
+    override fun act(delta: Float) {
+        this.isDisabled = this.counter.textEquals("0")
+        this.cover.zIndex = if (this.isDisabled) 50000000 else 0
+
+        this.updateSlot()
+
+        super.act(delta)
     }
 }
