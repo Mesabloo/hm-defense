@@ -14,20 +14,23 @@ class BuildMachineIfPossible(
     private val slot: BuildSlot,
     private val cells: KMutableProperty0<Long>,
     private val buildQueue: BuildQueue,
-    private val builds: Builds
+    private val builds: Builds,
+    private val upgradeMenuShown: KMutableProperty0<Boolean>
 ) :
     ClickListener() {
     override fun clicked(event: InputEvent?, x: Float, y: Float) {
-        if (!this.slot.isDisabled) {
+        if (!this.slot.isDisabled && !this.upgradeMenuShown.get()) {
             val currentCells = this.cells.get()
 
             this.cells.set(currentCells - this.slot.cellCost)
 
-            this.buildQueue.build(when (this.slot) {
-                is MachineBuildSlot -> BuildMachineItem(this.slot.kind, this.slot.level, this.builds)
-                is TurretBuildSlot -> TODO()
-                else -> TODO()
-            })
+            this.buildQueue.build(
+                when (this.slot) {
+                    is MachineBuildSlot -> BuildMachineItem(this.slot.kind, this.slot.level, this.builds)
+                    is TurretBuildSlot -> TODO()
+                    else -> TODO()
+                }
+            )
         }
     }
 }

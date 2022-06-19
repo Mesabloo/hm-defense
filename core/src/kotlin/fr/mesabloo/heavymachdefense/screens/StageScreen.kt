@@ -87,8 +87,6 @@ class StageScreen(
     private lateinit var upgradeEquipButton: UpgradeEquipment
 
     private var currentMenuKind by Delegates.observable(StageAssetsManager.UI.TitleKind.BUILD_MACH) { _, old, new ->
-        Gdx.app.debug(this.javaClass.simpleName, "Observer called")
-
         if (old != new) {
             this.upgradeEquipButton.kind = new
             this.title.kind = new
@@ -157,7 +155,7 @@ class StageScreen(
                 it.setPosition(630f, 972f)
             })
 
-        this.background.addActor(BuildQueue(this::upgradeMenuShown).also {
+        this.background.addActor(BuildQueue(this::upgradeMenuShown, this.upgrades, this.save).also {
             this.buildQueue = it
 
             it.height = 508f
@@ -174,7 +172,7 @@ class StageScreen(
             }.also {
                 it.setPosition(680f, currentY)
 
-                it.addListener(BuildMachineIfPossible(it, this::currentCells, this.buildQueue, this.builds))
+                it.addListener(BuildMachineIfPossible(it, this::currentCells, this.buildQueue, this.builds, this::upgradeMenuShown))
             })
 
             currentY -= 64f

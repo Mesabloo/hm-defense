@@ -3,15 +3,14 @@ package fr.mesabloo.heavymachdefense.ui.stage
 import aurelienribon.tweenengine.Tween
 import aurelienribon.tweenengine.TweenManager
 import aurelienribon.tweenengine.equations.Expo
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Queue
-import fr.mesabloo.heavymachdefense.data.Builds
-import fr.mesabloo.heavymachdefense.data.MachineKind
-import fr.mesabloo.heavymachdefense.data.TurretKind
+import fr.mesabloo.heavymachdefense.data.*
 import fr.mesabloo.heavymachdefense.managers.FontManager
 import fr.mesabloo.heavymachdefense.managers.assets.StageAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.stageAssetsManager
@@ -20,16 +19,19 @@ import fr.mesabloo.heavymachdefense.tweens.ActorAccessor
 import fr.mesabloo.heavymachdefense.tweens.ActorAccessor.Companion.POSITION
 import kotlin.reflect.KMutableProperty0
 
-abstract class BuildItem(internal var elapsed: Float, internal val timeToBuild: Float)
-class BuildMachineItem(val kind: MachineKind, val level: Int, builds: Builds) : BuildItem(0f, builds.machines[kind to level]!!.time)
-class BuildTurretItem(val kind: TurretKind, val level: Int, builds: Builds) : BuildItem(0f, builds.turrets[kind to level]!!.time)
+abstract class BuildItem(internal var elapsed: Float, internal var timeToBuild: Float)
+class BuildMachineItem(val kind: MachineKind, val level: Int, builds: Builds) :
+    BuildItem(0f, builds.machines[kind to level]!!.time)
+
+class BuildTurretItem(val kind: TurretKind, val level: Int, builds: Builds) :
+    BuildItem(0f, builds.turrets[kind to level]!!.time)
 
 private class BuildItemActor(val item: BuildItem) : Group() {
     private companion object {
         const val PADDING = 2f
     }
 
-    internal val gauge: Actor
+    val gauge: Actor
 
     init {
         this.width = 64f
@@ -63,8 +65,12 @@ private class BuildItemActor(val item: BuildItem) : Group() {
     }
 }
 
-class BuildQueue(private val upgradeMenuShown: KMutableProperty0<Boolean>) : Group() {
-    private companion object  {
+class BuildQueue(
+    private val upgradeMenuShown: KMutableProperty0<Boolean>,
+    private val upgrades: Upgrades,
+    private val save: GameSave,
+) : Group() {
+    private companion object {
         const val SLOT_HEIGHT = 64f
         const val SLOT_PADDING = 8f
     }
@@ -87,6 +93,7 @@ class BuildQueue(private val upgradeMenuShown: KMutableProperty0<Boolean>) : Gro
 
     fun build(item: BuildItem) {
         val actor = BuildItemActor(item)
+        actor.item.timeToBuild *= this.upgrades.build_time[this.save.mainUpgrades[UpgradeKind.BUILD_TIME]?.minus(1) ?: 0].multiplier
         val slotsOccupied = this.queue.size
 
         if (slotsOccupied > 7) {
@@ -135,6 +142,8 @@ class BuildQueue(private val upgradeMenuShown: KMutableProperty0<Boolean>) : Gro
                     this.queue.removeIndex(index)
                     this.tweenManager.killTarget(item, POSITION)
                     item.remove()
+
+                    Gdx.app.debug(this.javaClass.simpleName, "TODO: create machine in world")
                 } else {
                     index += 1
                 }
