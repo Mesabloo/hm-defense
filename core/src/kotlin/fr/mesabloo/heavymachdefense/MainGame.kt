@@ -10,6 +10,7 @@ import fr.mesabloo.heavymachdefense.managers.assets.assetManager
 import fr.mesabloo.heavymachdefense.managers.assets.debugAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.loadingAssetsManager
 import fr.mesabloo.heavymachdefense.managers.assets.startAssetsManager
+import fr.mesabloo.heavymachdefense.managers.backgroundMusicManager
 import fr.mesabloo.heavymachdefense.managers.fontManager
 import fr.mesabloo.heavymachdefense.screens.AbstractScreen
 import fr.mesabloo.heavymachdefense.screens.StartScreen
@@ -39,6 +40,7 @@ class MainGame : KtxGame<AbstractScreen>() {
         // - all the assets for the loading screen
         // - assets for the welcome screen
 
+        backgroundMusicManager.preload()
         startAssetsManager.preload()
         loadingAssetsManager.preload()
         fontManager.init()
@@ -55,8 +57,11 @@ class MainGame : KtxGame<AbstractScreen>() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         assetManager.update()
+        backgroundMusicManager.update()
 
-        if (this.justStarted && debugAssetsManager.isFullyLoaded() && startAssetsManager.isFullyLoaded() && loadingAssetsManager.isFullyLoaded()) {
+        if (this.justStarted && debugAssetsManager.isFullyLoaded() && startAssetsManager.isFullyLoaded()
+            && loadingAssetsManager.isFullyLoaded() && backgroundMusicManager.isFullyLoaded()
+        ) {
             this.justStarted = false
             (changeScreen(this.startingScreen) as AbstractScreen?)?.removeLoadingOverlayEnd()
         }
@@ -88,5 +93,7 @@ class MainGame : KtxGame<AbstractScreen>() {
         assetManager.dispose()
 
         fontManager.dispose()
+
+        backgroundMusicManager.dispose()
     }
 }
