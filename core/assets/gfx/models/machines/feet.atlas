@@ -1,0 +1,167 @@
+
+feet.png
+size: 256, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+1
+  rotate: false
+  xy: 64, 48
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+10
+  rotate: false
+  xy: 96, 48
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+11
+  rotate: false
+  xy: 0, 32
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+12
+  rotate: false
+  xy: 96, 0
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+13
+  rotate: false
+  xy: 32, 16
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+14
+  rotate: false
+  xy: 160, 32
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+15
+  rotate: false
+  xy: 96, 32
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+16
+  rotate: false
+  xy: 0, 16
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+17
+  rotate: false
+  xy: 160, 48
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+18
+  rotate: false
+  xy: 64, 32
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+19
+  rotate: false
+  xy: 0, 48
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 128, 0
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+20
+  rotate: false
+  xy: 128, 48
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+21
+  rotate: false
+  xy: 32, 32
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+22
+  rotate: false
+  xy: 128, 16
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+23
+  rotate: false
+  xy: 64, 16
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+3
+  rotate: false
+  xy: 64, 0
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 32, 48
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 128, 32
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+6
+  rotate: false
+  xy: 32, 0
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+7
+  rotate: false
+  xy: 192, 48
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+8
+  rotate: false
+  xy: 96, 16
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+9
+  rotate: false
+  xy: 0, 0
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
