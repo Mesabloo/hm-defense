@@ -4,13 +4,13 @@
 
 let
   gdx-setup-tool-jar = pkgs.fetchurl {
-    url = "https://libgdx.com/assets/downloads/legacy_setup/gdx-setup_latest.jar";
-    sha256 = "1w79rll5302inmysr2bav2y80117b86npgry23maiv6cnj5xa19l";
+    url = "https://libgdx-nightlies.s3.amazonaws.com/libgdx-runnables/gdx-setup.jar";
+    sha256 = "sha256-nFEPjsstdet5goMfO619lLQ+YddKSh1BpiADefrSMJ0=";
   };
 
   hiero-jar = pkgs.fetchurl {
     url = "https://libgdx-nightlies.s3.eu-central-1.amazonaws.com/libgdx-runnables/runnable-hiero.jar";
-    sha256 = "1lvr4qa0qjs103nkbl2gyc0d0syza12ghf0qpwqcqqn1v3hiq765";
+    sha256 = "sha256-uT+cpx6azFOfGsQ3K0IpxOHi5TQL9Cufx0EjQ/EoBA0=";
   };
 
   hiero = pkgs.stdenv.mkDerivation {
@@ -106,9 +106,7 @@ pkgs.mkShell {
   ];
 
   buildInputs = with pkgs; [
-    gradle
-
-    kotlin
+    sbt
 
     jetbrains.idea-community
 
@@ -124,9 +122,12 @@ pkgs.mkShell {
     glib.dev
 
     visualvm
+
+    graphviz
   ];
 
   LD_LIBRARY_PATH = "${pkgs.xorg.libXxf86vm}/lib:${pkgs.openal}/lib";
   GDX_SETUP = "java -jar ${gdx-setup-tool-jar}";
   JAVA_HOME = "${pkgs.jdk11}/lib/openjdk";
+  GRAPHVIZ_DOT = "${pkgs.graphviz}/bin/dot";
 }
