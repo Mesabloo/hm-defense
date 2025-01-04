@@ -1,0 +1,566 @@
+
+bodies.png
+size: 1024, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+heavy-missile-01
+  rotate: false
+  xy: 790, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+heavy-missile-02
+  rotate: false
+  xy: 460, 266
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+heavy-missile-03
+  rotate: false
+  xy: 396, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+heavy-missile-04
+  rotate: false
+  xy: 658, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+heavy-missile-05
+  rotate: false
+  xy: 920, 398
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+heavy-missile-06
+  rotate: false
+  xy: 592, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+heavy-missile-07
+  rotate: false
+  xy: 658, 332
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+heavy-missile-08
+  rotate: false
+  xy: 392, 398
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+heavy-missile-09
+  rotate: false
+  xy: 262, 204
+  size: 64, 128
+  orig: 64, 128
+  offset: 0, 0
+  index: -1
+heavy-missile-10
+  rotate: false
+  xy: 2, 204
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+hmg-01
+  rotate: false
+  xy: 328, 136
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+hmg-02
+  rotate: false
+  xy: 856, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+hmg-03
+  rotate: false
+  xy: 658, 266
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+hmg-04
+  rotate: false
+  xy: 458, 398
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+hmg-05
+  rotate: false
+  xy: 856, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+hmg-06
+  rotate: false
+  xy: 526, 332
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+hmg-07
+  rotate: false
+  xy: 330, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+hmg-08
+  rotate: false
+  xy: 790, 332
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+hmg-09
+  rotate: false
+  xy: 854, 398
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+hmg-10
+  rotate: false
+  xy: 922, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-01
+  rotate: false
+  xy: 394, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-02
+  rotate: false
+  xy: 264, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-03
+  rotate: false
+  xy: 658, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-04
+  rotate: false
+  xy: 722, 398
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-05
+  rotate: false
+  xy: 394, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-06
+  rotate: false
+  xy: 460, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-07
+  rotate: false
+  xy: 660, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-08
+  rotate: false
+  xy: 790, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-09
+  rotate: false
+  xy: 394, 332
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ion-10
+  rotate: false
+  xy: 2, 8
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+missile-01
+  rotate: false
+  xy: 922, 266
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+missile-02
+  rotate: false
+  xy: 394, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+missile-03
+  rotate: false
+  xy: 462, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+missile-04
+  rotate: false
+  xy: 724, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+missile-05
+  rotate: false
+  xy: 328, 268
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+missile-06
+  rotate: false
+  xy: 658, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+missile-07
+  rotate: false
+  xy: 526, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+missile-08
+  rotate: false
+  xy: 262, 138
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+missile-09
+  rotate: false
+  xy: 856, 266
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+missile-10
+  rotate: false
+  xy: 394, 266
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-01
+  rotate: false
+  xy: 198, 6
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-02
+  rotate: false
+  xy: 592, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-03
+  rotate: false
+  xy: 590, 398
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-04
+  rotate: false
+  xy: 856, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-05
+  rotate: false
+  xy: 460, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-06
+  rotate: false
+  xy: 528, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-07
+  rotate: false
+  xy: 790, 266
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-08
+  rotate: false
+  xy: 328, 202
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-09
+  rotate: false
+  xy: 724, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plasma-10
+  rotate: false
+  xy: 592, 266
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rifle-01
+  rotate: false
+  xy: 986, 398
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+rifle-02
+  rotate: false
+  xy: 788, 398
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rifle-03
+  rotate: false
+  xy: 460, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rifle-04
+  rotate: false
+  xy: 526, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rifle-05
+  rotate: false
+  xy: 726, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rifle-06
+  rotate: false
+  xy: 724, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rifle-07
+  rotate: false
+  xy: 328, 70
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rifle-08
+  rotate: false
+  xy: 922, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rifle-09
+  rotate: false
+  xy: 724, 332
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+rifle-10
+  rotate: false
+  xy: 524, 398
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-01
+  rotate: false
+  xy: 922, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-02
+  rotate: false
+  xy: 526, 266
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-03
+  rotate: false
+  xy: 594, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-04
+  rotate: false
+  xy: 856, 332
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-05
+  rotate: false
+  xy: 262, 72
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-06
+  rotate: false
+  xy: 790, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-07
+  rotate: false
+  xy: 592, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-08
+  rotate: false
+  xy: 132, 8
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-09
+  rotate: false
+  xy: 922, 332
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shotgun-10
+  rotate: false
+  xy: 460, 332
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tanker-01
+  rotate: false
+  xy: 724, 266
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tanker-02
+  rotate: false
+  xy: 656, 398
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tanker-03
+  rotate: false
+  xy: 526, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tanker-04
+  rotate: false
+  xy: 592, 332
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tanker-05
+  rotate: false
+  xy: 132, 74
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tanker-06
+  rotate: false
+  xy: 132, 204
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tanker-07
+  rotate: false
+  xy: 132, 334
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tanker-08
+  rotate: false
+  xy: 262, 334
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tanker-09
+  rotate: false
+  xy: 2, 74
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tanker-10
+  rotate: false
+  xy: 2, 334
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1

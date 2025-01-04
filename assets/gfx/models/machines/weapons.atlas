@@ -1,0 +1,496 @@
+
+weapons.png
+size: 1024, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+heavy-missile-01
+  rotate: false
+  xy: 630, 74
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+heavy-missile-02
+  rotate: false
+  xy: 530, 56
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+heavy-missile-03
+  rotate: false
+  xy: 532, 38
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+heavy-missile-04
+  rotate: false
+  xy: 564, 56
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+heavy-missile-05
+  rotate: false
+  xy: 266, 2
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+heavy-missile-06
+  rotate: false
+  xy: 530, 92
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+heavy-missile-07
+  rotate: false
+  xy: 728, 110
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+heavy-missile-08
+  rotate: false
+  xy: 2, 8
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+heavy-missile-09
+  rotate: false
+  xy: 464, 92
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+heavy-missile-10
+  rotate: false
+  xy: 134, 8
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+hmg-01
+  rotate: false
+  xy: 68, 94
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+hmg-02
+  rotate: false
+  xy: 200, 94
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+hmg-03
+  rotate: false
+  xy: 68, 60
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+hmg-04
+  rotate: false
+  xy: 2, 94
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+hmg-05
+  rotate: false
+  xy: 68, 26
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+hmg-06
+  rotate: false
+  xy: 2, 26
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+hmg-07
+  rotate: false
+  xy: 134, 26
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+hmg-08
+  rotate: false
+  xy: 134, 94
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+hmg-09
+  rotate: false
+  xy: 2, 60
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+hmg-10
+  rotate: false
+  xy: 134, 60
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+ion-01
+  rotate: false
+  xy: 566, 46
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: -1
+ion-02
+  rotate: false
+  xy: 596, 92
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ion-03
+  rotate: false
+  xy: 398, 92
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ion-04
+  rotate: false
+  xy: 68, 8
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ion-05
+  rotate: false
+  xy: 398, 56
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ion-06
+  rotate: false
+  xy: 200, 22
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ion-07
+  rotate: false
+  xy: 662, 110
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ion-08
+  rotate: false
+  xy: 398, 74
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ion-09
+  rotate: false
+  xy: 200, 40
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ion-10
+  rotate: false
+  xy: 464, 56
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+missile-01
+  rotate: false
+  xy: 696, 92
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+missile-02
+  rotate: false
+  xy: 632, 64
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: -1
+missile-03
+  rotate: false
+  xy: 598, 56
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+missile-04
+  rotate: false
+  xy: 764, 100
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: -1
+missile-05
+  rotate: false
+  xy: 464, 38
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+missile-06
+  rotate: false
+  xy: 200, 2
+  size: 64, 8
+  orig: 64, 8
+  offset: 0, 0
+  index: -1
+missile-07
+  rotate: false
+  xy: 300, 20
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+missile-08
+  rotate: false
+  xy: 200, 12
+  size: 64, 8
+  orig: 64, 8
+  offset: 0, 0
+  index: -1
+missile-09
+  rotate: false
+  xy: 530, 110
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+missile-10
+  rotate: false
+  xy: 266, 74
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+plasma-01
+  rotate: false
+  xy: 334, 2
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+plasma-02
+  rotate: false
+  xy: 300, 2
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+plasma-03
+  rotate: false
+  xy: 266, 20
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+plasma-04
+  rotate: false
+  xy: 762, 110
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+plasma-05
+  rotate: false
+  xy: 398, 110
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+plasma-06
+  rotate: false
+  xy: 664, 74
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+plasma-07
+  rotate: false
+  xy: 464, 110
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+plasma-08
+  rotate: false
+  xy: 200, 58
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+plasma-09
+  rotate: false
+  xy: 596, 110
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+plasma-10
+  rotate: false
+  xy: 662, 92
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+rifle-01
+  rotate: false
+  xy: 498, 38
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+rifle-02
+  rotate: false
+  xy: 368, 28
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: -1
+rifle-03
+  rotate: false
+  xy: 464, 74
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+rifle-04
+  rotate: false
+  xy: 698, 82
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: -1
+rifle-05
+  rotate: false
+  xy: 796, 110
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+rifle-06
+  rotate: false
+  xy: 332, 56
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+rifle-07
+  rotate: false
+  xy: 332, 110
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+rifle-08
+  rotate: false
+  xy: 530, 74
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+rifle-09
+  rotate: false
+  xy: 332, 74
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+rifle-10
+  rotate: false
+  xy: 266, 110
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+shotgun-01
+  rotate: false
+  xy: 334, 20
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+shotgun-02
+  rotate: false
+  xy: 596, 74
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+shotgun-03
+  rotate: false
+  xy: 730, 92
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+shotgun-04
+  rotate: false
+  xy: 266, 38
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+shotgun-05
+  rotate: false
+  xy: 266, 92
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+shotgun-06
+  rotate: false
+  xy: 398, 38
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+shotgun-07
+  rotate: false
+  xy: 266, 56
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+shotgun-08
+  rotate: false
+  xy: 200, 76
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+shotgun-09
+  rotate: false
+  xy: 332, 38
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+shotgun-10
+  rotate: false
+  xy: 332, 92
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1

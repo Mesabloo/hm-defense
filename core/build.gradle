@@ -1,0 +1,20 @@
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+eclipse.project.name = appName + '-core'
+
+tasks.withType(ScalaCompile).configureEach {
+  scalaCompileOptions.additionalParameters = ["-language:strictEquality", "-language:implicitConversions"] // "-feature"
+}
+
+dependencies {
+  api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+  api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  implementation "org.scala-lang:scala3-library_3:$scalaVersion"
+
+  if (enableGraalNative == 'true') {
+    implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
+  }
+  implementation group: 'com.github.kolemannix', name: 'spack', version: 'v0.0.5'
+}

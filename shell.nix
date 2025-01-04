@@ -1,16 +1,52 @@
-{ pkgs ? import <nixpkgs> {}
-  
+{ pkgs ? import
+    (builtins.fetchTarball {
+      name = "nixpkgs-pinned";
+      url = "https://github.com/nixos/nixpkgs/archive/de1864217bfa9b5845f465e771e0ecb48b30e02d.tar.gz";
+      sha256 = "sha256:0q7j2ar7i7ylgr1zrpas9yh1vy2dmszlrr7x6jiz25vbmp3fgisi";
+    })
+    { }
+
 }:
 
 let
   gdx-setup-tool-jar = pkgs.fetchurl {
     url = "https://libgdx-nightlies.s3.amazonaws.com/libgdx-runnables/gdx-setup.jar";
-    sha256 = "sha256-nFEPjsstdet5goMfO619lLQ+YddKSh1BpiADefrSMJ0=";
+    sha256 = "sha256-vIb8qI45rEuRDn7doLkZdwtOFjfEDX1fejL0gltzmGQ=";
+  };
+
+  gdx-lift-off-jar = pkgs.fetchurl {
+    url = "https://github.com/libgdx/gdx-liftoff/releases/download/v1.13.0.2/gdx-liftoff-1.13.0.2.jar";
+    sha256 = "sha256-yaJF5EnfDqgCdq7JhqY6uLPA+t+rVWjHnMA538X7WBI=";
+  };
+
+  gdx-lift-off = pkgs.stdenv.mkDerivation {
+    name = "gdx-lift-off";
+
+    nativeBuildInputs = with pkgs; [
+      wrapGAppsHook
+      glib
+      jdk17
+    ];
+
+    src = null;
+
+    unpackPhase = ":";
+
+    installPhase = ''
+      mkdir -p $out/bin
+
+      cat >$out/bin/gdx-lift-off <<-'EOF'
+      #!/usr/bin/env bash
+
+      java -jar ${gdx-lift-off-jar}
+      EOF
+      chmod +x $out/bin/gdx-lift-off
+    '';
   };
 
   hiero-jar = pkgs.fetchurl {
     url = "https://libgdx-nightlies.s3.eu-central-1.amazonaws.com/libgdx-runnables/runnable-hiero.jar";
-    sha256 = "sha256-uT+cpx6azFOfGsQ3K0IpxOHi5TQL9Cufx0EjQ/EoBA0=";
+    sha256 = "sha256-SjpYkZEK5vl7/i5a/wkJDnQZadcIMU5gUG5p0LZRkm0=";
   };
 
   hiero = pkgs.stdenv.mkDerivation {
@@ -19,7 +55,7 @@ let
     nativeBuildInputs = with pkgs; [
       wrapGAppsHook
       glib
-      jdk11
+      jdk8
     ];
 
     src = null;
@@ -30,9 +66,9 @@ let
       mkdir -p $out/bin
 
       cat >$out/bin/hiero <<-'EOF'
-        #!/usr/bin/env bash
+      #!/usr/bin/env bash
 
-        java -jar ${hiero-jar}
+      java -jar ${hiero-jar}
       EOF
       chmod +x $out/bin/hiero
     '';
@@ -47,9 +83,10 @@ let
     name = "skin-composer";
 
     nativeBuildInputs = with pkgs; [
+      autoPatchelfHook
       wrapGAppsHook
       glib
-      jdk11
+      jdk17
     ];
 
     src = null;
@@ -60,9 +97,9 @@ let
       mkdir -p $out/bin
 
       cat >$out/bin/skin-composer <<-'EOF'
-        #!/usr/bin/env bash
+      #!/bin/bash
 
-        java -jar ${gdx-skin-composer-jar}
+      java -jar ${gdx-skin-composer-jar} "$@"
       EOF
       chmod +x $out/bin/skin-composer
     '';
@@ -72,7 +109,7 @@ let
     name = "gdx-texture-packer";
 
     buildInputs = with pkgs; [
-      jdk11
+      jdk17
       unzip
     ];
 
@@ -93,25 +130,54 @@ let
     '';
   };
 
+  # androidSdk = (pkgs.androidenv.composeAndroidPackages {
+  #   # cmdLineToolsVersion = "8.0";
+  #   toolsVersion = "26.1.1";
+  #   platformToolsVersion = "33.0.2";
+  #   buildToolsVersions = [ "33.0.0" ];
+  #   includeEmulator = false;
+  #   emulatorVersion = "30.3.4";
+  #   platformVersions = [ "31" "33" ];
+  #   includeSources = false;
+  #   includeSystemImages = false;
+  #   systemImageTypes = [ "google_apis_playstore" ];
+  #   abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
+  #   cmakeVersions = [ "3.10.2" ];
+  #   includeNDK = true;
+  #   ndkVersions = ["22.0.7026061"];
+  #   useGoogleAPIs = false;
+  #   useGoogleTVAddOns = false;
+  #   includeExtras = [
+  #     "extras;google;gcm"
+  #   ];
+  # }).androidsdk;
+
 in
 pkgs.mkShell {
   name = "hm-defense-shell";
   version = "0.0.1";
 
   nativeBuildInputs = with pkgs; [
-    xorg.libXxf86vm
     openal
+    # glfw2
+    # mesa
+    xorg.libXxf86vm
+    libGL
 
-    jdk11
+    jdk17
   ];
 
   buildInputs = with pkgs; [
-    sbt
+    gradle
 
-    jetbrains.idea-community
+    jetbrains.idea-community-bin
+
+    # androidSdk
+    #androidStudioPackages
 
     gdx-texture-packer
     hiero
+    gdx-lift-off
     skin-composer
 
     (python3.withPackages (ps: with ps; [
@@ -124,10 +190,14 @@ pkgs.mkShell {
     visualvm
 
     graphviz
+
+    glxinfo
   ];
 
-  LD_LIBRARY_PATH = "${pkgs.xorg.libXxf86vm}/lib:${pkgs.openal}/lib";
+  # LD_LIBRARY_PATH = "${pkgs.openal}/lib:${pkgs.glfw3}/lib:${pkgs.xorg.libXxf86vm}/lib:${pkgs.mesa}/lib";
+  LD_LIBRARY_PATH = "${pkgs.libGL}/lib:${pkgs.xorg.libXxf86vm}/lib:${pkgs.openal}/lib";
   GDX_SETUP = "java -jar ${gdx-setup-tool-jar}";
-  JAVA_HOME = "${pkgs.jdk11}/lib/openjdk";
+  JAVA_HOME = "${pkgs.jdk17}/lib/openjdk";
   GRAPHVIZ_DOT = "${pkgs.graphviz}/bin/dot";
+  # ANDROID_SDK = "${androidSdk}";
 }

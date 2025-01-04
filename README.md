@@ -1,30 +1,37 @@
-*Heavy MACH: Defense* is a game where you need to create an army of machines in order to defend your castle from the enemy castle, in a top-down side-scroller style.
+*Heavy MACH: Defense* is a game where you need to create an army of machines in order to defend your castle from the
+enemy castle, in a top-down side-scroller style.
 
-## Why? 
+## Why?
 
-I was completely stunned when I recently learned that one of my favourite childhood game, 
-[Heavy MACH: Defense](https://www.formidapps.com/ios/app.heavy-mach-defense-jBEDCiEx.aspx), had gone missing from the AppStore few years ago.
+I was completely stunned when I recently learned that one of my favourite childhood game,
+[Heavy MACH: Defense](https://www.formidapps.com/ios/app.heavy-mach-defense-jBEDCiEx.aspx), had gone missing from the
+AppStore few years ago.
 
-This decision was most likely taken because of an introduced [“bug” in recent iOS versions](https://discussions.apple.com/thread/5371577) 
+This decision was most likely taken because of an
+introduced [“bug” in recent iOS versions](https://discussions.apple.com/thread/5371577)
 (newer than iOS 7) which made the game unplayable because of the impossibility to create a new save file.
-The game seems to have unfortunately been abandonned by the company who developed it, [We Made Entertainment](https://wemade.com), leading to
+The game seems to have unfortunately been abandonned by the company who developed
+it, [We Made Entertainment](https://wemade.com), leading to
 no hope of a new upgrade to fix this.
 
-Many people seem to miss this game as much as I do, and I would like to try recreating it from scratch for Desktop & Android environments 
+Many people seem to miss this game as much as I do, and I would like to try recreating it from scratch for Desktop &
+Android environments
 (I will not be targetting iOS directly, even though minor modifications to the codebase should make it work there).
 
 ## Installation
 
 ### Desktop
 
-From the root of the project, run the command `./gradlew :desktop:dist` (or `gradlew.bat :desktop:dist` on Windows).
-This will generate the JAR file `desktop/build/libs/desktop-VER.jar` (where `VER` is the version number).
+From the root of the project, run the command `./gradlew :lwjgl3:dist` (or `gradlew.bat :lwjgl3:dist` on Windows).
+This will generate the JAR file `lwjgl3/build/libs/Heavy Mach Defense-VER.jar` (where `VER` is the version number).
 
-On Windows, if Java has been installed globally, you should be able to launch it with a simple double-click in the explorer.
-If not, resort to using the command-line (CMD, Powershell, or others) and type the command `java -jar path/to/desktop-VER.jar`.
+On Windows, if Java has been installed globally, you should be able to launch it with a simple double-click in the
+explorer.
+If not, resort to using the command-line (CMD, Powershell, or others) and type the command
+`java -jar 'path/to/Heavy Mach Defense-VER.jar'`.
 On Linux and MacOS, the above command should work, provided that `java` is installed on your computer.
 
-> TODO: create wrapper scripts around `java -jar desktop-VER.jar`
+> TODO: create wrapper scripts around `java -jar 'Heavy Mach Defense-VER.jar'`
 
 ### Android
 
