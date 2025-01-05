@@ -1,0 +1,49 @@
+import hasTargetLocked?:"io.github.mesabloo.hmdefense.ai.HasTargetLockedCondition"
+import targetLockedIsAlive?:"io.github.mesabloo.hmdefense.ai.TargetLockedIsAliveCondition"
+import targetLockedIsInRange?:"io.github.mesabloo.hmdefense.ai.TargetLockedIsInRangeCondition"
+import targetLockedIsNearRange?:"io.github.mesabloo.hmdefense.ai.TargetLockedIsNearRangeCondition"
+import targetLockedIsAlive?:"io.github.mesabloo.hmdefense.ai.TargetLockedIsAliveCondition"
+
+import turnUntilFacingTarget:"io.github.mesabloo.hmdefense.ai.machines.TurnUntilFacingTargetTask"
+import shootTarget:"io.github.mesabloo.hmdefense.ai.machines.ShootTargetTask"
+import walkForward:"io.github.mesabloo.hmdefense.ai.machines.WalkForwardTask"
+import unlockTarget:"io.github.mesabloo.hmdefense.ai.UnlockTargetTask"
+
+subtree name:"lockedTargetInRange?"
+    sequence
+        hasTargetLocked?
+        targetLockedIsAlive?
+        targetLockedIsInRange?
+
+subtree name:"lockedTargetAlmostInRange?"
+    sequence
+        hasTargetLocked?
+        targetLockedIsAlive?
+        invert
+            targetLockedIsInRange?
+        targetLockedIsNearRange?
+
+subtree name:"lockedTargetDied?"
+    sequence
+        hasTargetLocked?
+        invert
+            targetLockedIsAlive?
+
+subtree name:"turnAndShoot"
+    sequence
+        turnUntilFacingTarget
+        shootTarget
+
+subtree name:"turnAndShootAndContinueForward"
+    parallel
+        sequence
+            turnUntilFacingTarget
+            shootTarget
+        walkForward
+
+root
+    dynamicGuardSelector
+        ($lockedTargetInRange?)       $turnAndShoot
+        ($lockedTargetAlmostInRange?) $turnAndShootAndContinueForward
+        ($lockedTargetDied?)          unlockTarget
+        ()                            walkForward
