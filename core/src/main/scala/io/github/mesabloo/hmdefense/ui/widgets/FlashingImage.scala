@@ -29,7 +29,7 @@ class FlashingImage(private val tex: Texture, private val delay: Float)
 //      override def step(init: Float, step: Float): Float = init + step
 
   private val flash = Animation(
-    Instant.inout(_),
+    Instant,
     1f,
     0f,
     1f,

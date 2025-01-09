@@ -1,12 +1,12 @@
 package io.github.mesabloo.hmdefense.ui.stage
 
 import com.badlogic.gdx.graphics.{OrthographicCamera, Texture}
-import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.math.{Interpolation, Vector3}
 import com.badlogic.gdx.scenes.scene2d.ui.{Image, Table}
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.{Gdx, Input}
-import io.github.mesabloo.hmdefense.animations.{Animation, Linear, given}
+import io.github.mesabloo.hmdefense.animations.{Animation, given}
 import io.github.mesabloo.hmdefense.assets.assetManager
 import io.github.mesabloo.hmdefense.assets.textures.{CommonTextures, given}
 import io.github.mesabloo.hmdefense.config.{DEBUG, whenDebug}
@@ -156,7 +156,7 @@ object MainStage extends TwoLayerStage(DefaultLayer.Background):
     // Make animation for central button
     this.centerPressAnimation = Option(
       Animation(
-        Linear.inout(_),
+        Interpolation.linear,
         0.2f, // 200ms
         1f,
         0.75f,

@@ -2,12 +2,13 @@ import hasTargetLocked?:"io.github.mesabloo.hmdefense.ai.HasTargetLockedConditio
 import targetLockedIsAlive?:"io.github.mesabloo.hmdefense.ai.TargetLockedIsAliveCondition"
 import targetLockedIsInRange?:"io.github.mesabloo.hmdefense.ai.TargetLockedIsInRangeCondition"
 import targetLockedIsNearRange?:"io.github.mesabloo.hmdefense.ai.TargetLockedIsNearRangeCondition"
-import targetLockedIsAlive?:"io.github.mesabloo.hmdefense.ai.TargetLockedIsAliveCondition"
+import someTargetNearRange?:"io.github.mesabloo.hmdefense.ai.SomeTargetNearRangeCondition"
 
-import turnUntilFacingTarget:"io.github.mesabloo.hmdefense.ai.machines.TurnUntilFacingTargetTask"
 import shootTarget:"io.github.mesabloo.hmdefense.ai.machines.ShootTargetTask"
 import walkForward:"io.github.mesabloo.hmdefense.ai.machines.WalkForwardTask"
 import unlockTarget:"io.github.mesabloo.hmdefense.ai.UnlockTargetTask"
+import lockAnyTargetNearRange:"io.github.mesabloo.hmdefense.ai.LockAnyTargetNearRangeTask"
+import stop:"io.github.mesabloo.hmdefense.ai.machines.StopMovementTask"
 
 subtree name:"lockedTargetInRange?"
     sequence
@@ -29,16 +30,32 @@ subtree name:"lockedTargetDied?"
         invert
             targetLockedIsAlive?
 
+subtree name:"noTargetInRange?"
+    invert
+        hasTargetLocked?
+
+subtree name:"newTargetAlmostInRange?"
+    sequence
+        $noTargetInRange?
+        someTargetNearRange?
+
+subtree name:"targetNoMoreInRange?"
+    sequence
+        hasTargetLocked?
+        invert
+            targetLockedIsInRange?
+        invert
+            targetLockedIsNearRange?
+
 subtree name:"turnAndShoot"
     sequence
-        turnUntilFacingTarget
+        stop
         shootTarget
+        walkForward
 
 subtree name:"turnAndShootAndContinueForward"
     parallel
-        sequence
-            turnUntilFacingTarget
-            shootTarget
+        shootTarget
         walkForward
 
 root
@@ -46,4 +63,6 @@ root
         ($lockedTargetInRange?)       $turnAndShoot
         ($lockedTargetAlmostInRange?) $turnAndShootAndContinueForward
         ($lockedTargetDied?)          unlockTarget
-        ()                            walkForward
+        ($targetNoMoreInRange?)       unlockTarget
+        ($newTargetAlmostInRange?)    lockAnyTargetNearRange
+        ($noTargetInRange?)           walkForward

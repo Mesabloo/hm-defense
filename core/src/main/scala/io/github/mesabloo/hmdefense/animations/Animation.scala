@@ -1,5 +1,6 @@
 package io.github.mesabloo.hmdefense.animations
 
+import com.badlogic.gdx.math.Interpolation
 import io.github.mesabloo.hmdefense.config.whenDebug
 
 /** A trait of types that can be animated within [[Animation]]s.
@@ -52,7 +53,7 @@ given [T: Animated: Ordering, U: Animated: Ordering]: Animated[(T, U)] with
   *   [[com.badlogic.gdx.scenes.scene2d.Actor]] or other stuff manipulated.
   */
 class Animation[T: Animated: Ordering](
-    private val easing: Float => Float,
+    private val easing: Interpolation,
     private val duration: Float,
     private var from: T,
     private var to: T,

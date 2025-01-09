@@ -1,9 +1,10 @@
 package io.github.mesabloo.hmdefense.ui.widgets.loading
 
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.Image
-import io.github.mesabloo.hmdefense.animations.{Animation, Circ, given}
+import io.github.mesabloo.hmdefense.animations.{Animation, given}
 import io.github.mesabloo.hmdefense.assets.assetManager
 import io.github.mesabloo.hmdefense.assets.textures.{CommonTextures, given}
 import io.github.mesabloo.hmdefense.config.whenDebug
@@ -47,7 +48,7 @@ final class LoadingPanel(
 
   @noinline
   private val animation = Animation[(Float, Float)](
-    Circ.easeIn(_),
+    Interpolation.circleIn,
     // Please keep those unnecessary parentheses, otherwise scalafmt breaks.
     (slidingDirection match
       case SlidingDirection.Left | SlidingDirection.Right => 0.4f
