@@ -65,4 +65,4 @@ root
         ($lockedTargetDied?)          unlockTarget
         ($targetNoMoreInRange?)       unlockTarget
         ($newTargetAlmostInRange?)    lockAnyTargetNearRange
-        ($noTargetInRange?)           walkForward
+        ()           walkForward
